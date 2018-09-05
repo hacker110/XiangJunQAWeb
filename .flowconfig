@@ -1,0 +1,37 @@
+[ignore]
+.*/node_modules/styled-components/.*
+
+[include]
+.*/src/.*
+
+[libs]
+
+[lints]
+
+[options]
+module.file_ext=.js
+module.file_ext=.jsx
+module.file_ext=.json
+module.file_ext=.css
+module.file_ext=.scss
+module.name_mapper='.*\(.s?css\)' -> 'css-module-flow'
+module.name_mapper='^@/' -> '<PROJECT_ROOT>/src/'
+module.name_mapper='^@comp' -> '<PROJECT_ROOT>/src/components'
+module.name_mapper='^@util' -> '<PROJECT_ROOT>/src/util'
+module.name_mapper='^@assets' -> '<PROJECT_ROOT>/src/assets'
+module.name_mapper='^@icon' -> '<PROJECT_ROOT>/src/assets/icon'
+module.name_mapper='^@image' -> '<PROJECT_ROOT>/src/assets/image'
+module.name_mapper='^@common/' -> '<PROJECT_ROOT>/src/common'
+module.name_mapper='^@commonComp' -> '<PROJECT_ROOT>/src/common/components'
+module.name_mapper='^@commonScss' -> '<PROJECT_ROOT>/src/common/scss'
+module.name_mapper='^@commonStore' -> '<PROJECT_ROOT>/src/common/store'
+module.name_mapper='^@commonStyled' -> '<PROJECT_ROOT>/src/common/styled'
+module.name_mapper='^@con' -> '<PROJECT_ROOT>/src/container'
+module.name_mapper='^@store' -> '<PROJECT_ROOT>/src/container/store'
+module.name_mapper='^@scss' -> '<PROJECT_ROOT>/src/container/scss'
+module.name_mapper='^@styled' -> '<PROJECT_ROOT>/src/container/styled'
+esproposal.decorators=ignore
+module.system=haste
+suppress_comment= \\(.\\|\n\\)*\\$FlowIgnore
+
+[strict]

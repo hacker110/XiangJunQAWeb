@@ -1,0 +1,40 @@
+@import './color.scss';
+
+* { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  color: $c000;
+  background-color: $fff;
+  font-size: 1.5rem;
+  font-family: 'Helvetica', 'Helvetica Neue', 'Verdana', 'sans-serif', 'Arial', 'PingFang SC', 'Microsoft YaHei';
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  touch-action: none;
+}
+
+button {
+  border: none;
+  background: none;
+}
+input {
+  border-radius: 0;
+  border: 1px solid #eee;
+  outline: none;
+  -webkit-appearance: none;
+}
+input:focus, button:focus {
+  outline: none;
+}
+
+::selection {
+  background-color: #333;
+  color: #fff;
+}
