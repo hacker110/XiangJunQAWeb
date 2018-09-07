@@ -1,0 +1,43 @@
+@import './color.scss';
+
+h1 { font-size: 2.8rem; }
+h2 { font-size: 2.6rem; }
+h3 { font-size: 2.4rem; }
+h4 { font-size: 2.2rem; }
+h5 { font-size: 2.0rem; }
+h6 { font-size: 1.8rem; }
+
+button {
+  padding: 0.5rem 1rem;
+  border: 1px solid $ddd;
+  background: none;
+}
+input, textarea {
+  padding: 0.5rem;
+  border-radius: 0;
+  border: 1px solid $ddd;
+  outline: none;
+  -webkit-appearance: none;
+}
+textarea { resize: none; }
+li { list-style: none; }
+details {
+  border: none;
+  outline: none;
+}
+input:focus, input:active, input:visited, input:hover,
+button:focus, button:active, button:visited, button:hover,
+textarea:focus, textarea:active, textarea:visited, textarea:hover,
+details:focus, details:active, details:visited, textarea:visited {
+  outline: none;
+}
+
+h1, h2, h3, h4, h5, h6,
+p, ol, ul, li, dl, dt, dd,
+fieldset, legend {
+  margin: 0;
+  padding: 0;
+}
+
+fieldset { border: 1px solid $c333; }
+table { border: 1px solid $c333; }

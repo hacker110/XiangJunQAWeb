@@ -20,20 +20,6 @@ body {
   touch-action: none;
 }
 
-button {
-  border: none;
-  background: none;
-}
-input {
-  border-radius: 0;
-  border: 1px solid #eee;
-  outline: none;
-  -webkit-appearance: none;
-}
-input:focus, button:focus {
-  outline: none;
-}
-
 ::selection {
   background-color: #333;
   color: #fff;

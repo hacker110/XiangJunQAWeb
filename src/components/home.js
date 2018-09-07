@@ -2,10 +2,24 @@
 import React, { Component } from 'react';
 
 class Home extends Component<{}, {}> {
+
+  onTextChange = () => {
+
+  }
+  onNumChange = () => {
+
+  }
+  onSelect = () => {
+
+  }
+  onTextarea = () => {
+
+  }
+
   render() {
     return (
       <div>
-        <p>Home Page...</p>
+        <p>hello</p>
       </div>
     )
   }
