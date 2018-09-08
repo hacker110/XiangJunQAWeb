@@ -1,10 +1,12 @@
 # React Wap Aim
 
-## 使用说明
-> 启动 &nbsp;&nbsp; <code>npm start</code>
+## Usage
+> start: &nbsp;&nbsp; <code>npm start</code>
+
+> build: &nbsp;&nbsp; <code>npm run build</code>
 
 
-## 目录说明
+## Directory
 
 | 目录符号        | 地址                    |
 | -------------- | ---------------------- |
@@ -23,3 +25,14 @@
 | @scss          | /src/container/scss    |
 | @store         | /src/container/store   |
 | @styled        | /src/container/styled  |
+
+## Introduction
+* 基于 create-react-app, 集成的功能有:
+
+> <code>react</code>, <code>react-router</code>, <code>mobx</code>
+
+> <code>lodash</code>, <code>moment</code>, <code>scss</code>
+
+> <code>flow</code>, <code>styled components</code>, <code>fetch</code>
+
+* 本项目是针对手机端的，并对字体自适应做好了处理(1rem = 10px)，且没有引入UI框架(推荐ant mobile)。(后续还会推出PC版本)
