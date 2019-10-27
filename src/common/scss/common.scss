@@ -1,19 +1,19 @@
 @import './color.scss';
 
-h1 { font-size: 2.8rem; }
-h2 { font-size: 2.6rem; }
-h3 { font-size: 2.4rem; }
-h4 { font-size: 2.2rem; }
-h5 { font-size: 2.0rem; }
-h6 { font-size: 1.8rem; }
+h1 { font-size: 0.28rem; }
+h2 { font-size: 0.26rem; }
+h3 { font-size: 0.24rem; }
+h4 { font-size: 0.22rem; }
+h5 { font-size: 0.20rem; }
+h6 { font-size: 0.18rem; }
 
 button {
-  padding: 0.5rem 1rem;
+  padding: 0.05rem .1rem;
   border: 1px solid $ddd;
   background: none;
 }
 input, textarea {
-  padding: 0.5rem;
+  padding: 0.05rem;
   border-radius: 0;
   border: 1px solid $ddd;
   outline: none;
