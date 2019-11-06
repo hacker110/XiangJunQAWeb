@@ -1,21 +1,19 @@
+/*
+ * @Description: This is a description
+ * @Author: Ask
+ * @LastEditors: Ask
+ * @Date: 2019-10-27 20:46:59
+ * @LastEditTime: 2019-11-06 20:45:58
+ */
 // @flow
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
-import Home from '@comp/home';
-import Page404 from '@commonComp/page404';
+import { Component } from 'react';
 import '@commonScss/index.scss';
+
+import router from './router/router.js';
 
 class App extends Component<{}, {}> {
   render() {
-    return (
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/*" component={Page404} />
-        </Switch>
-      </Router>
-    )
+    return router();
   }
 }
 

@@ -1,3 +1,10 @@
+<!--
+ * @Description: This is a description
+ * @Author: Ask
+ * @LastEditors: Ask
+ * @Date: 2019-10-27 20:46:59
+ * @LastEditTime: 2019-10-27 23:22:23
+ -->
 # React Wap Aim
 
 ## Usage
@@ -35,4 +42,4 @@
 
 > <code>flow</code>, <code>styled components</code>, <code>fetch</code>
 
-* 本项目是针对手机端的，并对字体自适应做好了处理(1rem = 10px)，且没有引入UI框架(推荐ant mobile)。(后续还会推出PC版本)
+* 本项目是针对手机端的，并对字体自适应做好了处理(1rem = 100px)，且没有引入UI框架(推荐ant mobile)。(后续还会推出PC版本)

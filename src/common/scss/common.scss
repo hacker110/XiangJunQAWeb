@@ -7,6 +7,9 @@ h4 { font-size: 0.22rem; }
 h5 { font-size: 0.20rem; }
 h6 { font-size: 0.18rem; }
 
+html,body,#root{
+  height: 100%;
+}
 button {
   padding: 0.05rem .1rem;
   border: 1px solid $ddd;

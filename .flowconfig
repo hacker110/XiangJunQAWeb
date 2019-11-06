@@ -30,6 +30,7 @@ module.name_mapper='^@con' -> '<PROJECT_ROOT>/src/container'
 module.name_mapper='^@store' -> '<PROJECT_ROOT>/src/container/store'
 module.name_mapper='^@scss' -> '<PROJECT_ROOT>/src/container/scss'
 module.name_mapper='^@styled' -> '<PROJECT_ROOT>/src/container/styled'
+module.name_mapper='^@pages' -> '<PROJECT_ROOT>/src/pages'
 esproposal.decorators=ignore
 module.system=haste
 suppress_comment= \\(.\\|\n\\)*\\$FlowIgnore
