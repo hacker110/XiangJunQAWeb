@@ -3,11 +3,16 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-11-05 08:51:42
- * @LastEditTime: 2019-11-06 23:00:28
+ * @LastEditTime: 2019-11-07 00:11:51
  */
 //  , { Suspense }
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from 'react-router-dom';
 import routes from './routes.js';
 
 const router = () => {
@@ -15,8 +20,10 @@ const router = () => {
     <Router>
       <Switch>
         {routes.map((route, id) => {
-          const { component: RouteComponent, children, path } = route;
-          return (
+          const { component: RouteComponent, children, path, redirect } = route;
+          return redirect ? (
+            <Redirect exact key={id} from={path} to={redirect}></Redirect>
+          ) : (
             <Route
               key={id}
               path={path}
@@ -24,7 +31,8 @@ const router = () => {
                 return (
                   <RouteComponent key={id} {...props}>
                     <Switch>
-                      {children.length &&
+                      {children &&
+                        children.length &&
                         children.map((routeChild, idx) => {
                           return (
                             <Route key={idx} exact {...routeChild}></Route>
