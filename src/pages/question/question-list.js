@@ -3,18 +3,12 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-10 10:03:21
+ * @LastEditTime: 2019-11-10 10:06:41
  */
 // @flow
 import React, { Component } from 'react';
 import { Tabs, Badge } from 'antd-mobile';
 import ComponentList from '@/components/Question/component-list';
-
-// const tabs = [
-//   { title: <Badge text={'3'}>First Tab</Badge> },
-//   { title: <Badge text={'今日(20)'}>Second Tab</Badge> },
-//   { title: <Badge dot>Third Tab</Badge> }
-// ];
 
 const tabs1 = [
   { title: '推荐', sub: '1' },
@@ -60,7 +54,6 @@ class QuestionList extends Component<{}, {}> {
                 }}
               >
                 {tabs2.map(tabs => {
-                  console.log(item.sub + '-' + tabs.sub);
                   return (
                     <ComponentList
                       style={{

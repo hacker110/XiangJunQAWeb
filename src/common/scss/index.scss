@@ -1,4 +1,17 @@
 @import './common.scss';
 @import './main.scss';
 
+// ===============page
 @import "./pages/question/question-list.scss";
+@import "./pages/question/question-detail.scss";
+
+
+
+
+
+
+
+
+
+// ===============detail
+@import "./components/question-item.scss";
