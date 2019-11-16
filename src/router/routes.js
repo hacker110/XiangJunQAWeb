@@ -3,54 +3,64 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-11-05 08:51:42
- * @LastEditTime: 2019-11-09 16:16:41
+ * @LastEditTime: 2019-11-16 14:15:25
  */
-import Home from '@comp/home';
-import Page404 from '@commonComp/page404';
-import PrePage from '@/pages/pre/pre-page.js';
-import QuestionBase from '@/pages/question/question-base.js';
-import QuestionList from '@/pages/question/question-list.js';
-import QuestionDetail from '@/pages/question/question-detail.js';
+import Home from "@comp/home";
+import Page404 from "@/components/404/page404";
+import PrePage from "@/pages/pre/pre-page.js";
+import Mine from "@/pages/mine/mine.js";
+import QuestionBase from "@/pages/question/question-base.js";
+import QuestionList from "@/pages/question/question-list.js";
+import QuestionDetail from "@/pages/question/question-detail.js";
+import QuestionCreate from "@/pages/question/question-create.js";
 
 export default [
   {
-    path: '/',
+    path: "/",
     component: Home,
-    redirect: '/prepage'
+    redirect: "/question/questionlist"
   },
   {
-    path: '/prepage',
+    path: "/prepage",
     component: PrePage
   },
   {
-    path: '/question',
+    path: "/question",
     component: QuestionBase,
     meta: {
-      title: '问题基页面'
+      title: "问题基页面"
     },
     // redirect: '/question/questionlist',
     children: [
       {
-        path: '/question/questionlist',
+        path: "/question/questionlist",
         component: QuestionList,
         meta: {
-          title: '问题列表页'
+          title: "问题列表页"
         }
       },
       {
-        path: '/question/questiondetail',
-        component: QuestionDetail,
-        meta: {
-          title: '问题详情页'
-        }
+        path: "/question/mine",
+        component: Mine
+      },
+      {
+        path: "/question/questioncreate",
+        component: QuestionCreate
       }
     ]
   },
   {
-    path: '/*',
+    path: "/questiondetail",
+    component: QuestionDetail,
+    meta: {
+      title: "问题详情页"
+    }
+  },
+  {
+    path: "/*",
     component: Page404,
     meta: {
-      title: '404'
+      title: "404"
     }
   }
 ];

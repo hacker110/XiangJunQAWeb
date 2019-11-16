@@ -1,0 +1,22 @@
+.mine {
+  padding: 0.2rem;
+  .mine-header {
+    background: gray;
+    display: flex;
+    align-items: center;
+    margin-bottom: .2rem;
+    .mine-header__avator {
+      width: .5rem;
+      height: .5rem;
+      margin-right: .1rem;
+      background:url(https://img.zuoyebang.cc/zyb_b700c0fdbf6a2ca87f084e7995036c8f.jpg@f_png) no-repeat;
+    }
+    .mine-header__name {
+      font-size: .2rem;
+    }
+  }
+  .mine-question {
+    background: gray;
+    min-height: 1rem;
+  }
+}

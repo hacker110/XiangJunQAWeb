@@ -3,11 +3,11 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-10 10:06:41
+ * @LastEditTime: 2019-11-16 14:52:49
  */
 // @flow
 import React, { Component } from 'react';
-import { Tabs, Badge } from 'antd-mobile';
+import { Tabs } from 'antd-mobile';
 import ComponentList from '@/components/Question/component-list';
 
 const tabs1 = [
@@ -53,15 +53,16 @@ class QuestionList extends Component<{}, {}> {
                   console.log('onTabClick', index, tab);
                 }}
               >
-                {tabs2.map(tabs => {
+                {tabs2.map(childItem => {
                   return (
                     <ComponentList
                       style={{
-                        height: '100%',
-                        backgroundColor: '#fff'
+                        height: "100%",
+                        backgroundColor: "#fff"
                       }}
-                      key={item.id + '-' + tabs.sub}
-                      tabIndex={tabs.sub}
+                      key={item.sub + "-" + childItem.sub}
+                      tabIndex={item.sub}
+                      subTabIndex={childItem.sub}
                     />
                   );
                 })}

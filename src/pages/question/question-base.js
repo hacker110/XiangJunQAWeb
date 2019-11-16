@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-09 16:29:28
+ * @LastEditTime: 2019-11-13 09:04:56
  */
 // @flow
 import React, { Component } from 'react';
@@ -14,38 +14,38 @@ class QuestionBase extends Component {
     super(props);
     console.log(this);
     this.state = {
-      selectedTab: 'blueTab',
+      selectedTab: "blueTab",
       hidden: false,
       tabs: [
         {
-          key: '主页',
-          title: '主页',
+          key: "主页",
+          title: "主页",
           icon:
-            'https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg',
+            "https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg",
           selectedIcon:
-            'https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg',
-          selected: 'blueTab',
-          path: '/question/questionlist'
+            "https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg",
+          selected: "blueTab",
+          path: "/question/questionlist"
         },
         {
-          key: '我的',
-          title: '我的',
+          key: "我的",
+          title: "我的",
           icon:
-            'https://gw.alipayobjects.com/zos/rmsportal/BTSsmHkPsQSPTktcXyTV.svg',
+            "https://gw.alipayobjects.com/zos/rmsportal/BTSsmHkPsQSPTktcXyTV.svg",
           selectedIcon:
-            'https://gw.alipayobjects.com/zos/rmsportal/ekLecvKBnRazVLXbWOnE.svg',
-          selected: 'redTab',
-          path: '/question/questiondetail'
+            "https://gw.alipayobjects.com/zos/rmsportal/ekLecvKBnRazVLXbWOnE.svg",
+          selected: "redTab",
+          path: "/question/mine"
         },
         {
-          key: '提问',
-          title: '提问',
+          key: "提问",
+          title: "提问",
           icon:
-            'https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg',
+            "https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg",
           selectedIcon:
-            'https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg',
-          selected: 'greenTab',
-          path: '/question/questionanswer'
+            "https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg",
+          selected: "greenTab",
+          path: "/question/questioncreate"
         }
       ]
     };

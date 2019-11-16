@@ -3,32 +3,36 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-10 18:24:28
+ * @LastEditTime: 2019-11-13 08:26:20
  */
 // @flow
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 
-class QuestionItem extends Component<{}, {}> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: {
-        id: 123,
-        title: '最近周杰伦的新歌,有一段旋律比较轻快,但是降一个C调会不会更改呢?',
-        icon: 'https://avatars2.githubusercontent.com/u/25131706?s=40&v=4'
-      }
-    };
+class ListItem extends Component {
+  gotoDetail() {
+    // x;
   }
 
   render() {
-    const { id, title, icon } = this.state.data;
+    const { id, title } = this.props.data;
     return (
-      <div data-question={id} className="question-item">
-        <img src={icon} alt="用户的icon" />
+      <div
+        onClick={() =>
+          this.props.history.push({
+            pathname: "/questiondetail",
+            state: {
+              id: 3
+            }
+          })
+        }
+        className="list-item"
+      >
+        <div>{id}</div>
         <div>{title}</div>
       </div>
     );
   }
 }
 
-export default QuestionItem;
+export default withRouter(ListItem);

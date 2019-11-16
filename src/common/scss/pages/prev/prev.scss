@@ -1,0 +1,21 @@
+
+.prev{
+  height: 100%;
+  padding: .2rem;
+  .prev-title{
+    padding-bottom: .2rem;
+  }
+  .tagList{
+    margin-bottom: .2rem;
+    .tagList-item{
+      margin: .1rem;
+    }
+  }
+  .prev-text{
+    margin-bottom: .5rem;
+  }
+  .prev-btnGroups{
+    display: flex;
+    justify-content: space-around;
+  }
+}
