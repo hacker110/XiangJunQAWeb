@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-23 12:42:41
+ * @LastEditTime: 2019-11-23 13:40:55
  */
 // @flow
 import React, { Component } from "react";
@@ -18,14 +18,15 @@ import {
   Button,
   Toast
 } from "antd-mobile";
-import subject_idData from "@/constant/profession.js";
+// import subject_idData from "@/constant/profession.js";
 import { trim } from "@/utils/utils.js";
 import { post } from "@/utils/request.js";
 import { SUBJECT, QUESTION } from "@/service/api.js";
 
-const choiceData = [
-  subject_idData.map(item => ({ label: item.name, value: item.id }))
-];
+// const choiceData = [
+//   subject_idData.map(item => ({ label: item.name, value: item.id }))
+// ];
+// console.log(choiceData);
 
 const data = [
   {
@@ -40,16 +41,16 @@ const data = [
 class QuestionCreate extends Component {
   constructor(props) {
     super(props);
-    this.state = { subject_id: [], files: data, content: "" };
-    console.log(1);
+    this.state = {
+      subject_id: [],
+      files: data,
+      content: "",
+      choiceData: []
+    };
   }
 
   componentWillMount() {
     this.getAllSubject();
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    return false;
   }
 
   gotoDetail() {
@@ -80,34 +81,38 @@ class QuestionCreate extends Component {
     if (!subject_id) return Toast.info("请选择标签");
     if (trim(content) === "") return Toast.info("请输入内容");
     post(QUESTION.ADD_QUESTION, {
-      subject_id,
+      subject_id: subject_id[0],
       content,
       type: 1,
       user_id: 1
     }).then(e => {
-      console.log(e);
+      if(e.status === 200){
+        this.props.history.push("/question/questionlist");
+      }
     });
-    console.log(subject_id, content);
-    console.log("publish");
   }
+
   getAllSubject() {
-    post(SUBJECT.GET_ALL_SUBJECT, { currentPage: 1, pageSize: 30 }).then(e => {
-      console.log(e);
+    post(SUBJECT.GET_ALL_SUBJECT, { currentPage: 1, pageSize: 100 }).then(e => {
+      const list = e.data.rows;
+      this.setState({
+        choiceData: list.map(item => ({ label: item.title, value: item.id }))
+      });
     });
   }
+
   render() {
-    const { files, content } = this.state;
+    const { files, content, choiceData } = this.state;
     return (
       <div className="question-create">
         <div className="question-create__box">
           <Picker
             data={choiceData}
             title="选择专业"
-            cascade={false}
             cols={1}
             value={this.state.subject_id}
             onChange={v => this.setState({ subject_id: v })}
-            onOk={v => this.setState({ subject_id: v })}
+            // onOk={v => this.setState({ subject_id: v })}
           >
             <List.Item arrow="horizontal">选择专业</List.Item>
           </Picker>

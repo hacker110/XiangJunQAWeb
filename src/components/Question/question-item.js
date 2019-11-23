@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-13 08:26:20
+ * @LastEditTime: 2019-11-23 13:51:31
  */
 // @flow
 import React, { Component } from "react";
@@ -15,7 +15,14 @@ class ListItem extends Component {
   }
 
   render() {
-    const { id, title } = this.props.data;
+    const {
+      subject_id,
+      collection_count,
+      like_count,
+      subject_title,
+      content
+    } = this.props.data;
+
     return (
       <div
         onClick={() =>
@@ -28,8 +35,11 @@ class ListItem extends Component {
         }
         className="list-item"
       >
-        <div>{id}</div>
-        <div>{title}</div>
+        <div>{subject_id}</div>
+        <div>{collection_count}</div>
+        <div>{like_count}</div>
+        <div>{subject_title}</div>
+        <div>{content}</div>
       </div>
     );
   }
