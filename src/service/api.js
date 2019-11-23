@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-11-17 22:00:55
- * @LastEditTime: 2019-11-17 22:08:55
+ * @LastEditTime: 2019-11-18 23:43:45
  */
 export const QUESTION = {
   // 添加问题
@@ -25,3 +25,10 @@ export const QUESTION = {
   // 保存问题点赞
   SAVE_QUESTION_LIKES: "/question/saveQuestionlikes"
 };
+export const SUBJECT = {
+  // 添加问题
+  GET_ALL_SUBJECT: "/subject/getAllSubject"
+  // 得到指定用户收藏的问题
+};
+
+export const host = "http://115.29.65.101:8888";

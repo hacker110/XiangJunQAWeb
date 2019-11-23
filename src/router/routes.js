@@ -3,13 +3,13 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-11-05 08:51:42
- * @LastEditTime: 2019-11-16 14:15:25
+ * @LastEditTime: 2019-11-23 12:22:01
  */
 import Home from "@comp/home";
 import Page404 from "@/components/404/page404";
 import PrePage from "@/pages/pre/pre-page.js";
 import Mine from "@/pages/mine/mine.js";
-import QuestionBase from "@/pages/question/question-base.js";
+// import QuestionBase from "@/pages/question/question-base.js";
 import QuestionList from "@/pages/question/question-list.js";
 import QuestionDetail from "@/pages/question/question-detail.js";
 import QuestionCreate from "@/pages/question/question-create.js";
@@ -25,29 +25,19 @@ export default [
     component: PrePage
   },
   {
-    path: "/question",
-    component: QuestionBase,
+    path: "/question/questionlist",
+    component: QuestionList,
     meta: {
-      title: "问题基页面"
-    },
-    // redirect: '/question/questionlist',
-    children: [
-      {
-        path: "/question/questionlist",
-        component: QuestionList,
-        meta: {
-          title: "问题列表页"
-        }
-      },
-      {
-        path: "/question/mine",
-        component: Mine
-      },
-      {
-        path: "/question/questioncreate",
-        component: QuestionCreate
-      }
-    ]
+      title: "问题列表页"
+    }
+  },
+  {
+    path: "/question/mine",
+    component: Mine
+  },
+  {
+    path: "/question/questioncreate",
+    component: QuestionCreate
   },
   {
     path: "/questiondetail",

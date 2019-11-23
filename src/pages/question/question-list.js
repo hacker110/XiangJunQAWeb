@@ -3,12 +3,13 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-16 14:52:49
+ * @LastEditTime: 2019-11-23 12:23:51
  */
 // @flow
 import React, { Component } from 'react';
 import { Tabs } from 'antd-mobile';
 import ComponentList from '@/components/Question/component-list';
+import QuestionTab from '@/components/Question/question-tab';
 
 const tabs1 = [
   { title: '推荐', sub: '1' },
@@ -70,6 +71,7 @@ class QuestionList extends Component<{}, {}> {
             );
           })}
         </Tabs>
+        <QuestionTab />
       </div>
     );
   }

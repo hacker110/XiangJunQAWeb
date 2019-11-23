@@ -13,9 +13,9 @@
     <meta name="format-detection" content="telephone=no" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <link rel="shortcut icon" href="//yy-s.zuoyebang.cc/static/common/css/resource/favicon.ico" />
+    <!-- <link rel="shortcut icon" href="//yy-s.zuoyebang.cc/static/common/css/resource/favicon.ico" /> -->
     <title>react-demo</title>
-    <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
+    <script src="/fastclick.js"></script>
     <script>
       if ('addEventListener' in document) {
         document.addEventListener(
@@ -28,7 +28,7 @@
       }
       if (!window.Promise) {
         document.writeln(
-          '<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"' +
+          '<script src="./es6-promise.min.js"' +
             '>' +
             '<' +
             '/' +

@@ -1,6 +1,18 @@
-
-.question-create{
+.question-create {
   height: 100%;
-  padding: .2rem;
-  
+  .question-create__box {
+    padding: 0.2rem;
+    padding-bottom: 0.6rem;
+  }
+  .img-picker {
+    padding-top: 0.2rem;
+    .am-image-picker-list {
+      padding: 0;
+    }
+  }
+  .question-create__btns {
+    margin-top: 0.6rem;
+    display: flex;
+    justify-content: space-around;
+  }
 }
