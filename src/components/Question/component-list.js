@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-23 16:02:38
+ * @LastEditTime: 2019-11-24 22:13:14
  */
 // @flow
 /* eslint no-dupe-keys: 0 */
@@ -11,6 +11,9 @@ import React, { Component } from "react";
 
 import { findDOMNode } from "react-dom";
 import { ListView } from "antd-mobile";
+import { post } from "@/utils/request.js";
+import { QUESTION } from "@/service/api.js";
+import QuestionItem from "./question-item";
 
 function MyBody(props) {
   return (
@@ -24,123 +27,107 @@ function MyBody(props) {
 const data = [
   {
     img: "https://zos.alipayobjects.com/rmsportal/dKbkpPXKfvZzWCM.png",
-    title: "Meet hotel",
-    des: "不是所有的兼职汪都需要风吹日晒"
+    subject_title: "Meet hotel",
+    content: "不是所有的兼职汪都需要风吹日晒"
   },
   {
     img: "https://zos.alipayobjects.com/rmsportal/XmwCzSeJiqpkuMB.png",
-    title: "McDonald's invites you",
-    des: "不是所有的兼职汪都需要风吹日晒"
+    subject_title: "McDonald's invites you",
+    content: "不是所有的兼职汪都需要风吹日晒"
   },
   {
     img: "https://zos.alipayobjects.com/rmsportal/hfVtzEhPzTUewPm.png",
-    title: "Eat the week",
-    des: "不是所有的兼职汪都需要风吹日晒"
+    subject_title: "Eat the week",
+    content: "不是所有的兼职汪都需要风吹日晒"
   }
 ];
-const NUM_SECTIONS = 2;
-const NUM_ROWS_PER_SECTION = 5;
+const NUM_ROWS_PER_SECTION = 10;
 let pageIndex = 0;
 
 const pages = 4;
 
 const dataBlobs = {};
-let sectionIDs = [];
 let rowIDs = [];
-function genData(pIndex = 0) {
-  for (let i = 0; i < NUM_SECTIONS; i++) {
-    const ii = pIndex * NUM_SECTIONS + i;
-    const sectionName = `Section ${ii}`;
-    sectionIDs.push(sectionName);
-    dataBlobs[sectionName] = sectionName;
-    rowIDs[ii] = [];
-
-    for (let jj = 0; jj < NUM_ROWS_PER_SECTION; jj++) {
-      const rowName = `S${ii}, R${jj}`;
-      rowIDs[ii].push(rowName);
-      dataBlobs[rowName] = rowName;
-    }
-  }
-  sectionIDs = [...sectionIDs];
-  rowIDs = [...rowIDs];
-}
 
 class ComponentList extends Component {
   constructor(props) {
     super(props);
-    const getSectionData = (dataBlob, sectionID) => dataBlob[sectionID];
     const getRowData = (dataBlob, sectionID, rowID) => dataBlob[rowID];
 
     const dataSource = new ListView.DataSource({
       getRowData,
-      getSectionHeaderData: getSectionData,
       rowHasChanged: (row1, row2) => row1 !== row2,
       sectionHeaderHasChanged: (s1, s2) => s1 !== s2
     });
 
     this.state = {
+      data: [],
       dataSource,
       isLoading: true,
       height: (document.documentElement.clientHeight * 3) / 4
     };
+    this.getData();
   }
 
   componentDidMount() {
-    // you can scroll to the specified position
-    // setTimeout(() => this.lv.scrollTo(0, 120), 800);
-
     const hei =
       document.documentElement.clientHeight -
       findDOMNode(this.lv).parentNode.offsetTop;
-    // simulate initial Ajax
+
     setTimeout(() => {
-      genData();
+      // simulate initial Ajax
+      this.genData();
+      console.log(rowIDs);
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRowsAndSections(
-          dataBlobs,
-          sectionIDs,
-          rowIDs
-        ),
+        dataSource: this.state.dataSource.cloneWithRows(dataBlobs, rowIDs),
         isLoading: false,
         height: hei
       });
-    }, 600);
+    }, 1000);
   }
 
-  // If you use redux, the data maybe at props, you need use `componentWillReceiveProps`
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.dataSource !== this.props.dataSource) {
-  //     this.setState({
-  //       dataSource: this.state.dataSource.cloneWithRowsAndSections(nextProps.dataSource),
-  //     });
-  //   }
-  // }
-
   onEndReached = event => {
-    // load new data
-    // hasMore: from backend data, indicates whether it is the last page, here is false
+    console.log(pageIndex);
     if (pageIndex === 2) {
       return;
     }
-    if (this.state.isLoading && !this.state.hasMore) {
+    if (this.state.isLoading) {
       return;
     }
     console.log("reach end", event);
     this.setState({ isLoading: true });
     setTimeout(() => {
-      genData(++pageIndex);
+      this.genData(++pageIndex);
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRowsAndSections(
-          dataBlobs,
-          sectionIDs,
-          rowIDs
-        ),
+        dataSource: this.state.dataSource.cloneWithRows(dataBlobs, rowIDs),
         isLoading: false
       });
     }, 1000);
   };
+  genData(pIndex = 0) {
+    for (let jj = 0; jj < NUM_ROWS_PER_SECTION; jj++) {
+      const rowName = `${pageIndex}-R${jj}`;
+      rowIDs.push(rowName);
+      dataBlobs[rowName] = rowName;
+    }
+    rowIDs = [...rowIDs];
+  }
 
+  getData() {
+    post(QUESTION.GET_NEW_QUESTION, { currentPage: 1, pageSize: 30 }).then(
+      e => {
+        console.log(e.data.rows);
+        this.setState(
+          {
+            data: e.data.rows
+          },
+          () => {}
+        );
+      }
+    );
+  }
   render() {
+    const { data } = this.state;
     const separator = (sectionID, rowID) => (
       <div
         key={`${sectionID}-${rowID}`}
@@ -152,46 +139,16 @@ class ComponentList extends Component {
         }}
       />
     );
-    let index = data.length - 1;
+    console.log(data);
+    let index = 0;
     const row = (rowData, sectionID, rowID) => {
       if (index < 0) {
-        index = data.length - 1;
+        index = 0;
       }
-      const obj = data[index--];
+      const obj = data[index++];
       return (
         <div key={rowID} style={{ padding: "0 15px" }}>
-          <div
-            style={{
-              lineHeight: "50px",
-              color: "#888",
-              fontSize: 18,
-              borderBottom: "1px solid #F6F6F6"
-            }}
-          >
-            {obj.title}
-          </div>
-          <div
-            style={{
-              display: "-webkit-box",
-              display: "flex",
-              padding: "15px 0"
-            }}
-          >
-            <img
-              style={{ height: "64px", marginRight: "15px" }}
-              src={obj.img}
-              alt=""
-            />
-            <div style={{ lineHeight: 1 }}>
-              <div style={{ marginBottom: "8px", fontWeight: "bold" }}>
-                {obj.des}
-              </div>
-              <div>
-                <span style={{ fontSize: "30px", color: "#FF6E27" }}>35</span>¥{" "}
-                {rowID}
-              </div>
-            </div>
-          </div>
+          <QuestionItem key={index} data={obj} />
         </div>
       );
     };
@@ -200,15 +157,14 @@ class ComponentList extends Component {
       <ListView
         ref={el => (this.lv = el)}
         dataSource={this.state.dataSource}
-        renderHeader={() => <span>header</span>}
         renderFooter={() => (
           <div style={{ padding: 30, textAlign: "center" }}>
             {this.state.isLoading ? "Loading..." : "Loaded"}
           </div>
         )}
-        renderSectionHeader={sectionData => (
-          <div>{`Task ${sectionData.split(" ")[1]}`}</div>
-        )}
+        // renderSectionHeader={sectionData => (
+        //   <div>{`Task ${sectionData.split(" ")[1]}`}</div>
+        // )}
         renderBodyComponent={() => <MyBody />}
         renderRow={row}
         renderSeparator={separator}
@@ -216,13 +172,13 @@ class ComponentList extends Component {
           height: this.state.height,
           overflow: "auto"
         }}
-        pageSize={4}
+        pageSize={10}
         onScroll={() => {
           console.log("scroll");
         }}
         scrollRenderAheadDistance={500}
         onEndReached={this.onEndReached}
-        onEndReachedThreshold={10}
+        onEndReachedThreshold={20}
       />
     );
   }

@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-11-17 22:00:55
- * @LastEditTime: 2019-11-18 23:43:45
+ * @LastEditTime: 2019-11-24 20:51:48
  */
 export const QUESTION = {
   // 添加问题
@@ -13,7 +13,7 @@ export const QUESTION = {
   // 得到指定用户关注作者的问题
   GET_COLLECTION_QUESTION_BY_UID: "/question/getCollectionQuestionByUserId",
   // 获得最新问题
-  GET_NEW_QUESTION: "/question/getNewQeustion",
+  GET_NEW_QUESTION: "/question/getNewQuestion",
   // 通过问题ID获取问题
   GET_QUESTION_BY_ID: "/question/getQuestionById",
   // 通过用户UID获取问题

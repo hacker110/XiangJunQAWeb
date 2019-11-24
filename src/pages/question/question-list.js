@@ -3,13 +3,12 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-23 16:13:33
+ * @LastEditTime: 2019-11-24 20:53:18
  */
 // @flow
 import React, { Component } from "react";
 import { Tabs } from "antd-mobile";
-import { post } from "@/utils/request.js";
-import { QUESTION } from "@/service/api.js";
+
 
 import ComponentList from "@/components/Question/component-list";
 import QuestionTab from "@/components/Question/question-tab";
@@ -33,25 +32,11 @@ class QuestionList extends Component<{}, {}> {
   constructor(props) {
     super(props);
     this.state = { data: [] };
-    this.getData();
   }
 
-  getData() {
-    post(QUESTION.GET_NEW_QUESTION, { currentPage: 1, pageSize: 30 }).then(
-      e => {
-        console.log(e.data.rows);
-        this.setState(
-          {
-            data: e.data.rows
-          },
-          () => {}
-        );
-      }
-    );
-  }
+
 
   render() {
-    console.log("QuestionList");
     // <Tabs
     //   tabs={tabs1}
     //   initialPage="1"
