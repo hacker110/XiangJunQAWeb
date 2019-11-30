@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-24 22:13:14
+ * @LastEditTime: 2019-11-30 11:58:16
  */
 // @flow
 /* eslint no-dupe-keys: 0 */
@@ -24,29 +24,11 @@ function MyBody(props) {
   );
 }
 
-const data = [
-  {
-    img: "https://zos.alipayobjects.com/rmsportal/dKbkpPXKfvZzWCM.png",
-    subject_title: "Meet hotel",
-    content: "不是所有的兼职汪都需要风吹日晒"
-  },
-  {
-    img: "https://zos.alipayobjects.com/rmsportal/XmwCzSeJiqpkuMB.png",
-    subject_title: "McDonald's invites you",
-    content: "不是所有的兼职汪都需要风吹日晒"
-  },
-  {
-    img: "https://zos.alipayobjects.com/rmsportal/hfVtzEhPzTUewPm.png",
-    subject_title: "Eat the week",
-    content: "不是所有的兼职汪都需要风吹日晒"
-  }
-];
 const NUM_ROWS_PER_SECTION = 10;
-let pageIndex = 0;
-
-const pages = 4;
-
 const dataBlobs = {};
+let pageIndex = 1;
+let totalPage = 1;
+let tempData = [];
 let rowIDs = [];
 
 class ComponentList extends Component {
@@ -66,65 +48,58 @@ class ComponentList extends Component {
       isLoading: true,
       height: (document.documentElement.clientHeight * 3) / 4
     };
-    this.getData();
   }
 
   componentDidMount() {
     const hei =
       document.documentElement.clientHeight -
       findDOMNode(this.lv).parentNode.offsetTop;
-
-    setTimeout(() => {
-      // simulate initial Ajax
-      this.genData();
-      console.log(rowIDs);
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(dataBlobs, rowIDs),
-        isLoading: false,
-        height: hei
-      });
-    }, 1000);
+    this.setState({ height: hei });
+    this.dealData();
   }
 
   onEndReached = event => {
     console.log(pageIndex);
-    if (pageIndex === 2) {
+    if (pageIndex >= totalPage) {
       return;
     }
+    ++pageIndex;
     if (this.state.isLoading) {
       return;
     }
     console.log("reach end", event);
     this.setState({ isLoading: true });
-    setTimeout(() => {
-      this.genData(++pageIndex);
+    this.dealData(pageIndex);
+  };
+  async dealData(pageIndex = 1) {
+    const data = await this.getData(pageIndex);
+    tempData = data.concat(tempData);
+    this.setState({ data }, () => {
+      for (let jj = 0; jj < data.length; jj++) {
+        const rowName = `${pageIndex}-R${jj}`;
+        rowIDs.push(rowName);
+        dataBlobs[rowName] = rowName;
+      }
+      rowIDs = [...rowIDs];
+      console.log(rowIDs);
+
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(dataBlobs, rowIDs),
         isLoading: false
       });
-    }, 1000);
-  };
-  genData(pIndex = 0) {
-    for (let jj = 0; jj < NUM_ROWS_PER_SECTION; jj++) {
-      const rowName = `${pageIndex}-R${jj}`;
-      rowIDs.push(rowName);
-      dataBlobs[rowName] = rowName;
-    }
-    rowIDs = [...rowIDs];
+    });
   }
 
-  getData() {
-    post(QUESTION.GET_NEW_QUESTION, { currentPage: 1, pageSize: 30 }).then(
-      e => {
-        console.log(e.data.rows);
-        this.setState(
-          {
-            data: e.data.rows
-          },
-          () => {}
-        );
-      }
-    );
+  getData(pageIndex) {
+    return new Promise(resolve => {
+      post(QUESTION.GET_NEW_QUESTION, {
+        currentPage: pageIndex,
+        pageSize: 6
+      }).then(res => {
+        totalPage = res.data.totalPage;
+        resolve(res.data.rows);
+      });
+    });
   }
   render() {
     const { data } = this.state;
@@ -145,7 +120,8 @@ class ComponentList extends Component {
       if (index < 0) {
         index = 0;
       }
-      const obj = data[index++];
+      console.log(index);
+      const obj = tempData[index++];
       return (
         <div key={rowID} style={{ padding: "0 15px" }}>
           <QuestionItem key={index} data={obj} />
@@ -159,7 +135,7 @@ class ComponentList extends Component {
         dataSource={this.state.dataSource}
         renderFooter={() => (
           <div style={{ padding: 30, textAlign: "center" }}>
-            {this.state.isLoading ? "Loading..." : "Loaded"}
+            {this.state.isLoading ? "加载中..." : "没有更多了"}
           </div>
         )}
         // renderSectionHeader={sectionData => (
