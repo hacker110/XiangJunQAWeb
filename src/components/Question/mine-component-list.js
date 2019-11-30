@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-30 16:08:32
+ * @LastEditTime: 2019-11-30 17:35:56
  */
 // @flow
 /* eslint no-dupe-keys: 0 */
@@ -13,7 +13,13 @@ import { findDOMNode } from "react-dom";
 import { ListView } from "antd-mobile";
 import { post } from "@/utils/request.js";
 import { QUESTION } from "@/service/api.js";
-import QuestionItem from "./question-item";
+import QuestionItemSelf from "./question-item-self";
+
+const UrlList = {
+  1: QUESTION.GET_QUESTION_BY_UID, // 问题
+  2: QUESTION.GET_QUESTION_BY_UID, // 分享
+  3: QUESTION.GET_COLLECTION_QUESTION // 收藏
+};
 
 function MyBody(props) {
   return (
@@ -55,8 +61,8 @@ class ComponentList extends Component {
 
   componentDidMount() {
     const hei = findDOMNode(this.lv).parentNode.clientHeight - 30;
-      // document.documentElement.clientHeight -
-      // findDOMNode(this.lv).parentNode.offsetTop;
+    // document.documentElement.clientHeight -
+    // findDOMNode(this.lv).parentNode.offsetTop;
     console.log(findDOMNode(this.lv).parentNode.clientHeight);
     this.setState({ height: hei });
     this.dealData();
@@ -76,38 +82,51 @@ class ComponentList extends Component {
     this.dealData(pageIndex);
   };
   async dealData(pageIndex = 1) {
-    const data = await this.getData(pageIndex);
-    tempData = data.concat(tempData);
-    this.setState({ data }, () => {
-      for (let jj = 0; jj < data.length; jj++) {
-        const rowName = `${pageIndex}-M${jj}`;
-        rowIDs.push(rowName);
-        dataBlobs[rowName] = rowName;
-      }
-      rowIDs = [...rowIDs];
-      console.log(rowIDs);
+    try {
+      const data = await this.getData(pageIndex);
+      const { cate } = this.props;
+      tempData = data.concat(tempData);
+      this.setState({ data }, () => {
+        for (let jj = 0; jj < data.length; jj++) {
+          const rowName = `${pageIndex}-T${cate}-M${jj}`;
+          rowIDs.push(rowName);
+          dataBlobs[rowName] = rowName;
+        }
+        rowIDs = [...rowIDs];
+        console.log(rowIDs);
 
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(dataBlobs, rowIDs),
-        isLoading: false
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(dataBlobs, rowIDs),
+          isLoading: false
+        });
       });
-    });
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   getData(pageIndex) {
+    const { cate } = this.props;
     return new Promise(resolve => {
-      post(QUESTION.GET_QUESTION_BY_UID, {
+      post(UrlList[cate], {
         currentPage: pageIndex,
         pageSize: 6,
         user_id: 1
-      }).then(res => {
-        totalPage = res.data.totalPage;
-        resolve(res.data.rows);
-      });
+      })
+        .then(res => {
+          totalPage = res.data.totalPage;
+          resolve(res.data.rows);
+        })
+        .catch(e => {
+          console.log(e);
+          this.setState({
+            isLoading: false
+          });
+        });
     });
   }
   render() {
-    const { data } = this.state;
+    // const { data } = this.state;
     const separator = (sectionID, rowID) => (
       <div
         key={`${sectionID}-${rowID}`}
@@ -119,7 +138,7 @@ class ComponentList extends Component {
         }}
       />
     );
-    console.log(data);
+    // console.log(data);
     let index = 0;
     const row = (rowData, sectionID, rowID) => {
       if (index < 0) {
@@ -129,7 +148,7 @@ class ComponentList extends Component {
       const obj = tempData[index++];
       return (
         <div key={rowID} style={{ padding: "0 15px" }}>
-          <QuestionItem key={index} data={obj} />
+          <QuestionItemSelf key={index} data={obj} />
         </div>
       );
     };
@@ -143,9 +162,6 @@ class ComponentList extends Component {
             {this.state.isLoading ? "加载中..." : "没有更多了"}
           </div>
         )}
-        // renderSectionHeader={sectionData => (
-        //   <div>{`Task ${sectionData.split(" ")[1]}`}</div>
-        // )}
         renderBodyComponent={() => <MyBody />}
         renderRow={row}
         renderSeparator={separator}

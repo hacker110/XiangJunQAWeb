@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-30 11:41:54
+ * @LastEditTime: 2019-11-30 16:18:23
  */
 // @flow
 import React, { Component } from "react";
@@ -49,9 +49,16 @@ class ListItem extends Component {
             <span className="list-item__contentCheck">查看详情</span>
           </div>
           <div className="list-item__control">
-            <span>{this.dealData(collection_count)}&nbsp;收藏</span>
-            &nbsp;·&nbsp;
-            <span>{this.dealData(like_count)}&nbsp;赞同</span>
+            <div className="list-item__control--status">
+              <span>{this.dealData(collection_count)}&nbsp;收藏</span>
+              &nbsp;·&nbsp;
+              <span>{this.dealData(like_count)}&nbsp;赞同</span>
+            </div>
+            <div className="list-item__control--btn">
+              <span>[收藏]</span>
+              &nbsp;&nbsp;
+              <span>[赞同]</span>
+            </div>
           </div>
         </div>
       </div>

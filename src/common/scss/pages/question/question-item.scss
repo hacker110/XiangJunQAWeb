@@ -29,8 +29,12 @@
     .list-item__control {
       margin-top: 0.1rem;
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
+    }
+    .list-item__control--status {
       color: #ccc;
+    }
+    .list-item__control--btn {
     }
   }
 }

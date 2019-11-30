@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-30 15:58:17
+ * @LastEditTime: 2019-11-30 17:52:34
  */
 // @flow
 /* eslint no-dupe-keys: 0 */
@@ -13,7 +13,7 @@ import { findDOMNode } from "react-dom";
 import { ListView } from "antd-mobile";
 import { post } from "@/utils/request.js";
 import { QUESTION } from "@/service/api.js";
-import QuestionItem from "./question-item";
+import QuestionItemCommon from "./question-item-common";
 
 function MyBody(props) {
   return (
@@ -108,6 +108,7 @@ class ComponentList extends Component {
       });
     });
   }
+
   render() {
     const { data } = this.state;
     const separator = (sectionID, rowID) => (
@@ -131,7 +132,11 @@ class ComponentList extends Component {
       const obj = tempData[index++];
       return (
         <div key={rowID} style={{ padding: "0 15px" }}>
-          <QuestionItem key={index} data={obj} />
+          <QuestionItemCommon
+            key={index}
+            index={index}
+            data={obj}
+          />
         </div>
       );
     };
