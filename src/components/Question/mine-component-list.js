@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-30 15:58:17
+ * @LastEditTime: 2019-11-30 16:08:32
  */
 // @flow
 /* eslint no-dupe-keys: 0 */
@@ -54,15 +54,12 @@ class ComponentList extends Component {
   }
 
   componentDidMount() {
-    const hei =
-      document.documentElement.clientHeight -
-      findDOMNode(this.lv).parentNode.offsetTop;
-    console.log(findDOMNode(this.lv).parentNode.offsetTop);
+    const hei = findDOMNode(this.lv).parentNode.clientHeight - 30;
+      // document.documentElement.clientHeight -
+      // findDOMNode(this.lv).parentNode.offsetTop;
+    console.log(findDOMNode(this.lv).parentNode.clientHeight);
     this.setState({ height: hei });
     this.dealData();
-  }
-  componentWillUnmount() {
-    console.log("B00000000");
   }
 
   onEndReached = event => {
@@ -83,7 +80,7 @@ class ComponentList extends Component {
     tempData = data.concat(tempData);
     this.setState({ data }, () => {
       for (let jj = 0; jj < data.length; jj++) {
-        const rowName = `${pageIndex}-R${jj}`;
+        const rowName = `${pageIndex}-M${jj}`;
         rowIDs.push(rowName);
         dataBlobs[rowName] = rowName;
       }
@@ -99,9 +96,10 @@ class ComponentList extends Component {
 
   getData(pageIndex) {
     return new Promise(resolve => {
-      post(QUESTION.GET_NEW_QUESTION, {
+      post(QUESTION.GET_QUESTION_BY_UID, {
         currentPage: pageIndex,
-        pageSize: 6
+        pageSize: 6,
+        user_id: 1
       }).then(res => {
         totalPage = res.data.totalPage;
         resolve(res.data.rows);
