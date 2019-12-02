@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-16 16:21:24
+ * @LastEditTime: 2019-12-01 09:35:49
  */
 // @flow
 import React, { Component } from "react";
@@ -11,6 +11,8 @@ import TagList from "@/components/TagList.js";
 import { TextareaItem, Button, Toast } from "antd-mobile";
 import { trim } from "@/utils/utils.js";
 import profession from "@/constant/profession.js";
+import { post } from "@/utils/request.js";
+import { QUESTION } from "@/service/api.js";
 
 class PrePage extends Component {
   constructor(props) {
@@ -23,6 +25,18 @@ class PrePage extends Component {
     this.getTagList();
     this.handleChange = this.handleChange.bind(this);
     this.selectedTag = this.selectedTag.bind(this);
+  }
+  /**
+   * @Description: 发布问题
+   */
+  saveData() {
+    post(QUESTION.ADD_QUESTION, {
+      id: this.state.id
+    }).then(res => {
+      this.setState({
+        data: res
+      });
+    });
   }
   /**
    * @Description: 获取标签list

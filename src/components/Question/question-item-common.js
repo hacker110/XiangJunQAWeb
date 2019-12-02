@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-30 17:54:59
+ * @LastEditTime: 2019-11-30 20:47:20
  */
 // @flow
 import React, { Component } from "react";
@@ -59,7 +59,7 @@ class ListItem extends Component {
     });
   }
   render() {
-    const { content } = this.props.data;
+    const { content, question_id } = this.props.data;
     const { collection_count, like_count } = this.state;
 
     return (
@@ -71,11 +71,9 @@ class ListItem extends Component {
           <div
             className="list-item__content"
             onClick={() =>
+              // ?id=" + question_id
               this.props.history.push({
-                pathname: "/questiondetail",
-                state: {
-                  id: 3
-                }
+                pathname: `/question/questiondetail/${question_id}`
               })
             }
           >

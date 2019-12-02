@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-11-17 22:00:55
- * @LastEditTime: 2019-11-24 20:51:48
+ * @LastEditTime: 2019-12-02 23:29:57
  */
 export const QUESTION = {
   // 添加问题
@@ -31,4 +31,5 @@ export const SUBJECT = {
   // 得到指定用户收藏的问题
 };
 
-export const host = "http://115.29.65.101:8888";
+// export const host = "http://115.29.65.101:8888";
+export const host = "http://www.xiangjun325.com/api/";

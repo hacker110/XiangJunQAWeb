@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-13 08:50:18
+ * @LastEditTime: 2019-12-01 09:03:55
  */
 // @flow
 import React, { Component } from "react";
@@ -32,9 +32,3 @@ class QuestionDetail extends Component<{}, {}> {
 }
 
 export default QuestionDetail;
-/**
-数学：
-现在的情况：
-1、笔记本过一遍
-
- */
