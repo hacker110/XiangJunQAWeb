@@ -1,0 +1,11 @@
+.question-answer {
+  height: 100%;
+  .question-anwer_text{
+    margin-top: 0.01rem;
+  }
+  .question-answer_btnGroups {
+    margin-top: 0.6rem;
+    display: flex;
+    justify-content: space-around;
+  }
+}

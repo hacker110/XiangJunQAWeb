@@ -4,6 +4,7 @@
 // ===============page
 @import "./pages/question/question-list.scss";
 @import "./pages/question/question-item.scss";
+@import "./pages/question/question-answer.scss";
 @import "./pages/question/question-detail.scss";
 @import "./pages/question/question-create.scss";
 @import "./pages/mine/mine.scss";
@@ -18,4 +19,4 @@
 
 
 // ===============detail
-@import "./components/question-item.scss";
+@import "./components/question-item-detail.scss";

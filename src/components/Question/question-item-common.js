@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-30 20:47:20
+ * @LastEditTime: 2019-12-05 23:36:14
  */
 // @flow
 import React, { Component } from "react";
@@ -20,6 +20,7 @@ class ListItem extends Component {
     super(props);
     this.collect = this.collect.bind(this);
     this.like = this.like.bind(this);
+    this.openAnswer = this.openAnswer.bind(this);
     const { collection_count, like_count } = this.props.data;
     this.state = {
       like_count: like_count,
@@ -58,6 +59,12 @@ class ListItem extends Component {
       console.log("like", res);
     });
   }
+  openAnswer() {
+    const { question_id } = this.props.data;
+    this.props.history.push({
+      pathname: `/question/questionanswer/${question_id}`,
+    });
+  }
   render() {
     const { content, question_id } = this.props.data;
     const { collection_count, like_count } = this.state;
@@ -87,9 +94,11 @@ class ListItem extends Component {
               <span>{this.dealData(like_count)}&nbsp;赞同</span>
             </div>
             <div className="list-item__control--btn">
-              <span onClick={this.collect}>[收藏]</span>
+              <span onClick={this.collect}>[关注]</span>
               &nbsp;&nbsp;
-              <span onClick={this.like}>[赞同]</span>
+              <span onClick={this.like}>[点赞]</span>
+              &nbsp;&nbsp;
+              <span onClick={this.openAnswer}>[回答]</span>
             </div>
           </div>
         </div>

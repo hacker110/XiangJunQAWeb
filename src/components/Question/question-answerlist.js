@@ -1,9 +1,9 @@
 /*
- * @Description: 问题详情
+ * @Description: 问题详情-答案列表
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-05 23:02:10
+ * @LastEditTime: 2019-12-05 23:14:21
  */
 // @flow
 import React, { Component } from "react";
@@ -11,7 +11,7 @@ import { withRouter } from "react-router-dom";
 import { post } from "@/utils/request.js";
 import { QUESTION } from "@/service/api.js";
 
-class QuestionItem extends Component<{}, {}> {
+class QuestionAnswerList extends Component<{}, {}> {
   constructor(props) {
     super(props);
     const { id } = this.props.match.params;
@@ -24,23 +24,12 @@ class QuestionItem extends Component<{}, {}> {
       icon: "",
       user_id: 0
     };
-    this.collect = this.collect.bind(this);
-    this.like = this.like.bind(this);
   }
 
   componentWillMount() {
     this.getData();
   }
-  collect() {
-    const { id, user_id } = this.state;
-    post(QUESTION.SAVE_QUESTION_COLLECTION, {
-      question_id: id,
-      create_user_id: user_id,
-      like_user_id: 1
-    }).then(res => {
-      this.setState(prev => ({ CollectionCount: prev.CollectionCount + 1 }));
-    });
-  }
+
   like() {
     const { id, user_id } = this.state;
     post(QUESTION.SAVE_QUESTION_LIKES, {
@@ -53,18 +42,14 @@ class QuestionItem extends Component<{}, {}> {
       console.log("like", res);
     });
   }
+
   getData() {
-    post(QUESTION.GET_QUESTION_BY_ID, {
-      id: this.state.id
+    post(QUESTION.GET_QUESTION_ANSWER_BY_QUESTIONID, {
+      question_id: this.state.id,
+      currentPage: 1,
+      pageSize: 30
     }).then(res => {
-      const { content, CollectionCount, LikeCount, user_id } = res.data;
-      this.setState({
-        user_id,
-        content,
-        CollectionCount,
-        LikeCount,
-        icon: "https://avatars2.githubusercontent.com/u/25131706?s=40&v=4"
-      });
+      console.log("answer", res);
     });
   }
 
@@ -76,25 +61,22 @@ class QuestionItem extends Component<{}, {}> {
   render() {
     const { id, content, icon, CollectionCount, LikeCount } = this.state;
     return (
-      <div data-question={id} className="question-itemDetail">
-        <div className="question-itemDetail-box">
-          <div className="question-itemDetail-imgBox">
+      <div data-question={id} className="question-answerlist">
+        <div className="question-answerlist-box">
+          <div className="question-answerlist-imgBox">
             <img src={icon} alt="用户的icon" />
           </div>
-          <div className="question-itemDetail-txtBox">
-            {content}
-            案件的痕迹撒谎精爱神的箭埃里克姜思达埃里克森基多拉可视角度奥斯卡来得及阿卡丽加速度拉时间段；案例库
-          </div>
+          <div className="question-answerlist-txtBox">{content}</div>
         </div>
-        <div className="question-itemDetail-bottom">
-          <div className="question-itemDetail-status">
+        <div className="question-answerlist-bottom">
+          <div className="question-answerlist-status">
             <div className="list-item__control--status">
               <span>{this.dealData(CollectionCount)}&nbsp;收藏</span>
               &nbsp;·&nbsp;
               <span>{this.dealData(LikeCount)}&nbsp;赞同</span>
             </div>
           </div>
-          <div className="question-itemDetail-tools">
+          <div className="question-answerlist-tools">
             <span onClick={this.collect}>[收藏]</span>
             &nbsp;&nbsp;
             <span onClick={this.like}>[赞同]</span>
@@ -105,4 +87,4 @@ class QuestionItem extends Component<{}, {}> {
   }
 }
 
-export default withRouter(QuestionItem);
+export default withRouter(QuestionAnswerList);

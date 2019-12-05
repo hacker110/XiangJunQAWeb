@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-11-17 22:00:55
- * @LastEditTime: 2019-12-03 23:43:57
+ * @LastEditTime: 2019-12-05 23:29:21
  */
 export const QUESTION = {
   // 添加问题
@@ -20,6 +20,9 @@ export const QUESTION = {
   GET_QUESTION_BY_UID: "/api/question/getQuestionByUserId",
   // 保存问题的答案评论
   SAVE_QUESTION_ANSWER: "/api/question/saveQuestionAnswer",
+  // 获取问题答案
+  GET_QUESTION_ANSWER_BY_QUESTIONID:
+    "/api/question/getQuestionAnswerByQuesitonId",
   // 收藏问题
   SAVE_QUESTION_COLLECTION: "/api/question/saveQuestioncollection",
   // 保存问题点赞
