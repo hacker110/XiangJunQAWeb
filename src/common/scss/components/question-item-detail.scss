@@ -15,6 +15,7 @@
   }
   .question-itemDetail-txtBox {
     font-size: 0.16rem;
+    color: $glc-font-grey-1;
   }
   .question-itemDetail-bottom {
     padding: 0 0.2rem .14rem;
@@ -23,15 +24,18 @@
     background: white;
   }
   .question-itemDetail-status {
-    width: 50%;
+    width: 40%;
     height: 0.2rem;
-    color: #ccc;
-    padding: 0 .2rem;
+    color: $glc-font-grey-5;
+    text-align: right;
   }
   .question-itemDetail-tools {
-    width: 50%;
+    width: 60%;
     height: 0.2rem;
     text-align: right;
-    padding: 0 .2rem;
+  }
+  .question-itemDetailBtns{
+    padding: .04rem .1rem;
+    color: $glc-green-1;
   }
 }

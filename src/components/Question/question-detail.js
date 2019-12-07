@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-05 23:02:10
+ * @LastEditTime: 2019-12-06 22:52:29
  */
 // @flow
 import React, { Component } from "react";
@@ -95,9 +95,13 @@ class QuestionItem extends Component<{}, {}> {
             </div>
           </div>
           <div className="question-itemDetail-tools">
-            <span onClick={this.collect}>[收藏]</span>
-            &nbsp;&nbsp;
-            <span onClick={this.like}>[赞同]</span>
+            <span className="question-itemDetailBtns" onClick={this.collect} style={{ marginRight: "4px" }}>
+              关注
+            </span>
+            <span className="question-itemDetailBtns" onClick={this.like} style={{ marginRight: "4px" }}>
+              点赞
+            </span>
+            <span className="question-itemDetailBtns" style={{ marginRight: "4px" }}>回答</span>
           </div>
         </div>
       </div>

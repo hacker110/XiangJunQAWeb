@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-30 17:52:34
+ * @LastEditTime: 2019-12-07 18:06:36
  */
 // @flow
 /* eslint no-dupe-keys: 0 */
@@ -131,13 +131,7 @@ class ComponentList extends Component {
       console.log(index);
       const obj = tempData[index++];
       return (
-        <div key={rowID} style={{ padding: "0 15px" }}>
-          <QuestionItemCommon
-            key={index}
-            index={index}
-            data={obj}
-          />
-        </div>
+        <QuestionItemCommon key={rowID} key={index} index={index} data={obj} />
       );
     };
 

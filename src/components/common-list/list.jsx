@@ -1,25 +1,16 @@
 /*
- * @Description: This is a description
+ * @Description: 通用列表页加载组件
  * @Author: Ask
  * @LastEditors: Ask
- * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-07 18:06:12
+ * @Date: 2019-12-06 22:33:51
+ * @LastEditTime: 2019-12-07 15:32:58
  */
-// @flow
-/* eslint no-dupe-keys: 0 */
-import React, { Component } from "react";
 
+import React, { Component } from "react";
+import { withRouter } from "react-router-dom";
 import { findDOMNode } from "react-dom";
 import { ListView } from "antd-mobile";
 import { post } from "@/utils/request.js";
-import { QUESTION } from "@/service/api.js";
-import QuestionItemSelf from "./question-item-self";
-
-const UrlList = {
-  1: QUESTION.GET_QUESTION_BY_UID, // 问题
-  2: QUESTION.GET_QUESTION_BY_UID, // 分享
-  3: QUESTION.GET_COLLECTION_QUESTION // 收藏
-};
 
 function MyBody(props) {
   return (
@@ -36,15 +27,15 @@ let totalPage = 1;
 let tempData = [];
 let rowIDs = [];
 
-class ComponentList extends Component {
+class List extends Component {
   constructor(props) {
     super(props);
     tempData = [];
     rowIDs = [];
-    totalPage = 1;
+    totalPage = 3;
     pageIndex = 1;
     const getRowData = (dataBlob, sectionID, rowID) => dataBlob[rowID];
-
+    this.getData = this.getData.bind(this);
     const dataSource = new ListView.DataSource({
       getRowData,
       rowHasChanged: (row1, row2) => row1 !== row2,
@@ -52,7 +43,7 @@ class ComponentList extends Component {
     });
 
     this.state = {
-      data: [],
+      data: props.data,
       dataSource,
       isLoading: true,
       height: (document.documentElement.clientHeight * 3) / 4
@@ -61,11 +52,11 @@ class ComponentList extends Component {
 
   componentDidMount() {
     const hei = findDOMNode(this.lv).parentNode.clientHeight - 30;
+    this.setState({ height: hei });
     // document.documentElement.clientHeight -
     // findDOMNode(this.lv).parentNode.offsetTop;
     console.log(findDOMNode(this.lv).parentNode.clientHeight);
-    this.setState({ height: hei });
-    this.dealData();
+    this.updateData();
   }
 
   onEndReached = event => {
@@ -79,41 +70,42 @@ class ComponentList extends Component {
     }
     console.log("reach end", event);
     this.setState({ isLoading: true });
-    this.dealData(pageIndex);
+    this.updateData(pageIndex);
   };
-  async dealData(pageIndex = 1) {
-    try {
-      const data = await this.getData(pageIndex);
-      const { cate } = this.props;
-      tempData = data.concat(tempData);
-      this.setState({ data }, () => {
-        for (let jj = 0; jj < data.length; jj++) {
-          const rowName = `${pageIndex}-T${cate}-M${jj}`;
-          rowIDs.push(rowName);
-          dataBlobs[rowName] = rowName;
-        }
-        rowIDs = [...rowIDs];
-        console.log(rowIDs);
 
-        this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(dataBlobs, rowIDs),
-          isLoading: false
-        });
-      });
-    } catch (e) {
-      console.log(e);
+  async updateData(pageIndex) {
+    const data = await this.getData(pageIndex);
+    this.dealData(data);
+  }
+  /*
+   * @Description: 处理数据
+   */
+  dealData(data) {
+    console.log(data);
+    for (let jj = 0; jj < data.length; jj++) {
+      const rowName = `${pageIndex}-T-M${jj}`;
+      rowIDs.push(rowName);
+      dataBlobs[rowName] = rowName;
     }
+    rowIDs = [...rowIDs];
+    console.log(rowIDs);
+
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(dataBlobs, rowIDs),
+      isLoading: false
+    });
   }
 
-  getData(pageIndex) {
-    const { cate } = this.props;
+  async getData(pageIndex) {
+    const { api } = this.props;
     return new Promise(resolve => {
-      post(UrlList[cate], {
-        currentPage: pageIndex,
+      post(api, {
+        currentPage: pageIndex || 1,
         pageSize: 6,
         user_id: 1
       })
         .then(res => {
+          tempData = [].concat(res.data.rows, tempData);
           totalPage = res.data.totalPage;
           resolve(res.data.rows);
         })
@@ -125,8 +117,11 @@ class ComponentList extends Component {
         });
     });
   }
+
   render() {
+    // console.log(this.props.item);
     // const { data } = this.state;
+    const Child = this.props.item;
     const separator = (sectionID, rowID) => (
       <div
         key={`${sectionID}-${rowID}`}
@@ -138,7 +133,6 @@ class ComponentList extends Component {
         }}
       />
     );
-    // console.log(data);
     let index = 0;
     const row = (rowData, sectionID, rowID) => {
       if (index < 0) {
@@ -146,7 +140,14 @@ class ComponentList extends Component {
       }
       console.log(index);
       const obj = tempData[index++];
-      return <QuestionItemSelf key={rowID} data={obj} />;
+      // <div key={rowID} style={{ padding: "0 15px" }}>
+      //   {obj.content}
+      //   <br />
+      //   <br />
+      //   <br />
+      //   {obj.subject_title}
+      // </div>
+      return <Child data={obj} />;
     };
 
     return (
@@ -177,4 +178,4 @@ class ComponentList extends Component {
   }
 }
 
-export default ComponentList;
+export default withRouter(List);

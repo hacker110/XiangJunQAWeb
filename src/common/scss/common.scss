@@ -1,46 +1,98 @@
-@import './color.scss';
+@import "./color.scss";
 
-h1 { font-size: 0.28rem; }
-h2 { font-size: 0.26rem; }
-h3 { font-size: 0.24rem; }
-h4 { font-size: 0.22rem; }
-h5 { font-size: 0.20rem; }
-h6 { font-size: 0.18rem; }
+h1 {
+  font-size: 0.28rem;
+}
+h2 {
+  font-size: 0.26rem;
+}
+h3 {
+  font-size: 0.24rem;
+}
+h4 {
+  font-size: 0.22rem;
+}
+h5 {
+  font-size: 0.2rem;
+}
+h6 {
+  font-size: 0.18rem;
+}
 
-html,body,#root{
+html,
+body,
+#root {
   height: 100%;
 }
 button {
-  padding: 0.05rem .1rem;
+  padding: 0.05rem 0.1rem;
   border: 1px solid $ddd;
   background: none;
 }
-input, textarea {
+input,
+textarea {
   padding: 0.05rem;
   border-radius: 0;
   border: 1px solid $ddd;
   outline: none;
   -webkit-appearance: none;
 }
-textarea { resize: none; }
-li { list-style: none; }
+textarea {
+  resize: none;
+}
+li {
+  list-style: none;
+}
 details {
   border: none;
   outline: none;
 }
-input:focus, input:active, input:visited, input:hover,
-button:focus, button:active, button:visited, button:hover,
-textarea:focus, textarea:active, textarea:visited, textarea:hover,
-details:focus, details:active, details:visited, textarea:visited {
+input:focus,
+input:active,
+input:visited,
+input:hover,
+button:focus,
+button:active,
+button:visited,
+button:hover,
+textarea:focus,
+textarea:active,
+textarea:visited,
+textarea:hover,
+details:focus,
+details:active,
+details:visited,
+textarea:visited {
   outline: none;
 }
 
-h1, h2, h3, h4, h5, h6,
-p, ol, ul, li, dl, dt, dd,
-fieldset, legend {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ol,
+ul,
+li,
+dl,
+dt,
+dd,
+fieldset,
+legend {
   margin: 0;
   padding: 0;
 }
 
-fieldset { border: 1px solid $c333; }
-table { border: 1px solid $c333; }
+fieldset {
+  border: 1px solid $c333;
+}
+table {
+  border: 1px solid $c333;
+}
+
+.txt-btn {
+  padding: 0.04rem 0.1rem;
+  color: $glc-green-1;
+}
