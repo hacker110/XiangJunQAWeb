@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-07 17:46:05
+ * @LastEditTime: 2019-12-09 23:50:27
  */
 // @flow
 import React, { Component } from "react";
@@ -29,8 +29,7 @@ class QuestionAnswerList extends Component<{}, {}> {
     this.getData = this.getData.bind(this);
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   getData(pageIndex) {
     return new Promise((resolve, reject) => {
@@ -50,7 +49,11 @@ class QuestionAnswerList extends Component<{}, {}> {
     const { id } = this.state;
     return (
       <div data-question={id} className="question-answerlist">
-        <List api={QUESTION.GET_NEW_QUESTION} item={AnswerItem} />
+        <List
+          label="detail"
+          api={QUESTION.GET_NEW_QUESTION}
+          item={AnswerItem}
+        />
       </div>
     );
   }

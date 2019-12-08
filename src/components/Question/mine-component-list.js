@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-07 18:06:12
+ * @LastEditTime: 2019-12-08 09:19:26
  */
 // @flow
 /* eslint no-dupe-keys: 0 */
@@ -60,7 +60,8 @@ class ComponentList extends Component {
   }
 
   componentDidMount() {
-    const hei = findDOMNode(this.lv).parentNode.clientHeight - 30;
+    const hei = findDOMNode(this.lv).parentNode.clientHeight;
+    console.log(hei)
     // document.documentElement.clientHeight -
     // findDOMNode(this.lv).parentNode.offsetTop;
     console.log(findDOMNode(this.lv).parentNode.clientHeight);

@@ -1,6 +1,15 @@
-
-@import '../../color.scss';
-.question-detail{
+@import "../../color.scss";
+.question-detail {
   height: 100%;
-  padding: .2rem;
+  display: flex;
+  flex-direction: column;
+  .am-navbar {
+    flex: 0 0 auto;
+  }
+  .question-itemDetail {
+    flex: 0 0 auto;
+  }
+  .question-answerlist {
+    flex: 1 0 auto;
+  }
 }

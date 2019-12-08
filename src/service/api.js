@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-11-17 22:00:55
- * @LastEditTime: 2019-12-05 23:29:21
+ * @LastEditTime: 2019-12-10 22:58:34
  */
 export const QUESTION = {
   // 添加问题
@@ -32,6 +32,11 @@ export const SUBJECT = {
   // 添加问题
   GET_ALL_SUBJECT: "/api/subject/getAllSubject"
   // 得到指定用户收藏的问题
+};
+
+export const USER = {
+  // 获取用户信息
+  GET_USER_BY_OPENID: "/api/user/GetUserByOpenId"
 };
 
 // export const host = "http://115.29.65.101:8888";

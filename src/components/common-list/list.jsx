@@ -3,7 +3,13 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-12-06 22:33:51
- * @LastEditTime: 2019-12-07 15:32:58
+ * @LastEditTime: 2019-12-10 22:37:21
+ eg:
+ <List label="detail" api={QUESTION.GET_NEW_QUESTION} item={AnswerItem} />
+  参数:   type            desc
+  label:  string          当前组件的唯一标识
+  api:    string          数据请求的地址
+  item:   jsx对象          列表渲染的组件(必须是function组件)
  */
 
 import React, { Component } from "react";
@@ -32,7 +38,7 @@ class List extends Component {
     super(props);
     tempData = [];
     rowIDs = [];
-    totalPage = 3;
+    totalPage = 1;
     pageIndex = 1;
     const getRowData = (dataBlob, sectionID, rowID) => dataBlob[rowID];
     this.getData = this.getData.bind(this);
@@ -51,10 +57,12 @@ class List extends Component {
   }
 
   componentDidMount() {
-    const hei = findDOMNode(this.lv).parentNode.clientHeight - 30;
-    this.setState({ height: hei });
-    // document.documentElement.clientHeight -
-    // findDOMNode(this.lv).parentNode.offsetTop;
+    const hei = findDOMNode(this.lv).parentNode.clientHeight;
+    this.setState({
+      height: findDOMNode(this.lv).parentNode.clientHeight
+    });
+    console.log(findDOMNode(this.lv).parentNode.offsetTop);
+    console.log(findDOMNode(this.lv).parentNode.parentNode.scrollTop);
     console.log(findDOMNode(this.lv).parentNode.clientHeight);
     this.updateData();
   }
@@ -81,9 +89,10 @@ class List extends Component {
    * @Description: 处理数据
    */
   dealData(data) {
-    console.log(data);
+    const { label } = this.props;
+    // console.log(data);
     for (let jj = 0; jj < data.length; jj++) {
-      const rowName = `${pageIndex}-T-M${jj}`;
+      const rowName = `${pageIndex}-${label}-M${jj}`;
       rowIDs.push(rowName);
       dataBlobs[rowName] = rowName;
     }
@@ -97,11 +106,11 @@ class List extends Component {
   }
 
   async getData(pageIndex) {
-    const { api } = this.props;
+    const { api, perpagenum } = this.props;
     return new Promise(resolve => {
       post(api, {
         currentPage: pageIndex || 1,
-        pageSize: 6,
+        pageSize: perpagenum || 10,
         user_id: 1
       })
         .then(res => {
@@ -140,13 +149,6 @@ class List extends Component {
       }
       console.log(index);
       const obj = tempData[index++];
-      // <div key={rowID} style={{ padding: "0 15px" }}>
-      //   {obj.content}
-      //   <br />
-      //   <br />
-      //   <br />
-      //   {obj.subject_title}
-      // </div>
       return <Child data={obj} />;
     };
 
@@ -155,7 +157,12 @@ class List extends Component {
         ref={el => (this.lv = el)}
         dataSource={this.state.dataSource}
         renderFooter={() => (
-          <div style={{ padding: 10, textAlign: "center" }}>
+          <div
+            style={{
+              padding: this.props.renderFooterPadding || "10px",
+              textAlign: "center"
+            }}
+          >
             {this.state.isLoading ? "加载中..." : "没有更多了"}
           </div>
         )}

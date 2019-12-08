@@ -3,16 +3,17 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-01 09:35:49
+ * @LastEditTime: 2019-12-11 22:13:19
  */
 // @flow
 import React, { Component } from "react";
 import TagList from "@/components/TagList.js";
 import { TextareaItem, Button, Toast } from "antd-mobile";
 import { trim } from "@/utils/utils.js";
-import profession from "@/constant/profession.js";
+// import profession from "@/constant/profession.js";
 import { post } from "@/utils/request.js";
-import { QUESTION } from "@/service/api.js";
+import { QUESTION, SUBJECT } from "@/service/api.js";
+import { QESTION_TYPE } from "@/utils/constans.js";
 
 class PrePage extends Component {
   constructor(props) {
@@ -26,31 +27,44 @@ class PrePage extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.selectedTag = this.selectedTag.bind(this);
   }
+
+  componentDidMount() {
+    this.autoFocusInst.focus();
+  }
   /**
    * @Description: 发布问题
    */
   saveData() {
+    const { selectedTag, value } = this.state;
+    const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
     post(QUESTION.ADD_QUESTION, {
-      id: this.state.id
-    }).then(res => {
-      this.setState({
-        data: res
-      });
+      subject_ids: selectedTag,
+      content: value,
+      type: QESTION_TYPE.SHARE,
+      user_id: userInfo.id
+    }).then(e => {
+      if (e.status === 200) {
+        Toast.success("发布成功~");
+        this.props.history.push("/question/questionlist");
+      }
     });
   }
   /**
    * @Description: 获取标签list
    */
   getTagList() {
-    let tagList = profession.map(item => ({
-      tagId: item.id,
-      tagName: item.name
-    }));
-    setTimeout(() => {
+    post(SUBJECT.GET_ALL_SUBJECT, {
+      currentPage: 1,
+      pageSize: 30
+    }).then(res => {
+      let tagList = res.data.rows.map(item => ({
+        tagId: item.id,
+        tagName: item.title
+      }));
       this.setState({
         tagList
       });
-    }, 1000);
+    });
   }
 
   /**
@@ -58,9 +72,10 @@ class PrePage extends Component {
    */
   publish(e) {
     const { selectedTag, value } = this.state;
-    if (!selectedTag.length) return Toast.info("请选择标签");
-    if (trim(value) === "") return Toast.info("请输入内容");
+    if (!selectedTag.length) return Toast.info("请选择标签", 2, null, false);
+    if (trim(value) === "") return Toast.info("请输入内容", 2, null, false);
     console.log("publish");
+    this.saveData();
   }
 
   /**
@@ -88,6 +103,7 @@ class PrePage extends Component {
         </h4>
         <TagList selectedTag={this.selectedTag} tagList={this.state.tagList} />
         <TextareaItem
+          ref={ref => (this.autoFocusInst = ref)}
           className="prev-text"
           placeholder="请输入您的问题或者想法"
           rows={7}
@@ -105,6 +121,7 @@ class PrePage extends Component {
             inline
             type="primary"
             icon="check-circle-o"
+            size="small"
           >
             主页
           </Button>
@@ -113,6 +130,7 @@ class PrePage extends Component {
             icon="check-circle-o"
             type="primary"
             inline
+            size="small"
           >
             发布
           </Button>

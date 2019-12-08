@@ -1,11 +1,18 @@
 @import "../../color.scss";
 .question-list {
   height: 100%;
+  display: flex;
+  flex-direction: column;
   .am-tabs {
     height: auto;
+    flex: none;
+    flex-shrink: 0;
   }
-  .am-list-view-scrollview {
-    height: 5.3rem !important;
+  .question-listbox {
+    flex-grow: 1;
   }
 }
 
+.selectedIcon {
+  color: $glc-green-1;
+}

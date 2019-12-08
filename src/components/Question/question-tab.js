@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-23 12:40:34
+ * @LastEditTime: 2019-12-12 00:17:39
  */
 // @flow
 import React, { Component } from "react";
@@ -20,30 +20,24 @@ class QuestionBase extends Component {
         {
           key: "主页",
           title: "主页",
-          icon:
-            "https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg",
-          selectedIcon:
-            "https://zos.alipayobjects.com/rmsportal/iSrlOTqrKddqbOmlvUfq.svg",
+          icon: "iconindex",
+          selectedIcon: "iconindex",
           selected: "/question/questionlist",
           path: "/question/questionlist"
         },
         {
           key: "我的",
           title: "我的",
-          icon:
-            "https://gw.alipayobjects.com/zos/rmsportal/BTSsmHkPsQSPTktcXyTV.svg",
-          selectedIcon:
-            "https://gw.alipayobjects.com/zos/rmsportal/ekLecvKBnRazVLXbWOnE.svg",
+          icon: "iconmy",
+          selectedIcon: "iconmy",
           selected: "/question/mine",
           path: "/question/mine"
         },
         {
           key: "提问",
           title: "提问",
-          icon:
-            "https://zos.alipayobjects.com/rmsportal/psUFoAMjkCcjqtUCNPxB.svg",
-          selectedIcon:
-            "https://zos.alipayobjects.com/rmsportal/IIRLrXXrFAhXVdhMWgUI.svg",
+          icon: "iconjia",
+          selectedIcon: "iconjia",
           selected: "/question/questioncreate",
           path: "/question/questioncreate"
         }
@@ -52,7 +46,6 @@ class QuestionBase extends Component {
   }
 
   render() {
-
     return (
       <div
         style={{
@@ -64,7 +57,7 @@ class QuestionBase extends Component {
       >
         <TabBar
           unselectedTintColor="#949494"
-          tintColor="#33A3F4"
+          tintColor="#42c57a"
           barTintColor="white"
           hidden={this.state.hidden}
           tabBarPosition="bottom"
@@ -74,29 +67,9 @@ class QuestionBase extends Component {
               <TabBar.Item
                 title={item.title}
                 key={item.key}
-                icon={
-                  <div
-                    style={{
-                      width: "22px",
-                      height: "22px",
-                      background:
-                        "url(" +
-                        item.icon +
-                        ") center center /  21px 21px no-repeat"
-                    }}
-                  />
-                }
+                icon={<i className={"iconfont " + item.icon}></i>}
                 selectedIcon={
-                  <div
-                    style={{
-                      width: "22px",
-                      height: "22px",
-                      background:
-                        "url(" +
-                        item.selectedIcon +
-                        ") center center /  21px 21px no-repeat"
-                    }}
-                  />
+                  <i className={"iconfont selectedIcon " + item.selectedIcon}></i>
                 }
                 selected={this.state.selectedTab === item.path}
                 // badge={1}

@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   margin-top: 0.03rem;
+  border-bottom: 0.01rem $glc-grey-3 solid;
   .question-itemDetail-box {
     display: flex;
     padding: 0.2rem 0.2rem 0.1rem;
@@ -18,7 +19,7 @@
     color: $glc-font-grey-1;
   }
   .question-itemDetail-bottom {
-    padding: 0 0.2rem .14rem;
+    padding: 0 0.2rem 0.14rem;
     display: flex;
     justify-content: space-between;
     background: white;
@@ -34,8 +35,8 @@
     height: 0.2rem;
     text-align: right;
   }
-  .question-itemDetailBtns{
-    padding: .04rem .1rem;
+  .question-itemDetailBtns {
+    padding: 0.04rem 0.1rem;
     color: $glc-green-1;
   }
 }

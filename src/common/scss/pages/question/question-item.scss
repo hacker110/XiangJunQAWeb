@@ -23,9 +23,7 @@
   }
   .list-item__contentCheck {
     position: absolute;
-    right: 0.12rem;
-    bottom: -0.04rem;
-    color: #ccc;
+    color: $glc-font-grey-3;
   }
   .list-item__control {
     margin-top: 0.1rem;
@@ -33,6 +31,6 @@
     justify-content: space-between;
   }
   .list-item__control--status {
-    color: #ccc;
+    color: $glc-font-grey-5;
   }
 }

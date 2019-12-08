@@ -16,10 +16,12 @@
     <!-- <link rel="shortcut icon" href="//yy-s.zuoyebang.cc/static/common/css/resource/favicon.ico" /> -->
     <title>果粒橙</title>
     <script src="/fastclick.js"></script>
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1558884_pl0zxtpvrki.css">
+    </style>
     <script>
-      if ('addEventListener' in document) {
+      if ("addEventListener" in document) {
         document.addEventListener(
-          'DOMContentLoaded',
+          "DOMContentLoaded",
           function() {
             FastClick.attach(document.body);
           },
@@ -28,11 +30,7 @@
       }
       if (!window.Promise) {
         document.writeln(
-          '<script src="./es6-promise.min.js"' +
-            '>' +
-            '<' +
-            '/' +
-            'script>'
+          '<script src="./es6-promise.min.js"' + ">" + "<" + "/" + "script>"
         );
       }
     </script>
@@ -40,15 +38,15 @@
       (function(doc, win) {
         var docEl = doc.documentElement,
           resizeEvt =
-            'orientationchange' in window ? 'orientationchange' : 'resize',
+            "orientationchange" in window ? "orientationchange" : "resize",
           recalc = function() {
             var clientWidth = docEl.clientWidth;
             if (!clientWidth) return;
-            docEl.style.fontSize = 200 * (clientWidth / 750) + 'px';
+            docEl.style.fontSize = 200 * (clientWidth / 750) + "px";
           };
         if (!doc.addEventListener) return;
         win.addEventListener(resizeEvt, recalc, false);
-        doc.addEventListener('DOMContentLoaded', recalc, false);
+        doc.addEventListener("DOMContentLoaded", recalc, false);
       })(document, window);
     </script>
   </head>

@@ -1,27 +1,51 @@
 .mine {
+  height: 100%;
   .mine-box {
-    padding-bottom: 0.6rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
   .mine-header {
     background: white;
     display: flex;
     align-items: center;
-    padding: .2rem;
+    padding: 0.2rem;
+    flex-shrink: 0;
     .mine-header__avator {
-      width: 0.5rem;
-      height: 0.5rem;
+      width: 0.7rem;
+      height: 0.7rem;
       margin-right: 0.1rem;
+      &>img{
+        width: 100%;
+        height: 100%;
+        border-radius: 10%;
+      }
     }
     .mine-header__name {
       font-size: 0.2rem;
     }
+    .mine-header__provence{
+      color: $glc-font-grey-4;
+    }
   }
-  .mine-question__title{
-    padding: 0 .2rem;
-    font-size: .2rem;
+  .mine-question__title {
+    padding: 0 0.2rem;
+    font-size: 0.2rem;
     font-weight: normal;
   }
   .mine-question {
-    min-height: 1rem;
+    flex-grow: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    .am-tabs {
+      height: auto;
+      flex: none;
+    }
+  }
+  .mine-question__list {
+    height: 100%;
+    flex-grow: 1;
+    padding-bottom: .5rem;
   }
 }

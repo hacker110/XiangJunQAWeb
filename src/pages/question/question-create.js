@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-11-23 13:40:55
+ * @LastEditTime: 2019-12-11 22:11:02
  */
 // @flow
 import React, { Component } from "react";
@@ -18,15 +18,9 @@ import {
   Button,
   Toast
 } from "antd-mobile";
-// import subject_idData from "@/constant/profession.js";
 import { trim } from "@/utils/utils.js";
 import { post } from "@/utils/request.js";
 import { SUBJECT, QUESTION } from "@/service/api.js";
-
-// const choiceData = [
-//   subject_idData.map(item => ({ label: item.name, value: item.id }))
-// ];
-// console.log(choiceData);
 
 const data = [
   {
@@ -51,6 +45,9 @@ class QuestionCreate extends Component {
 
   componentWillMount() {
     this.getAllSubject();
+  }
+  componentDidMount() {
+    this.autoFocusInst.focus();
   }
 
   gotoDetail() {
@@ -86,7 +83,7 @@ class QuestionCreate extends Component {
       type: 1,
       user_id: 1
     }).then(e => {
-      if(e.status === 200){
+      if (e.status === 200) {
         this.props.history.push("/question/questionlist");
       }
     });
@@ -122,6 +119,7 @@ class QuestionCreate extends Component {
             rows={5}
             count={100}
             value={content}
+            ref={ref => (this.autoFocusInst = ref)}
             onChange={content => this.setState({ content })}
           />
           <ImagePicker
