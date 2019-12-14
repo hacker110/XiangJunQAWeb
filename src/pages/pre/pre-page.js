@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-11 22:13:19
+ * @LastEditTime: 2019-12-14 23:37:46
  */
 // @flow
 import React, { Component } from "react";
@@ -12,7 +12,7 @@ import { TextareaItem, Button, Toast } from "antd-mobile";
 import { trim } from "@/utils/utils.js";
 // import profession from "@/constant/profession.js";
 import { post } from "@/utils/request.js";
-import { QUESTION, SUBJECT } from "@/service/api.js";
+import { QUESTION, SUBJECT, USER } from "@/service/api.js";
 import { QESTION_TYPE } from "@/utils/constans.js";
 
 class PrePage extends Component {
@@ -35,18 +35,50 @@ class PrePage extends Component {
    * @Description: 发布问题
    */
   saveData() {
-    const { selectedTag, value } = this.state;
-    const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
-    post(QUESTION.ADD_QUESTION, {
-      subject_ids: selectedTag,
-      content: value,
-      type: QESTION_TYPE.SHARE,
-      user_id: userInfo.id
-    }).then(e => {
-      if (e.status === 200) {
-        Toast.success("发布成功~");
-        this.props.history.push("/question/questionlist");
-      }
+    Promise.all([this.saveSubject(), this.addShare()]).then(res => {
+      console.log(res);
+      this.props.history.push("/question/questionlist");
+    });
+  }
+
+  /**
+   * @Description: 保存类目
+   */
+
+  saveSubject() {
+    return new Promise((resolve, reject) => {
+      const { selectedTag } = this.state;
+      const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+      post(USER.USER_BING_SUBJECT, {
+        subjectIds: selectedTag.join(","),
+        user_id: userInfo.id
+      }).then(e => {
+        if (e.status === 200) {
+          resolve();
+          Toast.success("发布成功~");
+        }
+      });
+    });
+  }
+  /**
+   * @Description: 分享
+   */
+
+  addShare() {
+    return new Promise((resolve, reject) => {
+      const { value, selectedTag } = this.state;
+      const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+      post(QUESTION.ADD_QUESTION, {
+        content: value,
+        type: QESTION_TYPE.SHARE,
+        user_id: userInfo.id,
+        subject_id: selectedTag[0]
+      }).then(e => {
+        if (e.status === 200) {
+          resolve();
+          Toast.success("发布成功~");
+        }
+      });
     });
   }
   /**

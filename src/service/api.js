@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-11-17 22:00:55
- * @LastEditTime: 2019-12-10 22:58:34
+ * @LastEditTime: 2019-12-14 22:55:50
  */
 export const QUESTION = {
   // 添加问题
@@ -36,7 +36,9 @@ export const SUBJECT = {
 
 export const USER = {
   // 获取用户信息
-  GET_USER_BY_OPENID: "/api/user/GetUserByOpenId"
+  GET_USER_BY_OPENID: "/api/user/GetUserByOpenId",
+  // 用户绑定方向
+  USER_BING_SUBJECT: "/api/user/UserBingSubject"
 };
 
 // export const host = "http://115.29.65.101:8888";

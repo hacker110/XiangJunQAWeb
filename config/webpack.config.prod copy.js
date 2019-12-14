@@ -228,6 +228,15 @@ module.exports = {
             // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
           },
           {
+            test: /\.less$/,
+            use: [
+              "style-loader",
+              "css-loader",
+              { loader: "less-loader", options: { modifyVars: theme } }
+            ],
+            include: /node_modules/
+          },
+          {
             test: /\.scss$/,
             loader: ExtractTextPlugin.extract(
               Object.assign(
@@ -266,53 +275,6 @@ module.exports = {
                     },
                     {
                       loader: require.resolve("sass-loader")
-                    }
-                  ]
-                },
-                extractTextPluginOptions
-              )
-            )
-            // Note: this won't work without `new ExtractTextPlugin()` in `plugins`.
-          },
-          {
-            test: /\.less$/,
-            loader: ExtractTextPlugin.extract(
-              Object.assign(
-                {
-                  fallback: {
-                    loader: require.resolve("style-loader"),
-                    options: {}
-                  },
-                  use: [
-                    {
-                      loader: require.resolve("css-loader"),
-                      options: {
-                        importLoaders: 1,
-                        sourceMap: shouldUseSourceMap
-                      }
-                    },
-                    {
-                      loader: require.resolve("postcss-loader"),
-                      options: {
-                        // Necessary for external CSS imports to work
-                        // https://github.com/facebookincubator/create-react-app/issues/2677
-                        ident: "postcss",
-                        plugins: () => [
-                          require("postcss-flexbugs-fixes"),
-                          autoprefixer({
-                            browsers: [
-                              ">1%",
-                              "last 4 versions",
-                              "Firefox ESR",
-                              "not ie < 9" // React doesn't support IE8 anyway
-                            ],
-                            flexbox: "no-2009"
-                          })
-                        ]
-                      }
-                    },
-                    {
-                      loader: require.resolve("less-loader")
                     }
                   ]
                 },

@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-11 23:19:01
+ * @LastEditTime: 2019-12-14 23:32:33
  */
 // @flow
 import React, { Component } from "react";
@@ -114,6 +114,7 @@ class QuestionList extends Component<{}, {}> {
             item={QuestionItem}
             perpagenum={10}
             renderFooterPadding="10px 0 50px"
+            subjectId={0}
           />
         </div>
         <QuestionTab />

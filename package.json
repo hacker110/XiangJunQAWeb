@@ -65,6 +65,12 @@
   },
   "theme": {
     "brand-primary": "#42c57a",
+    "brand-primary-tap": "#52cc87",
+    "@brand-success": "#38bc6d",
+    "@brand-warning": "#f78502",
+    "@brand-error": "#fa574b",
+    "@brand-important": "#5392ff",
+    "@brand-wait": "#42c57a",
     "color-text-base": "#333"
   },
   "eslintConfig": {

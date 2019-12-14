@@ -3,11 +3,11 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-12-11 22:00:58
- * @LastEditTime: 2019-12-11 22:02:42
+ * @LastEditTime: 2019-12-14 23:04:57
  */
 
 // 1 问题 2 发布新的知识。
 export const QESTION_TYPE = {
-  SIMPLE:1,
-  SHARE:2,
-}
+  SIMPLE: 1,
+  SHARE: 2
+};

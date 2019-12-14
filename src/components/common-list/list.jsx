@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-12-06 22:33:51
- * @LastEditTime: 2019-12-10 22:37:21
+ * @LastEditTime: 2019-12-14 23:32:57
  eg:
  <List label="detail" api={QUESTION.GET_NEW_QUESTION} item={AnswerItem} />
   参数:   type            desc
@@ -85,6 +85,7 @@ class List extends Component {
     const data = await this.getData(pageIndex);
     this.dealData(data);
   }
+
   /*
    * @Description: 处理数据
    */
@@ -106,12 +107,13 @@ class List extends Component {
   }
 
   async getData(pageIndex) {
-    const { api, perpagenum } = this.props;
+    const { api, perpagenum, subjectId } = this.props;
     return new Promise(resolve => {
       post(api, {
         currentPage: pageIndex || 1,
         pageSize: perpagenum || 10,
-        user_id: 1
+        user_id: 1,
+        subjectId
       })
         .then(res => {
           tempData = [].concat(res.data.rows, tempData);
@@ -147,7 +149,6 @@ class List extends Component {
       if (index < 0) {
         index = 0;
       }
-      console.log(index);
       const obj = tempData[index++];
       return <Child data={obj} />;
     };
