@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-11-17 22:00:55
- * @LastEditTime: 2019-12-17 09:02:31
+ * @LastEditTime: 2019-12-17 23:37:28
  */
 export const QUESTION = {
   // 添加问题
@@ -38,7 +38,7 @@ export const USER = {
   // 获取用户信息
   GET_USER_BY_OPENID: "/api/user/GetUserByOpenId",
   // 用户绑定方向
-  USER_BING_SUBJECT: "/api/user/UserBingSubject"
+  USER_BIND_SUBJECT: "/api/user/UserBindSubject"
 };
 export const FILE = {
   // 上传图片

@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-14 23:37:46
+ * @LastEditTime: 2019-12-17 23:37:16
  */
 // @flow
 import React, { Component } from "react";
@@ -49,7 +49,7 @@ class PrePage extends Component {
     return new Promise((resolve, reject) => {
       const { selectedTag } = this.state;
       const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
-      post(USER.USER_BING_SUBJECT, {
+      post(USER.USER_BIND_SUBJECT, {
         subjectIds: selectedTag.join(","),
         user_id: userInfo.id
       }).then(e => {
