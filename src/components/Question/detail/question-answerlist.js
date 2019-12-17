@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-09 23:50:27
+ * @LastEditTime: 2019-12-17 23:12:39
  */
 // @flow
 import React, { Component } from "react";
@@ -33,9 +33,8 @@ class QuestionAnswerList extends Component<{}, {}> {
 
   getData(pageIndex) {
     return new Promise((resolve, reject) => {
-      // post(QUESTION.GET_QUESTION_ANSWER_BY_QUESTIONID, {
-      post(QUESTION.GET_NEW_QUESTION, {
-        // question_id: this.state.id,
+      post(QUESTION.GET_QUESTION_ANSWER_BY_QUESTIONID, {
+        question_id: this.state.id,
         currentPage: pageIndex || 1,
         pageSize: 6
       }).then(res => {
@@ -51,7 +50,8 @@ class QuestionAnswerList extends Component<{}, {}> {
       <div data-question={id} className="question-answerlist">
         <List
           label="detail"
-          api={QUESTION.GET_NEW_QUESTION}
+          api={QUESTION.GET_QUESTION_ANSWER_BY_QUESTIONID}
+          searchArgvs={{ question_id: id }}
           item={AnswerItem}
         />
       </div>

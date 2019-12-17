@@ -3,13 +3,12 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-11 22:11:02
+ * @LastEditTime: 2019-12-17 23:03:21
  */
 // @flow
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import QuestionTab from "@/components/Question/question-tab";
-
 import {
   Picker,
   List,
@@ -19,18 +18,18 @@ import {
   Toast
 } from "antd-mobile";
 import { trim } from "@/utils/utils.js";
+import { QUESTION, SUBJECT, FILE } from "@/service/api.js";
 import { post } from "@/utils/request.js";
-import { SUBJECT, QUESTION } from "@/service/api.js";
 
 const data = [
-  {
-    url: "https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg",
-    id: "2121"
-  },
-  {
-    url: "https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg",
-    id: "2122"
-  }
+  // {
+  //   url: "https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg",
+  //   id: "2121"
+  // },
+  // {
+  //   url: "https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg",
+  //   id: "2122"
+  // }
 ];
 class QuestionCreate extends Component {
   constructor(props) {
@@ -39,7 +38,8 @@ class QuestionCreate extends Component {
       subject_id: [],
       files: data,
       content: "",
-      choiceData: []
+      choiceData: [],
+      uploadFiles: []
     };
   }
 
@@ -55,33 +55,40 @@ class QuestionCreate extends Component {
   }
   onChange = (files, type, index) => {
     console.log("onChange");
-    console.log(files, type, index);
+    console.log(files, type);
+    if (type === "add") {
+      let cur = files.slice(-1);
+      this.uploadFun(cur[0].file);
+    }
     this.setState({
       files
     });
   };
-  onAddImageClick = e => {
-    console.log("onAddImageClick");
-    e.preventDefault();
-    this.setState({
-      files: this.state.files.concat({
-        url: "https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg",
-        id: "3"
-      })
+  uploadFun(file) {
+    const { uploadFiles } = this.state;
+    let formdata = new FormData();
+    formdata.append("file", file);
+    post(FILE.SAVE_FILE, formdata, { needqs: false }).then(res => {
+      uploadFiles.push(res.data);
+      this.setState({
+        uploadFiles
+      });
+      console.log(res.data);
     });
-  };
+  }
   /**
    * @Description: 发布问题/分享
    */
   publish(e) {
-    const { subject_id, content } = this.state;
+    const { subject_id, content, uploadFiles } = this.state;
     if (!subject_id) return Toast.info("请选择标签");
     if (trim(content) === "") return Toast.info("请输入内容");
     post(QUESTION.ADD_QUESTION, {
       subject_id: subject_id[0],
       content,
       type: 1,
-      user_id: 1
+      user_id: 1,
+      img_name: uploadFiles.join(",")
     }).then(e => {
       if (e.status === 200) {
         this.props.history.push("/question/questionlist");
@@ -126,7 +133,6 @@ class QuestionCreate extends Component {
             className="img-picker"
             files={files}
             onChange={this.onChange}
-            onAddImageClick={this.onAddImageClick}
             multiple={true}
             onImageClick={(index, fs) => console.log(index, fs)}
             selectable={files.length < 8}

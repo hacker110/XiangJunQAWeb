@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-11-17 22:00:55
- * @LastEditTime: 2019-12-14 22:55:50
+ * @LastEditTime: 2019-12-17 09:02:31
  */
 export const QUESTION = {
   // 添加问题
@@ -39,6 +39,10 @@ export const USER = {
   GET_USER_BY_OPENID: "/api/user/GetUserByOpenId",
   // 用户绑定方向
   USER_BING_SUBJECT: "/api/user/UserBingSubject"
+};
+export const FILE = {
+  // 上传图片
+  SAVE_FILE: "/api/qaFile/saveFile",
 };
 
 // export const host = "http://115.29.65.101:8888";

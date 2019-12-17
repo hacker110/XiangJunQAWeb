@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-06 22:52:29
+ * @LastEditTime: 2019-12-17 23:24:30
  */
 // @flow
 import React, { Component } from "react";
@@ -81,10 +81,7 @@ class QuestionItem extends Component<{}, {}> {
           <div className="question-itemDetail-imgBox">
             <img src={icon} alt="用户的icon" />
           </div>
-          <div className="question-itemDetail-txtBox">
-            {content}
-            案件的痕迹撒谎精爱神的箭埃里克姜思达埃里克森基多拉可视角度奥斯卡来得及阿卡丽加速度拉时间段；案例库
-          </div>
+          <div className="question-itemDetail-txtBox">{content}</div>
         </div>
         <div className="question-itemDetail-bottom">
           <div className="question-itemDetail-status">
@@ -95,13 +92,31 @@ class QuestionItem extends Component<{}, {}> {
             </div>
           </div>
           <div className="question-itemDetail-tools">
-            <span className="question-itemDetailBtns" onClick={this.collect} style={{ marginRight: "4px" }}>
+            <span
+              className="question-itemDetailBtns"
+              onClick={this.collect}
+              style={{ marginRight: "4px" }}
+            >
               关注
             </span>
-            <span className="question-itemDetailBtns" onClick={this.like} style={{ marginRight: "4px" }}>
+            <span
+              className="question-itemDetailBtns"
+              onClick={this.like}
+              style={{ marginRight: "4px" }}
+            >
               点赞
             </span>
-            <span className="question-itemDetailBtns" style={{ marginRight: "4px" }}>回答</span>
+            <span
+              className="question-itemDetailBtns"
+              onClick={() => {
+                this.props.history.push({
+                  pathname: `/question/questionanswer/${id}`
+                });
+              }}
+              style={{ marginRight: "4px" }}
+            >
+              回答
+            </span>
           </div>
         </div>
       </div>

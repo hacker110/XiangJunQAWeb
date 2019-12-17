@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-06 08:55:24
+ * @LastEditTime: 2019-12-17 23:15:52
  */
 // @flow
 import React, { Component } from "react";
@@ -15,7 +15,9 @@ class QuestionAnwer extends Component<{}, {}> {
   constructor(props) {
     super(props);
     const { id } = this.props.match.params;
+    let userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
     this.state = {
+      userInfo,
       id,
       content: ""
     };
@@ -25,11 +27,11 @@ class QuestionAnwer extends Component<{}, {}> {
   }
 
   publish() {
-    const { id, content } = this.state;
+    const { id, content, userInfo } = this.state;
     post(QUESTION.SAVE_QUESTION_ANSWER, {
       father_id: 0, // 0 问题的答案，>0 对答案的评论
       question_id: id,
-      user_id: 1,
+      user_id: userInfo.id,
       content
     }).then(res => {
       console.log("QuestionAnwer", res);

@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-12-06 22:33:51
- * @LastEditTime: 2019-12-14 23:32:57
+ * @LastEditTime: 2019-12-17 23:13:45
  eg:
  <List label="detail" api={QUESTION.GET_NEW_QUESTION} item={AnswerItem} />
   参数:   type            desc
@@ -47,8 +47,9 @@ class List extends Component {
       rowHasChanged: (row1, row2) => row1 !== row2,
       sectionHeaderHasChanged: (s1, s2) => s1 !== s2
     });
-
+    let userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
     this.state = {
+      userInfo,
       data: props.data,
       dataSource,
       isLoading: true,
@@ -107,12 +108,15 @@ class List extends Component {
   }
 
   async getData(pageIndex) {
-    const { api, perpagenum, subjectId } = this.props;
+    // searchArgvs 检索项添加
+    const { api, perpagenum, subjectId, searchArgvs } = this.props;
+    const { userInfo } = this.state;
     return new Promise(resolve => {
       post(api, {
+        ...searchArgvs,
         currentPage: pageIndex || 1,
         pageSize: perpagenum || 10,
-        user_id: 1,
+        user_id: userInfo.id,
         subjectId
       })
         .then(res => {

@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-10-28 14:25:00
- * @LastEditTime: 2019-11-30 17:35:06
+ * @LastEditTime: 2019-12-17 23:00:38
  */
 import Axios from "axios";
 import { concatUrl } from "./utils";
@@ -30,7 +30,9 @@ export const get = (url, params = {}, options = { showToast: true }) => {
     });
 };
 
-export const post = (url, params = {}) => {
+export const post = (url, params = {}, options) => {
+  options = Object.assign({}, { needqs: true }, options);
+  if (options.needqs) params = qs.stringify(params);
   if (/localhost/gi.test(window.location.host)) {
     url = host + url;
   }
@@ -41,7 +43,7 @@ export const post = (url, params = {}) => {
         // "Content-Type": "application/json"
       },
       url,
-      data: qs.stringify(params)
+      data: params // qs.stringify(params)
     })
       .then(res => {
         if (res.data.status === 200) {
