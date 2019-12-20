@@ -1,9 +1,9 @@
 /*
  * @Description: This is a description
  * @Author: Ask
- * @LastEditors: Ask
+ * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-11 22:41:55
+ * @LastEditTime : 2019-12-20 09:16:06
  */
 // @flow
 import React, { useState } from "react";
@@ -120,46 +120,42 @@ function ListItem(props) {
           </div>
           <div className="list-item__control--btn">
             {collectionStatus ? (
-              <span
-                className="question-itemDetailBtns txt-btn"
+              <i
                 onClick={unCollect}
-                style={{ marginRight: "4px" }}
-              >
-                取消关注
-              </span>
+                className={"iconfont iconfavor-active selectIcon selectedIcon"}
+                style={{ marginRight: "16px" }}
+              ></i>
             ) : (
-              <span
-                className="question-itemDetailBtns txt-btn"
+              <i
                 onClick={collect}
-                style={{ marginRight: "4px" }}
-              >
-                关注
-              </span>
+                className={
+                  "iconfont iconfavor-active selectIcon unselectedIcon"
+                }
+                style={{ marginRight: "16px" }}
+              ></i>
             )}
             {likeStatus ? (
-              <span
-                className="question-itemDetailBtns txt-btn"
+              <i
                 onClick={unLikeFun}
-                style={{ marginRight: "4px" }}
-              >
-                取消点赞
-              </span>
+                className={"iconfont icondiancai1-copy selectIcon selectedIcon"}
+                style={{ marginRight: "10px" }}
+              ></i>
             ) : (
-              <span
-                className="question-itemDetailBtns txt-btn"
+              <i
                 onClick={likeFun}
-                style={{ marginRight: "4px" }}
-              >
-                点赞
-              </span>
+                className={
+                  "iconfont icondiancai1-copy selectIcon unselectedIcon"
+                }
+                style={{ marginRight: "10px" }}
+              ></i>
             )}
-            <span
-              className="question-itemDetailBtns txt-btn"
-              style={{ marginRight: "4px" }}
+            <i
+              className={
+                "iconfont iconicon-test-copy selectIcon"
+              }
               onClick={openAnswer}
-            >
-              回答
-            </span>
+              style={{ marginRight: "4px",color:'#38bc6d' }}
+            ></i>
           </div>
         </div>
       </div>

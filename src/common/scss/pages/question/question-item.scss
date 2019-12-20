@@ -33,4 +33,13 @@
   .list-item__control--status {
     color: $glc-font-grey-5;
   }
+  .selectIcon{
+    font-size: .18rem;
+  }
+  .unselectedIcon{
+    color: $glc-font-grey-4;
+  }
+  .selectedIcon{
+    color: $glc-red-2;
+  }
 }

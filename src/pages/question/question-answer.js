@@ -1,9 +1,9 @@
 /*
  * @Description: This is a description
  * @Author: Ask
- * @LastEditors: Ask
+ * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-17 23:15:52
+ * @LastEditTime : 2019-12-20 09:16:57
  */
 // @flow
 import React, { Component } from "react";
@@ -72,6 +72,7 @@ class QuestionAnwer extends Component<{}, {}> {
             icon="check-circle-o"
             type="primary"
             inline
+            size="small"
           >
             发布
           </Button>

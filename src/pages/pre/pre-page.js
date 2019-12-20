@@ -1,9 +1,9 @@
 /*
  * @Description: This is a description
  * @Author: Ask
- * @LastEditors: Ask
+ * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-17 23:37:16
+ * @LastEditTime : 2019-12-20 08:44:51
  */
 // @flow
 import React, { Component } from "react";
@@ -50,7 +50,7 @@ class PrePage extends Component {
       const { selectedTag } = this.state;
       const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
       post(USER.USER_BIND_SUBJECT, {
-        subjectIds: selectedTag.join(","),
+        subject_ids: selectedTag.join(","),
         user_id: userInfo.id
       }).then(e => {
         if (e.status === 200) {
