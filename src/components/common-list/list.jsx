@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-12-06 22:33:51
- * @LastEditTime: 2019-12-17 23:13:45
+ * @LastEditTime: 2019-12-21 22:16:08
  eg:
  <List label="detail" api={QUESTION.GET_NEW_QUESTION} item={AnswerItem} />
   参数:   type            desc
@@ -16,6 +16,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { findDOMNode } from "react-dom";
 import { ListView } from "antd-mobile";
+import { QUESTION, USER } from "@/service/api.js";
 import { post } from "@/utils/request.js";
 
 function MyBody(props) {
@@ -106,11 +107,34 @@ class List extends Component {
       isLoading: false
     });
   }
-
+  getUserInfo() {
+    return new Promise((resolve, reject) => {
+      const wx_open_id = localStorage.getItem("wx_open_id");
+      post(USER.GET_USER_BY_OPENID, {
+        wx_open_id
+      }).then(res => {
+        if (!res.data) return;
+        const { id, city, provence, nick_name, head_img } = res.data;
+        let userInfo = {
+          id,
+          city,
+          provence,
+          photo: head_img,
+          name: nick_name
+        };
+        this.setState({ userInfo });
+        sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+        resolve(userInfo);
+      });
+    });
+  }
   async getData(pageIndex) {
     // searchArgvs 检索项添加
     const { api, perpagenum, subjectId, searchArgvs } = this.props;
-    const { userInfo } = this.state;
+    let { userInfo } = this.state;
+    if (!userInfo || !userInfo.id) {
+      userInfo = await this.getUserInfo();
+    }
     return new Promise(resolve => {
       post(api, {
         ...searchArgvs,
@@ -135,7 +159,7 @@ class List extends Component {
 
   render() {
     // console.log(this.props.item);
-    // const { data } = this.state;
+    const { userInfo } = this.state;
     const Child = this.props.item;
     const separator = (sectionID, rowID) => (
       <div
@@ -154,7 +178,7 @@ class List extends Component {
         index = 0;
       }
       const obj = tempData[index++];
-      return <Child data={obj} />;
+      return <Child data={obj} userInfo={userInfo} />;
     };
 
     return (

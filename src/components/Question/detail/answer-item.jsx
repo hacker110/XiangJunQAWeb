@@ -5,11 +5,24 @@ import { QUESTION } from "@/service/api.js";
 import { useState } from "react";
 import { Icon } from "antd-mobile";
 
-
 function AnswerItem(props) {
   // 文字的最大长度
   const maxLength = 35;
-  const { content, like_count } = props.data;
+  const {
+    content,
+    like_count,
+    like_status,
+    userInfo,
+    question_id,
+    create_user_id,
+    collection_count,
+    collection_status
+  } = props.data;
+
+  const [like, setLike] = useState(like_count);
+  const [likeStatus, setLikeStatus] = useState(like_status);
+  // const [collection, setCollection] = useState(collection_count);
+  // const [collectionStatus, setCollectionStatus] = useState(collection_status);
 
   // 展开与合并的开关
   const [flag, setFlag] = useState(false);
@@ -23,22 +36,36 @@ function AnswerItem(props) {
     return number.toLocaleString();
   };
 
-  const like = () => {
-    console.log("like");
-    // const { id, user_id } = this.state;
-    // post(QUESTION.SAVE_QUESTION_LIKES, {
-    //   create_user_id: user_id,
-    //   question_id: id,
-    //   like_user_id: 1
-    // }).then(res => {
-    //   // this.setState(prev => ({ LikeCount: prev.LikeCount + 1 }));
-    //   // this.setState(prev => ({ like_count: prev.like_count + 1 }));
-    //   console.log("like", res);
-    // });
+  const likeFun = () => {
+    post(QUESTION.SAVE_QUESTION_LIKES, {
+      create_user_id: create_user_id,
+      question_id: question_id,
+      like_user_id: userInfo.id,
+      question_answer_id: 0 // 是问题则值id=0 如果是评论则是评论的id
+    }).then(res => {
+      setLike(like + 1);
+      setLikeStatus(true);
+      console.log("like", res);
+    });
   };
 
-  const remark = () => {
+  const unLikeFun = () => {
+    post(QUESTION.CANCLE_QUESTION_LIKES, {
+      like_user_id: userInfo.id,
+      question_id: question_id,
+      question_answer_id: 0 //0 对问题点赞，评论点赞,（评论的ID）
+    }).then(res => {
+      setLike(like - 1);
+      setLikeStatus(false);
+      console.log("like", res);
+    });
+  };
 
+  const openAnswer = () => {
+    const { question_id } = props.data;
+    props.history.push({
+      pathname: `/question/questionanswer/${question_id}`
+    });
   };
 
   return (
@@ -64,20 +91,26 @@ function AnswerItem(props) {
         <div className="list-item__control">
           <div className="list-item__control--status"></div>
           <div className="list-item__control--btn">
-            <span
-              className="question-itemDetailBtns txt-btn"
-              onClick={like}
-              style={{ marginRight: "4px" }}
-            >
-              点赞
-            </span>
-            <span
-              className="question-itemDetailBtns txt-btn"
-              style={{ marginRight: "4px" }}
-              onClick={remark}
-            >
-              评论
-            </span>
+            {likeStatus ? (
+              <i
+                onClick={unLikeFun}
+                className={"iconfont icondiancai1-copy selectIcon selectedIcon"}
+                style={{ marginRight: "10px" }}
+              ></i>
+            ) : (
+              <i
+                onClick={likeFun}
+                className={
+                  "iconfont icondiancai1-copy selectIcon unselectedIcon"
+                }
+                style={{ marginRight: "10px" }}
+              ></i>
+            )}
+            <i
+              className={"iconfont iconicon-test-copy selectIcon"}
+              onClick={openAnswer}
+              style={{ marginRight: "4px", color: "#38bc6d" }}
+            ></i>
           </div>
         </div>
       </div>

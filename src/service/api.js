@@ -1,9 +1,9 @@
 /*
  * @Description: This is a description
  * @Author: Ask
- * @LastEditors: Ask
+ * @LastEditors  : Ask
  * @Date: 2019-11-17 22:00:55
- * @LastEditTime: 2019-12-17 23:37:28
+ * @LastEditTime : 2019-12-21 21:01:28
  */
 export const QUESTION = {
   // 添加问题
@@ -25,8 +25,12 @@ export const QUESTION = {
     "/api/question/getQuestionAnswerByQuesitonId",
   // 收藏问题
   SAVE_QUESTION_COLLECTION: "/api/question/saveQuestioncollection",
+  // 取消收藏问题
+  CANCLE_QUESTION_COLLECTION: "/api/question/cancelQuestionCollection",
   // 保存问题点赞
-  SAVE_QUESTION_LIKES: "/api/question/saveQuestionlikes"
+  SAVE_QUESTION_LIKES: "/api/question/saveQuestionlikes",
+  // 取消问题点赞
+  CANCLE_QUESTION_LIKES: "/api/question/cancelQuestionlikes"
 };
 export const SUBJECT = {
   // 添加问题
@@ -42,7 +46,7 @@ export const USER = {
 };
 export const FILE = {
   // 上传图片
-  SAVE_FILE: "/api/qaFile/saveFile",
+  SAVE_FILE: "/api/qaFile/saveFile"
 };
 
 // export const host = "http://115.29.65.101:8888";

@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2019-12-20 09:16:57
+ * @LastEditTime : 2019-12-21 22:07:19
  */
 // @flow
 import React, { Component } from "react";
@@ -35,6 +35,7 @@ class QuestionAnwer extends Component<{}, {}> {
       content
     }).then(res => {
       console.log("QuestionAnwer", res);
+      this.props.history.goBack();
     });
   }
 

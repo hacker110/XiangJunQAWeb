@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2019-12-20 09:16:06
+ * @LastEditTime : 2019-12-21 22:02:43
  */
 // @flow
 import React, { useState } from "react";
@@ -16,18 +16,19 @@ import { QUESTION } from "@/service/api.js";
 const maxLength = 35;
 
 function ListItem(props) {
+  const { userInfo } = props.userInfo;
   const {
     collection_count,
     like_count,
     content,
     question_id,
+    create_user_id,
     like_status = false,
     collection_status = false
   } = props.data;
-
-  const [collection, setCollection] = useState(collection_count);
   const [like, setLike] = useState(like_count);
   const [likeStatus, setLikeStatus] = useState(like_status);
+  const [collection, setCollection] = useState(collection_count);
   const [collectionStatus, setCollectionStatus] = useState(collection_status);
 
   const dealData = number => {
@@ -38,7 +39,6 @@ function ListItem(props) {
     return text.substr(0, maxLength) + "...";
   };
   const collect = () => {
-    const { question_id, create_user_id } = props.data;
     post(QUESTION.SAVE_QUESTION_COLLECTION, {
       question_id: question_id,
       create_user_id: create_user_id,
@@ -50,24 +50,21 @@ function ListItem(props) {
     });
   };
   const unCollect = () => {
-    setCollection(collection - 1);
-    setCollectionStatus(false);
-    // const { question_id, create_user_id } = props.data;
-    // post(QUESTION.SAVE_QUESTION_COLLECTION, {
-    //   question_id: question_id,
-    //   create_user_id: create_user_id,
-    //   like_user_id: 1
-    // }).then(res => {
-    //   setCollection(collection + 1);
-    //   console.log("collect", res);
-    // });
+    post(QUESTION.CANCLE_QUESTION_COLLECTION, {
+      question_id: question_id,
+      create_user_id: create_user_id,
+      collection_user_id: userInfo.id
+    }).then(res => {
+      setCollection(collection - 1);
+      setCollectionStatus(false);
+    });
   };
   const likeFun = () => {
-    const { question_id, create_user_id } = props.data;
     post(QUESTION.SAVE_QUESTION_LIKES, {
       create_user_id: create_user_id,
       question_id: question_id,
-      like_user_id: 1
+      like_user_id: userInfo.id,
+      question_answer_id: 0 // 是问题则值id=0 如果是评论则是评论的id
     }).then(res => {
       setLike(like + 1);
       setLikeStatus(true);
@@ -76,16 +73,15 @@ function ListItem(props) {
   };
 
   const unLikeFun = () => {
-    setLike(like - 1);
-    setLikeStatus(false);
-    // const { question_id, create_user_id } = props.data;
-    // post(QUESTION.SAVE_QUESTION_LIKES, {
-    //   create_user_id: create_user_id,
-    //   question_id: question_id,
-    //   like_user_id: 1
-    // }).then(res => {
-    //   console.log("like", res);
-    // });
+    post(QUESTION.CANCLE_QUESTION_LIKES, {
+      like_user_id: userInfo.id,
+      question_id: question_id,
+      question_answer_id: 0 //0 对问题点赞，评论点赞,（评论的ID）
+    }).then(res => {
+      setLike(like - 1);
+      setLikeStatus(false);
+      console.log("like", res);
+    });
   };
   const openAnswer = () => {
     const { question_id } = props.data;
@@ -150,11 +146,9 @@ function ListItem(props) {
               ></i>
             )}
             <i
-              className={
-                "iconfont iconicon-test-copy selectIcon"
-              }
+              className={"iconfont iconicon-test-copy selectIcon"}
               onClick={openAnswer}
-              style={{ marginRight: "4px",color:'#38bc6d' }}
+              style={{ marginRight: "4px", color: "#38bc6d" }}
             ></i>
           </div>
         </div>

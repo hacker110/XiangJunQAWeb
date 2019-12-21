@@ -1,9 +1,9 @@
 /*
  * @Description: This is a description
  * @Author: Ask
- * @LastEditors: Ask
+ * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-14 23:32:33
+ * @LastEditTime : 2019-12-21 22:11:11
  */
 // @flow
 import React, { Component } from "react";
@@ -12,8 +12,6 @@ import QuestionTab from "@/components/Question/question-tab";
 import { QUESTION, USER } from "@/service/api.js";
 import List from "@/components/common-list/list.jsx";
 import { post } from "@/utils/request.js";
-
-// import ComponentList from "@/components/Question/list/component-list";
 import QuestionItem from "@/components/Question/list/question-item";
 
 const tabs1 = [
@@ -83,6 +81,7 @@ class QuestionList extends Component<{}, {}> {
     });
   }
   render() {
+    const { userInfo } = this.state;
     return (
       <div className="question-list">
         <Tabs
@@ -108,14 +107,16 @@ class QuestionList extends Component<{}, {}> {
           ></Tabs>
         </Tabs>
         <div className="question-listbox">
-          <List
-            label="list"
-            api={QUESTION.GET_NEW_QUESTION}
-            item={QuestionItem}
-            perpagenum={10}
-            renderFooterPadding="10px 0 50px"
-            subjectId={0}
-          />
+          {userInfo.id && (
+            <List
+              label="list"
+              api={QUESTION.GET_NEW_QUESTION}
+              item={QuestionItem}
+              perpagenum={10}
+              renderFooterPadding="10px 0 50px"
+              subjectId={0}
+            />
+          )}
         </div>
         <QuestionTab />
       </div>
