@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2019-12-21 22:11:11
+ * @LastEditTime : 2020-01-07 16:44:44
  */
 // @flow
 import React, { Component } from "react";
@@ -14,25 +14,44 @@ import List from "@/components/common-list/list.jsx";
 import { post } from "@/utils/request.js";
 import QuestionItem from "@/components/Question/list/question-item";
 
-const tabs1 = [
-  { title: "推荐", sub: "1" },
-  { title: "最新", sub: "2" },
-  { title: "关注", sub: "3" }
+const tabList = [
+  {
+    title: "推荐",
+    key: 1,
+    api: QUESTION.GET_NEW_QUESTION,
+    item: QuestionItem,
+    searchArgvs: { subjectId: 0 }
+  },
+  {
+    title: "最新",
+    key: 2,
+    api: QUESTION.GET_NEW_QUESTION,
+    item: QuestionItem,
+    searchArgvs: { subjectId: 0 }
+  },
+  {
+    title: "关注",
+    key: 3,
+    api: QUESTION.GET_COLLECTION_QUESTION_BY_UID,
+    item: QuestionItem,
+    searchArgvs: {}
+  }
 ];
-const tabs2 = [
-  { title: "工商管理", sub: "1" },
-  { title: "体育", sub: "2" },
-  { title: "人力资源", sub: "3" },
-  { title: "美术", sub: "4" },
-  { title: "美术", sub: "5" },
-  { title: "美术", sub: "6" },
-  { title: "音乐", sub: "7" }
-];
+// const tabs2 = [
+//   { title: "工商管理", key: 1" ,
+//   { title: "体育", key: 2" ,
+//   { title: "人力资源", key: 3" ,
+//   { title: "美术", key: 4" ,
+//   { title: "美术", key: 5" ,
+//   { title: "美术", key: 6" ,
+//   { title: "音乐", key: 7",
+// ];
 
 class QuestionList extends Component<{}, {}> {
   constructor(props) {
     super(props);
     this.state = {
+      currentTab: tabList[0],
       data: [],
       userInfo: {
         id: "",
@@ -81,22 +100,20 @@ class QuestionList extends Component<{}, {}> {
     });
   }
   render() {
-    const { userInfo } = this.state;
+    const { userInfo, currentTab } = this.state;
     return (
       <div className="question-list">
         <Tabs
-          tabs={tabs1}
+          tabs={tabList}
           initialPage="1"
           onChange={(tab, index) => {
             console.log("onChange", index, tab);
-          }}
-          onTabClick={(tab, index) => {
-            console.log("onTabClick", index, tab);
+            this.setState({ currentTab: tab });
           }}
         >
-          <Tabs
-            // key={item.sub}
-            tabs={tabs2}
+          {/*<Tabs
+            // key={item.key}
+           tabs={tabs,
             initialPage="1"
             onChange={(tab, index) => {
               console.log("onChange", index, tab);
@@ -104,17 +121,20 @@ class QuestionList extends Component<{}, {}> {
             onTabClick={(tab, index) => {
               console.log("onTabClick", index, tab);
             }}
-          ></Tabs>
+          ></Tabs>*/}
         </Tabs>
         <div className="question-listbox">
           {userInfo.id && (
             <List
+              key={currentTab.key}
               label="list"
-              api={QUESTION.GET_NEW_QUESTION}
-              item={QuestionItem}
+              api={currentTab.api}
+              item={currentTab.item}
               perpagenum={10}
               renderFooterPadding="10px 0 50px"
-              subjectId={0}
+              searchArgvs={Object.assign(currentTab.searchArgvs, {
+                // user_id: userInfo.id
+              })}
             />
           )}
         </div>

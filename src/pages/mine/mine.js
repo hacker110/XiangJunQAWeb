@@ -1,9 +1,9 @@
 /*
  * @Description: 我的页面
  * @Author: Ask
- * @LastEditors: Ask
+ * @LastEditors  : Ask
  * @Date: 2019-11-13 08:30:07
- * @LastEditTime: 2019-12-11 21:59:51
+ * @LastEditTime : 2019-12-25 22:38:32
  */
 
 import React, { Component } from "react";
@@ -11,7 +11,9 @@ import QuestionTab from "@/components/Question/question-tab";
 import { Tabs } from "antd-mobile";
 import { QUESTION } from "@/service/api.js";
 import List from "@/components/common-list/list.jsx";
-import QuestionItem from "@/components/Question/list/question-item";
+import QuestionItem from "@/components/mine/question-item";
+import ShareItem from "@/components/mine/share-item";
+import CollectItem from "@/components/mine/collect-item";
 import teacher from "@/assets/teacher.png";
 
 const tabs = [
@@ -19,10 +21,10 @@ const tabs = [
   { title: "分享", sub: "2" },
   { title: "收藏", sub: "3" }
 ];
-const UrlList = {
-  1: QUESTION.GET_QUESTION_BY_UID, // 问题
-  2: QUESTION.GET_QUESTION_BY_UID, // 分享
-  3: QUESTION.GET_COLLECTION_QUESTION // 收藏
+const ListItem = {
+  1: { url: QUESTION.GET_QUESTION_BY_UID, item: QuestionItem }, // 问题
+  2: { url: QUESTION.GET_QUESTION_BY_UID, item: ShareItem }, // 分享
+  3: { url: QUESTION.GET_COLLECTION_QUESTION, item: CollectItem } // 收藏
 };
 
 export default class Mine extends Component {
@@ -37,8 +39,11 @@ export default class Mine extends Component {
 
   render() {
     const { currentTab, userInfo } = this.state;
-    //  <MineComponentList key={currentTab} cate={currentTab} />;
-
+    // question的类型
+    let args = {};
+    if (currentTab < 3) {
+      args = { type: currentTab };
+    }
     return (
       <div className="mine">
         <div className="mine-box">
@@ -65,9 +70,10 @@ export default class Mine extends Component {
               <div style={{ height: "100%" }}>
                 <List
                   key={currentTab}
+                  searchArgvs={args}
                   label={"mine" + currentTab}
-                  api={UrlList[currentTab]}
-                  item={QuestionItem}
+                  api={ListItem[currentTab].url}
+                  item={ListItem[currentTab].item}
                 />
               </div>
             </div>

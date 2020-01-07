@@ -1,69 +1,137 @@
 /*
  * @Description: 问题详情
  * @Author: Ask
- * @LastEditors: Ask
+ * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-17 23:24:30
+ * @LastEditTime : 2020-01-07 23:08:31
  */
 // @flow
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { post } from "@/utils/request.js";
-import { QUESTION } from "@/service/api.js";
+import { QUESTION, USER } from "@/service/api.js";
 
 class QuestionItem extends Component<{}, {}> {
   constructor(props) {
     super(props);
     const { id } = this.props.match.params;
-    console.log(id);
+    const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
     this.state = {
       id,
+      userInfo,
       CollectionCount: 0,
       LikeCount: "",
       content: "",
       icon: "",
-      user_id: 0
+      user_id: 0,
+      isFocus: false,
+      isLike: false,
+      isCollection: false
     };
-    this.collect = this.collect.bind(this);
+    this.focusUser = this.focusUser.bind(this);
+    this.cancleFocusUser = this.cancleFocusUser.bind(this);
     this.like = this.like.bind(this);
+    this.unLike = this.unLike.bind(this);
+    this.collection = this.collection.bind(this);
+    this.unCollection = this.unCollection.bind(this);
   }
 
   componentWillMount() {
     this.getData();
   }
-  collect() {
-    const { id, user_id } = this.state;
-    post(QUESTION.SAVE_QUESTION_COLLECTION, {
-      question_id: id,
-      create_user_id: user_id,
-      like_user_id: 1
+
+  focusUser() {
+    const { user_id, userInfo } = this.state;
+    post(USER.COLLECTION_USER, {
+      collection_user_id: user_id,
+      user_id: userInfo.id
     }).then(res => {
-      this.setState(prev => ({ CollectionCount: prev.CollectionCount + 1 }));
+      this.setState({ isFocus: true });
     });
   }
+
+  cancleFocusUser() {
+    const { user_id, userInfo } = this.state;
+    post(USER.CANCLE_COLLECTION_USER, {
+      collection_user_id: user_id,
+      user_id: userInfo.id
+    }).then(res => {
+      this.setState({ isFocus: false });
+    });
+  }
+
   like() {
-    const { id, user_id } = this.state;
+    const { id, user_id, userInfo, LikeCount } = this.state;
     post(QUESTION.SAVE_QUESTION_LIKES, {
       create_user_id: user_id,
       question_id: id,
-      like_user_id: 1
+      like_user_id: userInfo.id
     }).then(res => {
-      this.setState(prev => ({ LikeCount: prev.LikeCount + 1 }));
-      // this.setState(prev => ({ like_count: prev.like_count + 1 }));
-      console.log("like", res);
+      this.setState({ isLike: true, LikeCount: LikeCount + 1 });
     });
   }
+
+  unLike() {
+    const { id, userInfo, LikeCount } = this.state;
+    post(QUESTION.CANCLE_QUESTION_LIKES, {
+      question_answer_id: 0, //如果是问题则值id=0 如果是评论则是评论的id
+      question_id: id,
+      like_user_id: userInfo.id
+    }).then(res => {
+      this.setState({ isLike: false, LikeCount: LikeCount - 1 });
+    });
+  }
+
+  collection() {
+    const { id, user_id, userInfo, CollectionCount } = this.state;
+    post(QUESTION.SAVE_QUESTION_COLLECTION, {
+      question_id: id,
+      create_user_id: user_id,
+      collection_user_id: userInfo.id
+    }).then(res => {
+      this.setState({
+        isCollection: true,
+        CollectionCount: CollectionCount + 1
+      });
+    });
+  }
+
+  unCollection() {
+    const { id, user_id, userInfo, CollectionCount } = this.state;
+    post(QUESTION.CANCLE_QUESTION_COLLECTION, {
+      question_id: id,
+      create_user_id: user_id,
+      collection_user_id: userInfo.id
+    }).then(res => {
+      this.setState({
+        isCollection: false,
+        CollectionCount: CollectionCount - 1
+      });
+    });
+  }
+
   getData() {
     post(QUESTION.GET_QUESTION_BY_ID, {
       id: this.state.id
     }).then(res => {
-      const { content, CollectionCount, LikeCount, user_id } = res.data;
+      const {
+        content,
+        CollectionCount,
+        LikeCount,
+        user_id,
+        isFocus,
+        is_like,
+        is_collection
+      } = res.data;
       this.setState({
+        isFocus: isFocus,
         user_id,
         content,
         CollectionCount,
         LikeCount,
-        icon: "https://avatars2.githubusercontent.com/u/25131706?s=40&v=4"
+        icon: "https://avatars2.githubusercontent.com/u/25131706?s=40&v=4",
+        isLike: Boolean(is_like),
+        isCollection: Boolean(is_collection)
       });
     });
   }
@@ -74,7 +142,16 @@ class QuestionItem extends Component<{}, {}> {
   }
 
   render() {
-    const { id, content, icon, CollectionCount, LikeCount } = this.state;
+    const {
+      id,
+      content,
+      icon,
+      CollectionCount,
+      LikeCount,
+      isFocus,
+      isLike,
+      isCollection
+    } = this.state;
     return (
       <div data-question={id} className="question-itemDetail">
         <div className="question-itemDetail-box">
@@ -92,20 +169,53 @@ class QuestionItem extends Component<{}, {}> {
             </div>
           </div>
           <div className="question-itemDetail-tools">
-            <span
-              className="question-itemDetailBtns"
-              onClick={this.collect}
-              style={{ marginRight: "4px" }}
-            >
-              关注
-            </span>
-            <span
-              className="question-itemDetailBtns"
-              onClick={this.like}
-              style={{ marginRight: "4px" }}
-            >
-              点赞
-            </span>
+            {isLike ? (
+              <i
+                onClick={this.unLike}
+                className={"iconfont icondiancai1-copy selectIcon selectedIcon"}
+                style={{ marginRight: "10px" }}
+              ></i>
+            ) : (
+              <i
+                onClick={this.like}
+                className={
+                  "iconfont icondiancai1-copy selectIcon unselectedIcon"
+                }
+                style={{ marginRight: "10px" }}
+              ></i>
+            )}
+            {isCollection ? (
+              <i
+                onClick={this.unCollection}
+                className={"iconfont iconfavor-active selectIcon selectedIcon"}
+                style={{ marginRight: "16px" }}
+              ></i>
+            ) : (
+              <i
+                onClick={this.collection}
+                className={
+                  "iconfont iconfavor-active selectIcon unselectedIcon"
+                }
+                style={{ marginRight: "16px" }}
+              ></i>
+            )}
+            {isFocus ? (
+              <span
+                className="question-itemDetailBtns"
+                onClick={this.cancleFocusUser}
+                style={{ marginRight: "4px" }}
+              >
+                取关
+              </span>
+            ) : (
+              <span
+                className="question-itemDetailBtns"
+                onClick={this.focusUser}
+                style={{ marginRight: "4px" }}
+              >
+                关注
+              </span>
+            )}
             <span
               className="question-itemDetailBtns"
               onClick={() => {

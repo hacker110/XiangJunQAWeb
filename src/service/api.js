@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-11-17 22:00:55
- * @LastEditTime : 2019-12-21 21:01:28
+ * @LastEditTime : 2020-01-07 17:08:14
  */
 export const QUESTION = {
   // 添加问题
@@ -39,10 +39,16 @@ export const SUBJECT = {
 };
 
 export const USER = {
-  // 获取用户信息
+  // 通过微信的openid查找用户信息
   GET_USER_BY_OPENID: "/api/user/GetUserByOpenId",
-  // 用户绑定方向
-  USER_BIND_SUBJECT: "/api/user/UserBindSubject"
+  // 用户绑定科目
+  USER_BIND_SUBJECT: "/api/user/UserBindSubject",
+  // 关注用户
+  COLLECTION_USER: "/api//user/CollectionUser",
+  // 取消关注用户
+  CANCLE_COLLECTION_USER: "/api/user/CancelCollectionUser",
+  // 得到所有被关注的用户
+  GET_COLLECTION_USER: "/api/user/user/GetCollectionUser"
 };
 export const FILE = {
   // 上传图片

@@ -3,13 +3,14 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-12-06 22:33:51
- * @LastEditTime: 2019-12-21 22:16:08
+ * @LastEditTime: 2020-01-07 16:45:16
  eg:
  <List label="detail" api={QUESTION.GET_NEW_QUESTION} item={AnswerItem} />
   参数:   type            desc
   label:  string          当前组件的唯一标识
   api:    string          数据请求的地址
   item:   jsx对象          列表渲染的组件(必须是function组件)
+  searchArgvs object      检索参数
  */
 
 import React, { Component } from "react";
@@ -130,7 +131,7 @@ class List extends Component {
   }
   async getData(pageIndex) {
     // searchArgvs 检索项添加
-    const { api, perpagenum, subjectId, searchArgvs } = this.props;
+    const { api, perpagenum, searchArgvs } = this.props;
     let { userInfo } = this.state;
     if (!userInfo || !userInfo.id) {
       userInfo = await this.getUserInfo();
@@ -141,7 +142,6 @@ class List extends Component {
         currentPage: pageIndex || 1,
         pageSize: perpagenum || 10,
         user_id: userInfo.id,
-        subjectId
       })
         .then(res => {
           tempData = [].concat(res.data.rows, tempData);

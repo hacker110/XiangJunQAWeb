@@ -1,4 +1,5 @@
 import React from "react";
+import { withRouter } from "react-router-dom";
 import teacher from "@/assets/teacher.png";
 import { post } from "@/utils/request.js";
 import { QUESTION } from "@/service/api.js";
@@ -12,12 +13,12 @@ function AnswerItem(props) {
     content,
     like_count,
     like_status,
-    userInfo,
     question_id,
     create_user_id,
     collection_count,
     collection_status
   } = props.data;
+  const { userInfo } = props;
 
   const [like, setLike] = useState(like_count);
   const [likeStatus, setLikeStatus] = useState(like_status);
@@ -118,4 +119,4 @@ function AnswerItem(props) {
   );
 }
 
-export default AnswerItem;
+export default withRouter(AnswerItem);

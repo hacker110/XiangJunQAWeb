@@ -1,9 +1,9 @@
 /*
- * @Description: This is a description
+ * @Description: 收藏
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-01-07 17:02:47
+ * @LastEditTime : 2019-12-25 22:35:13
  */
 // @flow
 import React, { useState } from "react";
@@ -16,20 +16,20 @@ import { QUESTION } from "@/service/api.js";
 const maxLength = 35;
 
 function ListItem(props) {
-  const { userInfo } = props;
+  const { userInfo } = props.userInfo;
   const {
     collection_count,
     like_count,
     content,
     question_id,
     create_user_id,
-    is_like = 0,
-    is_collection = 0
+    like_status = false,
+    collection_status = false
   } = props.data;
   const [like, setLike] = useState(like_count);
-  const [likeStatus, setLikeStatus] = useState(is_like);
-  const [collectionStatus, setCollectionStatus] = useState(is_collection);
+  const [likeStatus, setLikeStatus] = useState(like_status);
   const [collection, setCollection] = useState(collection_count);
+  const [collectionStatus, setCollectionStatus] = useState(collection_status);
 
   const dealData = number => {
     number = +number;
@@ -42,10 +42,10 @@ function ListItem(props) {
     post(QUESTION.SAVE_QUESTION_COLLECTION, {
       question_id: question_id,
       create_user_id: create_user_id,
-      collection_user_id: userInfo.id
+      like_user_id: 1
     }).then(res => {
       setCollection(collection + 1);
-      setCollectionStatus(1);
+      setCollectionStatus(true);
       console.log("collect", res);
     });
   };
@@ -56,7 +56,7 @@ function ListItem(props) {
       collection_user_id: userInfo.id
     }).then(res => {
       setCollection(collection - 1);
-      setCollectionStatus(0);
+      setCollectionStatus(false);
     });
   };
   const likeFun = () => {
@@ -67,7 +67,7 @@ function ListItem(props) {
       question_answer_id: 0 // 是问题则值id=0 如果是评论则是评论的id
     }).then(res => {
       setLike(like + 1);
-      setLikeStatus(1);
+      setLikeStatus(true);
       console.log("like", res);
     });
   };
@@ -79,7 +79,7 @@ function ListItem(props) {
       question_answer_id: 0 //0 对问题点赞，评论点赞,（评论的ID）
     }).then(res => {
       setLike(like - 1);
-      setLikeStatus(0);
+      setLikeStatus(false);
       console.log("like", res);
     });
   };
@@ -110,9 +110,6 @@ function ListItem(props) {
         </div>
         <div className="list-item__control">
           <div className="list-item__control--status">
-            <span>{dealData(collection)}&nbsp;收藏</span>
-            &nbsp;·&nbsp;
-            <span>{dealData(like)}&nbsp;赞同</span>
           </div>
           <div className="list-item__control--btn">
             {collectionStatus ? (

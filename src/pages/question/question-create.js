@@ -1,9 +1,9 @@
 /*
  * @Description: 提问
  * @Author: Ask
- * @LastEditors: Ask
+ * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-17 23:03:21
+ * @LastEditTime : 2019-12-25 22:21:26
  */
 // @flow
 import React, { Component } from "react";
@@ -20,42 +20,30 @@ import {
 import { trim } from "@/utils/utils.js";
 import { QUESTION, SUBJECT, FILE } from "@/service/api.js";
 import { post } from "@/utils/request.js";
+import { QESTION_TYPE } from "@/utils/constans.js";
 
-const data = [
-  // {
-  //   url: "https://zos.alipayobjects.com/rmsportal/PZUUCKTRIHWiZSY.jpeg",
-  //   id: "2121"
-  // },
-  // {
-  //   url: "https://zos.alipayobjects.com/rmsportal/hqQWgTXdrlmVVYi.jpeg",
-  //   id: "2122"
-  // }
-];
 class QuestionCreate extends Component {
   constructor(props) {
     super(props);
+    const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
     this.state = {
       subject_id: [],
-      files: data,
+      files: [],
       content: "",
       choiceData: [],
-      uploadFiles: []
+      uploadFiles: [],
+      questionTypeData: QESTION_TYPE,
+      questionType: [1],
+      userInfo
     };
   }
 
-  componentWillMount() {
-    this.getAllSubject();
-  }
   componentDidMount() {
+    this.getAllSubject();
     this.autoFocusInst.focus();
   }
 
-  gotoDetail() {
-    // x;
-  }
   onChange = (files, type, index) => {
-    console.log("onChange");
-    console.log(files, type);
     if (type === "add") {
       let cur = files.slice(-1);
       this.uploadFun(cur[0].file);
@@ -64,6 +52,7 @@ class QuestionCreate extends Component {
       files
     });
   };
+
   uploadFun(file) {
     const { uploadFiles } = this.state;
     let formdata = new FormData();
@@ -76,18 +65,25 @@ class QuestionCreate extends Component {
       console.log(res.data);
     });
   }
+  
   /**
    * @Description: 发布问题/分享
    */
   publish(e) {
-    const { subject_id, content, uploadFiles } = this.state;
+    const {
+      subject_id,
+      content,
+      uploadFiles,
+      questionType,
+      userInfo
+    } = this.state;
     if (!subject_id) return Toast.info("请选择标签");
     if (trim(content) === "") return Toast.info("请输入内容");
     post(QUESTION.ADD_QUESTION, {
       subject_id: subject_id[0],
       content,
-      type: 1,
-      user_id: 1,
+      type: questionType[0],
+      user_id: userInfo.id,
       img_name: uploadFiles.join(",")
     }).then(e => {
       if (e.status === 200) {
@@ -106,10 +102,20 @@ class QuestionCreate extends Component {
   }
 
   render() {
-    const { files, content, choiceData } = this.state;
+    const { files, content, choiceData, questionTypeData } = this.state;
     return (
       <div className="question-create">
         <div className="question-create__box">
+          <Picker
+            data={questionTypeData}
+            title="选择类型"
+            cols={1}
+            value={this.state.questionType}
+            onOk={v => this.setState({ questionType: v })}
+          >
+            <List.Item arrow="horizontal">选择创建的类型</List.Item>
+          </Picker>
+          <br />
           <Picker
             data={choiceData}
             title="选择专业"
@@ -118,7 +124,7 @@ class QuestionCreate extends Component {
             onChange={v => this.setState({ subject_id: v })}
             // onOk={v => this.setState({ subject_id: v })}
           >
-            <List.Item arrow="horizontal">选择专业</List.Item>
+            <List.Item arrow="horizontal">选择相关专业</List.Item>
           </Picker>
           <br />
           <TextareaItem
