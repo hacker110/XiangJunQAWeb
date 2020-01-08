@@ -1,5 +1,5 @@
 .list-item {
-  padding: 0.2rem .2rem 0.1rem;
+  padding: 0.2rem 0.2rem 0.1rem;
   display: flex;
   justify-content: space-between;
 }
@@ -33,13 +33,13 @@
   .list-item__control--status {
     color: $glc-font-grey-5;
   }
-  .selectIcon{
-    font-size: .18rem;
-  }
-  .unselectedIcon{
-    color: $glc-font-grey-4;
-  }
-  .selectedIcon{
-    color: $glc-red-2;
-  }
+}
+.selectIcon {
+  font-size: 0.18rem;
+}
+.unselectedIcon {
+  color: $glc-font-grey-4;
+}
+.selectedIcon {
+  color: $glc-green-1;
 }

@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-11-13 08:30:07
- * @LastEditTime : 2019-12-25 22:38:32
+ * @LastEditTime : 2020-01-07 23:18:18
  */
 
 import React, { Component } from "react";
@@ -18,7 +18,7 @@ import teacher from "@/assets/teacher.png";
 
 const tabs = [
   { title: "问题", sub: "1" },
-  { title: "分享", sub: "2" },
+  { title: "知识", sub: "2" },
   { title: "收藏", sub: "3" }
 ];
 const ListItem = {

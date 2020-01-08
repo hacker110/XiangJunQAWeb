@@ -34,6 +34,9 @@
     width: 60%;
     height: 0.2rem;
     text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
   .question-itemDetailBtns {
     padding: 0.04rem 0.1rem;

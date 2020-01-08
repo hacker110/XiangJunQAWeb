@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-01-07 17:02:47
+ * @LastEditTime : 2020-01-08 11:07:18
  */
 // @flow
 import React, { useState } from "react";
@@ -133,14 +133,14 @@ function ListItem(props) {
             {likeStatus ? (
               <i
                 onClick={unLikeFun}
-                className={"iconfont icondiancai1-copy selectIcon selectedIcon"}
+                className={"iconfont icondianzandianji selectIcon selectedIcon"}
                 style={{ marginRight: "10px" }}
               ></i>
             ) : (
               <i
                 onClick={likeFun}
                 className={
-                  "iconfont icondiancai1-copy selectIcon unselectedIcon"
+                  "iconfont icondianzandianji selectIcon unselectedIcon"
                 }
                 style={{ marginRight: "10px" }}
               ></i>

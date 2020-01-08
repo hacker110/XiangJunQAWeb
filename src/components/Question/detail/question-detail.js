@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-01-07 23:08:31
+ * @LastEditTime : 2020-01-08 11:17:53
  */
 // @flow
 import React, { Component } from "react";
@@ -188,7 +188,7 @@ class QuestionItem extends Component<{}, {}> {
               <i
                 onClick={this.unCollection}
                 className={"iconfont iconfavor-active selectIcon selectedIcon"}
-                style={{ marginRight: "16px" }}
+                style={{ marginRight: "10px" }}
               ></i>
             ) : (
               <i
@@ -196,37 +196,30 @@ class QuestionItem extends Component<{}, {}> {
                 className={
                   "iconfont iconfavor-active selectIcon unselectedIcon"
                 }
-                style={{ marginRight: "16px" }}
+                style={{ marginRight: "10px" }}
               ></i>
             )}
             {isFocus ? (
-              <span
-                className="question-itemDetailBtns"
+              <i
                 onClick={this.cancleFocusUser}
-                style={{ marginRight: "4px" }}
-              >
-                取关
-              </span>
+                className={"iconfont iconguanzhu selectIcon selectedIcon"}
+                style={{ marginRight: "10px" }}
+              ></i>
             ) : (
-              <span
-                className="question-itemDetailBtns"
+              <i
                 onClick={this.focusUser}
-                style={{ marginRight: "4px" }}
-              >
-                关注
-              </span>
+                className={"iconfont iconguanzhu selectIcon unselectedIcon"}
+                style={{ marginRight: "10px" }}
+              ></i>
             )}
-            <span
-              className="question-itemDetailBtns"
+            <i
+              className={"iconfont iconicon-test-copy selectIcon selectedIcon"}
               onClick={() => {
                 this.props.history.push({
                   pathname: `/question/questionanswer/${id}`
                 });
               }}
-              style={{ marginRight: "4px" }}
-            >
-              回答
-            </span>
+            ></i>
           </div>
         </div>
       </div>

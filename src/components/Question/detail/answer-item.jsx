@@ -65,7 +65,10 @@ function AnswerItem(props) {
   const openAnswer = () => {
     const { question_id } = props.data;
     props.history.push({
-      pathname: `/question/questionanswer/${question_id}`
+      pathname: `/question/questionanswer/${question_id}`,
+      params:{
+        type:1
+      }
     });
   };
 

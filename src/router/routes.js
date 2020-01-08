@@ -1,9 +1,9 @@
 /*
  * @Description: This is a description
  * @Author: Ask
- * @LastEditors: Ask
+ * @LastEditors  : Ask
  * @Date: 2019-11-05 08:51:42
- * @LastEditTime: 2019-12-05 23:33:25
+ * @LastEditTime : 2020-01-08 11:20:06
  */
 import Home from "@comp/home";
 import Page404 from "@/components/404/page404";
@@ -33,7 +33,7 @@ export default [
     }
   },
   {
-    path: "/question/questionanswer/:id",
+    path: "/question/questionanswer/:id/:type?",
     component: QuestionAnswer,
     meta: {
       title: "回答问题"

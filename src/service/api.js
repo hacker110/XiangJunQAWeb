@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-11-17 22:00:55
- * @LastEditTime : 2020-01-07 17:08:14
+ * @LastEditTime : 2020-01-08 16:04:27
  */
 export const QUESTION = {
   // 添加问题
@@ -44,7 +44,7 @@ export const USER = {
   // 用户绑定科目
   USER_BIND_SUBJECT: "/api/user/UserBindSubject",
   // 关注用户
-  COLLECTION_USER: "/api//user/CollectionUser",
+  COLLECTION_USER: "/api/user/CollectionUser",
   // 取消关注用户
   CANCLE_COLLECTION_USER: "/api/user/CancelCollectionUser",
   // 得到所有被关注的用户
