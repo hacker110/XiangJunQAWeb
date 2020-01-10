@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-11-05 08:51:42
- * @LastEditTime : 2020-01-08 11:20:06
+ * @LastEditTime : 2020-01-10 14:48:18
  */
 import Home from "@comp/home";
 import Page404 from "@/components/404/page404";
@@ -33,7 +33,7 @@ export default [
     }
   },
   {
-    path: "/question/questionanswer/:id/:type?",
+    path: "/question/questionanswer/:questionId/:answerId?",
     component: QuestionAnswer,
     meta: {
       title: "回答问题"
@@ -44,7 +44,7 @@ export default [
     component: Mine
   },
   {
-    path: "/question/questioncreate",
+    path: "/question/questioncreate/:id?",
     component: QuestionCreate
   },
   {

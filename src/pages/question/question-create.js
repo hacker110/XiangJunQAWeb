@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2019-12-25 22:21:26
+ * @LastEditTime : 2020-01-08 17:25:23
  */
 // @flow
 import React, { Component } from "react";
@@ -21,12 +21,17 @@ import { trim } from "@/utils/utils.js";
 import { QUESTION, SUBJECT, FILE } from "@/service/api.js";
 import { post } from "@/utils/request.js";
 import { QESTION_TYPE } from "@/utils/constans.js";
-
+const pageStatusConf = {
+  CREATE: "create",
+  EDIT: "edit"
+};
 class QuestionCreate extends Component {
   constructor(props) {
     super(props);
     const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
+    const { id } = this.props.match.params;
     this.state = {
+      pageStatus: id ? pageStatusConf.EDIT : pageStatusConf.CREATE,
       subject_id: [],
       files: [],
       content: "",
@@ -36,6 +41,9 @@ class QuestionCreate extends Component {
       questionType: [1],
       userInfo
     };
+    if (id) {
+      this.getData();
+    }
   }
 
   componentDidMount() {
@@ -53,6 +61,28 @@ class QuestionCreate extends Component {
     });
   };
 
+  updateQuestion() {
+    const {
+      id,
+      subject_id,
+      content,
+      uploadFiles,
+      questionType,
+      userInfo
+    } = this.state;
+    post(QUESTION.UPDATE_QUESTION, {
+      id,
+      uploadFiles,
+      content,
+      subject_id,
+      user_id: userInfo.id,
+      type: questionType
+    }).then(res => {
+      this.props.history.push("/question/questionlist");
+      console.log(res.data);
+    });
+  }
+
   uploadFun(file) {
     const { uploadFiles } = this.state;
     let formdata = new FormData();
@@ -65,7 +95,7 @@ class QuestionCreate extends Component {
       console.log(res.data);
     });
   }
-  
+
   /**
    * @Description: 发布问题/分享
    */
@@ -97,6 +127,24 @@ class QuestionCreate extends Component {
       const list = e.data.rows;
       this.setState({
         choiceData: list.map(item => ({ label: item.title, value: item.id }))
+      });
+    });
+  }
+
+  // 获取问题详情
+  getData() {
+    const { id, userInfo } = this.state;
+    post(QUESTION.GET_QUESTION_BY_ID, {
+      id: id,
+      user_id: userInfo.id
+    }).then(res => {
+      const { content, CollectionCount, LikeCount, user_id } = res.data;
+      this.setState({
+        user_id,
+        content,
+        CollectionCount,
+        LikeCount,
+        icon: "https://avatars2.githubusercontent.com/u/25131706?s=40&v=4"
       });
     });
   }

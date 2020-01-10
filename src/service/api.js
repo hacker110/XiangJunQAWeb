@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-11-17 22:00:55
- * @LastEditTime : 2020-01-08 16:04:27
+ * @LastEditTime : 2020-01-08 17:16:43
  */
 export const QUESTION = {
   // 添加问题
@@ -30,7 +30,9 @@ export const QUESTION = {
   // 保存问题点赞
   SAVE_QUESTION_LIKES: "/api/question/saveQuestionlikes",
   // 取消问题点赞
-  CANCLE_QUESTION_LIKES: "/api/question/cancelQuestionlikes"
+  CANCLE_QUESTION_LIKES: "/api/question/cancelQuestionlikes",
+  // 更新问题
+  UPDATE_QUESTION: "/api/question/updateQuestion"
 };
 export const SUBJECT = {
   // 添加问题

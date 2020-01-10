@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-01-07 16:55:13
+ * @LastEditTime : 2020-01-08 17:13:41
  */
 // @flow
 import React, { useState } from "react";
@@ -83,10 +83,19 @@ function ListItem(props) {
       console.log("like", res);
     });
   };
-  const openAnswer = () => {
-    const { question_id } = props.data;
+
+  const deleteQuestion = () => {
     props.history.push({
       pathname: `/question/questionanswer/${question_id}`
+    });
+  };
+
+  const editQuestion = () => {
+    props.history.push({
+      pathname: `/question/questioncreate/`,
+      params: {
+        id: question_id
+      }
     });
   };
 
@@ -115,7 +124,7 @@ function ListItem(props) {
             <span>{dealData(like)}&nbsp;赞同</span>
           </div>
           <div className="list-item__control--btn">
-            {collectionStatus ? (
+            {/*collectionStatus ? (
               <i
                 onClick={unCollect}
                 className={"iconfont iconfavor-active selectIcon selectedIcon"}
@@ -144,11 +153,15 @@ function ListItem(props) {
                 }
                 style={{ marginRight: "10px" }}
               ></i>
-            )}
+            )*/}
             <i
-              className={"iconfont iconicon-test-copy selectIcon"}
-              onClick={openAnswer}
-              style={{ marginRight: "4px", color: "#38bc6d" }}
+              className={"iconfont iconshanchu selectIcon alertIcon"}
+              onClick={deleteQuestion}
+              style={{ marginRight: "16px" }}
+            ></i>
+            <i
+              className={"iconfont iconbianji selectIcon selectedIcon"}
+              onClick={editQuestion}
             ></i>
           </div>
         </div>

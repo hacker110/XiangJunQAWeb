@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-01-08 11:17:53
+ * @LastEditTime : 2020-01-08 16:47:07
  */
 // @flow
 import React, { Component } from "react";
@@ -24,9 +24,9 @@ class QuestionItem extends Component<{}, {}> {
       content: "",
       icon: "",
       user_id: 0,
-      isFocus: false,
       isLike: false,
-      isCollection: false
+      isCollection: false,
+      isCollectionAuthor: false
     };
     this.focusUser = this.focusUser.bind(this);
     this.cancleFocusUser = this.cancleFocusUser.bind(this);
@@ -46,7 +46,7 @@ class QuestionItem extends Component<{}, {}> {
       collection_user_id: user_id,
       user_id: userInfo.id
     }).then(res => {
-      this.setState({ isFocus: true });
+      this.setState({ isCollectionAuthor: true });
     });
   }
 
@@ -56,7 +56,7 @@ class QuestionItem extends Component<{}, {}> {
       collection_user_id: user_id,
       user_id: userInfo.id
     }).then(res => {
-      this.setState({ isFocus: false });
+      this.setState({ isCollectionAuthor: false });
     });
   }
 
@@ -111,27 +111,29 @@ class QuestionItem extends Component<{}, {}> {
   }
 
   getData() {
+    const { id, userInfo } = this.state;
     post(QUESTION.GET_QUESTION_BY_ID, {
-      id: this.state.id
+      id: id,
+      user_id: userInfo.id
     }).then(res => {
       const {
         content,
         CollectionCount,
         LikeCount,
         user_id,
-        isFocus,
         is_like,
-        is_collection
+        is_collection,
+        is_collection_author
       } = res.data;
       this.setState({
-        isFocus: isFocus,
         user_id,
         content,
         CollectionCount,
         LikeCount,
         icon: "https://avatars2.githubusercontent.com/u/25131706?s=40&v=4",
         isLike: Boolean(is_like),
-        isCollection: Boolean(is_collection)
+        isCollection: Boolean(is_collection),
+        isCollectionAuthor: Boolean(is_collection_author)
       });
     });
   }
@@ -148,9 +150,9 @@ class QuestionItem extends Component<{}, {}> {
       icon,
       CollectionCount,
       LikeCount,
-      isFocus,
       isLike,
-      isCollection
+      isCollection,
+      isCollectionAuthor
     } = this.state;
     return (
       <div data-question={id} className="question-itemDetail">
@@ -199,7 +201,7 @@ class QuestionItem extends Component<{}, {}> {
                 style={{ marginRight: "10px" }}
               ></i>
             )}
-            {isFocus ? (
+            {isCollectionAuthor ? (
               <i
                 onClick={this.cancleFocusUser}
                 className={"iconfont iconguanzhu selectIcon selectedIcon"}

@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-12-06 22:33:51
- * @LastEditTime: 2020-01-07 16:45:16
+ * @LastEditTime: 2020-01-09 00:31:50
  eg:
  <List label="detail" api={QUESTION.GET_NEW_QUESTION} item={AnswerItem} />
   参数:   type            desc
@@ -141,7 +141,7 @@ class List extends Component {
         ...searchArgvs,
         currentPage: pageIndex || 1,
         pageSize: perpagenum || 10,
-        user_id: userInfo.id,
+        user_id: userInfo.id
       })
         .then(res => {
           tempData = [].concat(res.data.rows, tempData);

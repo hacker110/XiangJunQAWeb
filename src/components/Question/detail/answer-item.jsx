@@ -15,13 +15,14 @@ function AnswerItem(props) {
     like_status,
     question_id,
     create_user_id,
+    answer_id,
+    is_like,
     collection_count,
     collection_status
   } = props.data;
   const { userInfo } = props;
 
-  const [like, setLike] = useState(like_count);
-  const [likeStatus, setLikeStatus] = useState(like_status);
+  const [likeStatus, setLikeStatus] = useState(Boolean(is_like));
   // const [collection, setCollection] = useState(collection_count);
   // const [collectionStatus, setCollectionStatus] = useState(collection_status);
 
@@ -42,9 +43,8 @@ function AnswerItem(props) {
       create_user_id: create_user_id,
       question_id: question_id,
       like_user_id: userInfo.id,
-      question_answer_id: 0 // 是问题则值id=0 如果是评论则是评论的id
+      question_answer_id: answer_id //0 对问题点赞，评论点赞,（评论的ID）
     }).then(res => {
-      setLike(like + 1);
       setLikeStatus(true);
       console.log("like", res);
     });
@@ -54,21 +54,16 @@ function AnswerItem(props) {
     post(QUESTION.CANCLE_QUESTION_LIKES, {
       like_user_id: userInfo.id,
       question_id: question_id,
-      question_answer_id: 0 //0 对问题点赞，评论点赞,（评论的ID）
+      question_answer_id: answer_id //0 对问题点赞，评论点赞,（评论的ID）
     }).then(res => {
-      setLike(like - 1);
       setLikeStatus(false);
       console.log("like", res);
     });
   };
 
   const openAnswer = () => {
-    const { question_id } = props.data;
     props.history.push({
-      pathname: `/question/questionanswer/${question_id}`,
-      params:{
-        type:1
-      }
+      pathname: `/question/questionanswer/${question_id}/${answer_id}`
     });
   };
 
