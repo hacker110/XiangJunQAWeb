@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-12-06 22:33:51
- * @LastEditTime: 2020-01-09 00:31:50
+ * @LastEditTime: 2020-01-12 10:08:48
  eg:
  <List label="detail" api={QUESTION.GET_NEW_QUESTION} item={AnswerItem} />
   参数:   type            desc
@@ -43,7 +43,6 @@ class List extends Component {
     totalPage = 1;
     pageIndex = 1;
     const getRowData = (dataBlob, sectionID, rowID) => dataBlob[rowID];
-    this.getData = this.getData.bind(this);
     const dataSource = new ListView.DataSource({
       getRowData,
       rowHasChanged: (row1, row2) => row1 !== row2,
@@ -108,6 +107,7 @@ class List extends Component {
       isLoading: false
     });
   }
+
   getUserInfo() {
     return new Promise((resolve, reject) => {
       const wx_open_id = localStorage.getItem("wx_open_id");
@@ -129,6 +129,7 @@ class List extends Component {
       });
     });
   }
+
   async getData(pageIndex) {
     // searchArgvs 检索项添加
     const { api, perpagenum, searchArgvs } = this.props;
@@ -144,9 +145,29 @@ class List extends Component {
         user_id: userInfo.id
       })
         .then(res => {
-          tempData = [].concat(res.data.rows, tempData);
-          totalPage = res.data.totalPage;
-          resolve(res.data.rows);
+          let data = res.data.rows;
+          // let map = data.reduce((prev, cur) => {
+          //   if (cur.father_id) {
+          //     if (prev[cur.father_id]) {
+          //       prev[cur.father_id].push(cur);
+          //     } else {
+          //       prev[cur.father_id] = [cur];
+          //     }
+          //   }
+          //   return prev;
+          // }, {});
+          // data = data
+          //   .map(item => {
+          //     item.child = map[item.answer_id];
+          //     return item;
+          //   })
+          //   .filter(item => item.father_id === 0);
+          // console.log(data);
+
+          tempData = [].concat(data, tempData);
+          totalPage = data.length; //res.data.totalPage;
+
+          resolve(data);
         })
         .catch(e => {
           console.log(e);

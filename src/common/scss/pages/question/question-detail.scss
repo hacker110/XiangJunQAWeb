@@ -12,4 +12,20 @@
   .question-answerlist {
     flex: 1 0 auto;
   }
+  .hasline {
+    padding-bottom: 10px;
+    border-bottom: solid 1px $glc-grey-3;
+  }
+  .loadMore {
+    color: $glc-green-3;
+  }
+  .answer-child {
+    border-bottom: solid 1px $glc-grey-3;
+  }
+  .answer-child:last-child {
+    border: none;
+  }
+  .remark-list {
+    transition: all 2s ease-out;
+  }
 }

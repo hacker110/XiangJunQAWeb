@@ -1,9 +1,9 @@
 /*
- * @Description: 问题详情
+ * @Description: 问题详情头部
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-01-08 16:47:07
+ * @LastEditTime : 2020-01-12 07:54:52
  */
 // @flow
 import React, { Component } from "react";

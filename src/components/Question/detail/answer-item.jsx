@@ -1,14 +1,23 @@
+/*
+ * @Description: 问题的答案
+ * @Author: Ask
+ * @LastEditors: Ask
+ * @Date: 2019-12-12 00:33:44
+ * @LastEditTime: 2020-01-12 10:01:11
+ */
 import React from "react";
 import { withRouter } from "react-router-dom";
-import teacher from "@/assets/teacher.png";
+import { Icon } from "antd-mobile";
 import { post } from "@/utils/request.js";
 import { QUESTION } from "@/service/api.js";
 import { useState } from "react";
-import { Icon } from "antd-mobile";
+import teacher from "@/assets/teacher.png";
+import Child from "./answer-child.jsx";
 
 function AnswerItem(props) {
   // 文字的最大长度
   const maxLength = 35;
+  console.log(props.data);
   const {
     content,
     like_count,
@@ -18,11 +27,14 @@ function AnswerItem(props) {
     answer_id,
     is_like,
     collection_count,
-    collection_status
+    collection_status,
+    child
   } = props.data;
   const { userInfo } = props;
-
+  // 子评论大于2的话标识可以加载更多
+  const collapseFlag = child && child.length > 2;
   const [likeStatus, setLikeStatus] = useState(Boolean(is_like));
+  const [hasMore, setHasMore] = useState(Boolean(collapseFlag));
   // const [collection, setCollection] = useState(collection_count);
   // const [collectionStatus, setCollectionStatus] = useState(collection_status);
 
@@ -66,7 +78,10 @@ function AnswerItem(props) {
       pathname: `/question/questionanswer/${question_id}/${answer_id}`
     });
   };
-
+  const hasChild = () => {
+    return child && child.length;
+  };
+  console.log(child);
   return (
     <div className="list-item answer-item">
       <div className="list-item__advatorBox">
@@ -87,7 +102,7 @@ function AnswerItem(props) {
             </span>
           )}
         </div>
-        <div className="list-item__control">
+        <div className={`list-item__control ${hasChild() && "hasline"} `}>
           <div className="list-item__control--status"></div>
           <div className="list-item__control--btn">
             {likeStatus ? (
@@ -112,6 +127,35 @@ function AnswerItem(props) {
             ></i>
           </div>
         </div>
+        <div
+          className="remark-list"
+          style={{ maxHeight: hasMore ? "200px" : "1000px" }}
+        >
+          {hasChild() && (
+            <Child data={child} userInfo={userInfo} hasMore={hasMore} />
+          )}
+        </div>
+        {hasChild() &&
+          child.length > 2 &&
+          (hasMore ? (
+            <div
+              className="loadMore"
+              onClick={() => {
+                setHasMore(false);
+              }}
+            >
+              加载剩余评论
+            </div>
+          ) : (
+            <div
+              className="loadMore"
+              onClick={() => {
+                setHasMore(true);
+              }}
+            >
+              收起
+            </div>
+          ))}
       </div>
     </div>
   );

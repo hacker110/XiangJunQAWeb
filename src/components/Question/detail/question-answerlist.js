@@ -1,9 +1,9 @@
 /*
  * @Description: 问题详情-答案列表
  * @Author: Ask
- * @LastEditors: Ask
+ * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-17 23:12:39
+ * @LastEditTime : 2020-01-10 15:22:43
  */
 // @flow
 import React, { Component } from "react";
@@ -26,23 +26,9 @@ class QuestionAnswerList extends Component<{}, {}> {
       user_id: 0,
       data: []
     };
-    this.getData = this.getData.bind(this);
   }
 
   componentDidMount() {}
-
-  getData(pageIndex) {
-    return new Promise((resolve, reject) => {
-      post(QUESTION.GET_QUESTION_ANSWER_BY_QUESTIONID, {
-        question_id: this.state.id,
-        currentPage: pageIndex || 1,
-        pageSize: 6
-      }).then(res => {
-        this.setState({ data: res.data.rows });
-        resolve(res.data.rows);
-      });
-    });
-  }
 
   render() {
     const { id } = this.state;
