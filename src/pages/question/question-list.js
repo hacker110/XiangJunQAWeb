@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-01-07 16:44:44
+ * @LastEditTime : 2020-01-21 20:03:59
  */
 // @flow
 import React, { Component } from "react";
@@ -18,7 +18,7 @@ const tabList = [
   {
     title: "推荐",
     key: 1,
-    api: QUESTION.GET_NEW_QUESTION,
+    api: QUESTION.GET_LIKE_QUESTION,
     item: QuestionItem,
     searchArgvs: { subjectId: 0 }
   },

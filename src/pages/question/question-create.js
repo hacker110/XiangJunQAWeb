@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-01-08 17:25:23
+ * @LastEditTime : 2020-01-16 17:55:25
  */
 // @flow
 import React, { Component } from "react";
@@ -28,20 +28,24 @@ const pageStatusConf = {
 class QuestionCreate extends Component {
   constructor(props) {
     super(props);
+    console.log("QuestionCreate");
     const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
-    const { id } = this.props.match.params;
+    const { questionId, type } = this.props.match.params;
+    console.log(questionId);
     this.state = {
-      pageStatus: id ? pageStatusConf.EDIT : pageStatusConf.CREATE,
+      id: questionId,
+      questionType: questionId && [
+        QESTION_TYPE.find(item => item.alias === type)["value"]
+      ],
+      pageStatus: questionId ? pageStatusConf.EDIT : pageStatusConf.CREATE,
       subject_id: [],
       files: [],
       content: "",
       choiceData: [],
       uploadFiles: [],
-      questionTypeData: QESTION_TYPE,
-      questionType: [1],
       userInfo
     };
-    if (id) {
+    if (questionId) {
       this.getData();
     }
   }
@@ -74,11 +78,11 @@ class QuestionCreate extends Component {
       id,
       uploadFiles,
       content,
-      subject_id,
+      subject_id: subject_id[0],
       user_id: userInfo.id,
-      type: questionType
+      type: questionType[0]
     }).then(res => {
-      this.props.history.push("/question/questionlist");
+      this.props.history.goBack();
       console.log(res.data);
     });
   }
@@ -134,28 +138,30 @@ class QuestionCreate extends Component {
   // 获取问题详情
   getData() {
     const { id, userInfo } = this.state;
+    console.log(id, userInfo);
     post(QUESTION.GET_QUESTION_BY_ID, {
       id: id,
       user_id: userInfo.id
     }).then(res => {
-      const { content, CollectionCount, LikeCount, user_id } = res.data;
+      const { content, CollectionCount, LikeCount, user_id, su_id } = res.data;
       this.setState({
         user_id,
         content,
         CollectionCount,
         LikeCount,
+        subject_id: [su_id],
         icon: "https://avatars2.githubusercontent.com/u/25131706?s=40&v=4"
       });
     });
   }
 
   render() {
-    const { files, content, choiceData, questionTypeData } = this.state;
+    const { files, content, choiceData, pageStatus } = this.state;
     return (
       <div className="question-create">
         <div className="question-create__box">
           <Picker
-            data={questionTypeData}
+            data={QESTION_TYPE}
             title="选择类型"
             cols={1}
             value={this.state.questionType}
@@ -206,15 +212,27 @@ class QuestionCreate extends Component {
             >
               返回主页
             </Button>
-            <Button
-              onClick={this.publish.bind(this)}
-              icon="check-circle-o"
-              size="small"
-              type="primary"
-              inline
-            >
-              发布并返回主页
-            </Button>
+            {pageStatus === pageStatusConf.CREATE ? (
+              <Button
+                onClick={this.publish.bind(this)}
+                icon="check-circle-o"
+                size="small"
+                type="primary"
+                inline
+              >
+                发布并返回主页
+              </Button>
+            ) : (
+              <Button
+                onClick={this.updateQuestion.bind(this)}
+                icon="check-circle-o"
+                size="small"
+                type="primary"
+                inline
+              >
+                保存并返回主页
+              </Button>
+            )}
           </div>
         </div>
 

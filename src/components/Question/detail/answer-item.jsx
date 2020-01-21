@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-12-12 00:33:44
- * @LastEditTime: 2020-01-12 10:01:11
+ * @LastEditTime: 2020-01-21 20:57:56
  */
 import React from "react";
 import { withRouter } from "react-router-dom";
@@ -20,14 +20,10 @@ function AnswerItem(props) {
   console.log(props.data);
   const {
     content,
-    like_count,
-    like_status,
     question_id,
     create_user_id,
     answer_id,
     is_like,
-    collection_count,
-    collection_status,
     child
   } = props.data;
   const { userInfo } = props;
@@ -43,11 +39,6 @@ function AnswerItem(props) {
 
   const elipsisText = text => {
     return text.substr(0, maxLength) + "...";
-  };
-
-  const dealData = number => {
-    number = +number;
-    return number.toLocaleString();
   };
 
   const likeFun = () => {
@@ -79,7 +70,7 @@ function AnswerItem(props) {
     });
   };
   const hasChild = () => {
-    return child && child.length;
+    return child && child.length > 0;
   };
   console.log(child);
   return (
@@ -102,7 +93,7 @@ function AnswerItem(props) {
             </span>
           )}
         </div>
-        <div className={`list-item__control ${hasChild() && "hasline"} `}>
+        <div className={`list-item__control ${hasChild() ? "hasline": ""} `}>
           <div className="list-item__control--status"></div>
           <div className="list-item__control--btn">
             {likeStatus ? (
@@ -127,14 +118,14 @@ function AnswerItem(props) {
             ></i>
           </div>
         </div>
-        <div
-          className="remark-list"
-          style={{ maxHeight: hasMore ? "200px" : "1000px" }}
-        >
-          {hasChild() && (
+        {hasChild() && (
+          <div
+            className="remark-list"
+            style={{ maxHeight: hasMore ? "200px" : "1000px" }}
+          >
             <Child data={child} userInfo={userInfo} hasMore={hasMore} />
-          )}
-        </div>
+          </div>
+        )}
         {hasChild() &&
           child.length > 2 &&
           (hasMore ? (

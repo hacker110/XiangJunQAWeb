@@ -3,12 +3,11 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-01-10 15:22:43
+ * @LastEditTime : 2020-01-21 20:57:44
  */
 // @flow
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import { post } from "@/utils/request.js";
 import { QUESTION } from "@/service/api.js";
 import List from "@/components/common-list/list.jsx";
 import AnswerItem from "./answer-item.jsx";

@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-01-08 17:13:41
+ * @LastEditTime : 2020-01-21 20:52:10
  */
 // @flow
 import React, { useState } from "react";
@@ -17,19 +17,9 @@ const maxLength = 35;
 
 function ListItem(props) {
   const { userInfo } = props;
-  const {
-    collection_count,
-    like_count,
-    content,
-    question_id,
-    create_user_id,
-    like_status = false,
-    collection_status = false
-  } = props.data;
-  const [like, setLike] = useState(like_count);
-  const [likeStatus, setLikeStatus] = useState(like_status);
-  const [collection, setCollection] = useState(collection_count);
-  const [collectionStatus, setCollectionStatus] = useState(collection_status);
+  const { collection_count, like_count, content, question_id } = props.data;
+  const [like] = useState(like_count);
+  const [collection] = useState(collection_count);
 
   const dealData = number => {
     number = +number;
@@ -38,64 +28,19 @@ function ListItem(props) {
   const elipsisText = text => {
     return text.substr(0, maxLength) + "...";
   };
-  const collect = () => {
-    post(QUESTION.SAVE_QUESTION_COLLECTION, {
-      question_id: question_id,
-      create_user_id: create_user_id,
-      collection_user_id: userInfo.id
-    }).then(res => {
-      setCollection(collection + 1);
-      setCollectionStatus(true);
-      console.log("collect", res);
-    });
-  };
-  const unCollect = () => {
-    post(QUESTION.CANCLE_QUESTION_COLLECTION, {
-      question_id: question_id,
-      create_user_id: create_user_id,
-      collection_user_id: userInfo.id
-    }).then(res => {
-      setCollection(collection - 1);
-      setCollectionStatus(false);
-    });
-  };
-  const likeFun = () => {
-    post(QUESTION.SAVE_QUESTION_LIKES, {
-      create_user_id: create_user_id,
-      question_id: question_id,
-      like_user_id: userInfo.id,
-      question_answer_id: 0 // 是问题则值id=0 如果是评论则是评论的id
-    }).then(res => {
-      setLike(like + 1);
-      setLikeStatus(true);
-      console.log("like", res);
-    });
-  };
-
-  const unLikeFun = () => {
-    post(QUESTION.CANCLE_QUESTION_LIKES, {
-      like_user_id: userInfo.id,
-      question_id: question_id,
-      question_answer_id: 0 //0 对问题点赞，评论点赞,（评论的ID）
-    }).then(res => {
-      setLike(like - 1);
-      setLikeStatus(false);
-      console.log("like", res);
-    });
-  };
 
   const deleteQuestion = () => {
-    props.history.push({
-      pathname: `/question/questionanswer/${question_id}`
+    post(QUESTION.DELETE_QUESTION_BY_QUESTIONID, {
+      user_id: userInfo.id,
+      question_id: question_id
+    }).then(res => {
+      window.location.reload();
     });
   };
 
   const editQuestion = () => {
     props.history.push({
-      pathname: `/question/questioncreate/`,
-      params: {
-        id: question_id
-      }
+      pathname: `/question/questioncreate/question/${question_id}`
     });
   };
 

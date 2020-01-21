@@ -3,32 +3,20 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2020-01-12 07:53:29
- * @LastEditTime: 2020-01-12 09:28:50
+ * @LastEditTime: 2020-01-21 20:59:39
  */
 
 import React from "react";
 import { withRouter } from "react-router-dom";
 import teacher from "@/assets/teacher.png";
-import { post } from "@/utils/request.js";
-import { QUESTION } from "@/service/api.js";
 import { useState } from "react";
 import { Icon } from "antd-mobile";
 
 function AnswerItem(props) {
   // 文字的最大长度
   const maxLength = 35;
-  const {
-    content,
-    like_count,
-    like_status,
-    question_id,
-    create_user_id,
-    answer_id,
-    is_like,
-    collection_count,
-    collection_status
-  } = props.data;
-  const { userInfo, hasMore, data } = props;
+  const { question_id, answer_id } = props.data;
+  const { hasMore, data } = props;
 
   // const [likeStatus, setLikeStatus] = useState(Boolean(is_like));
   // const [collection, setCollection] = useState(collection_count);
@@ -39,34 +27,6 @@ function AnswerItem(props) {
 
   const elipsisText = text => {
     return text.substr(0, maxLength) + "...";
-  };
-
-  const dealData = number => {
-    number = +number;
-    return number.toLocaleString();
-  };
-
-  const likeFun = () => {
-    post(QUESTION.SAVE_QUESTION_LIKES, {
-      create_user_id: create_user_id,
-      question_id: question_id,
-      like_user_id: userInfo.id,
-      question_answer_id: answer_id //0 对问题点赞，评论点赞,（评论的ID）
-    }).then(res => {
-      // setLikeStatus(true);
-      console.log("like", res);
-    });
-  };
-
-  const unLikeFun = () => {
-    post(QUESTION.CANCLE_QUESTION_LIKES, {
-      like_user_id: userInfo.id,
-      question_id: question_id,
-      question_answer_id: answer_id //0 对问题点赞，评论点赞,（评论的ID）
-    }).then(res => {
-      // setLikeStatus(false);
-      console.log("like", res);
-    });
   };
 
   const openAnswer = () => {

@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-01-12 07:54:52
+ * @LastEditTime : 2020-01-16 11:01:05
  */
 // @flow
 import React, { Component } from "react";
@@ -14,10 +14,10 @@ import { QUESTION, USER } from "@/service/api.js";
 class QuestionItem extends Component<{}, {}> {
   constructor(props) {
     super(props);
-    const { id } = this.props.match.params;
+    const { questionId } = this.props.match.params;
     const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
     this.state = {
-      id,
+      id: questionId,
       userInfo,
       CollectionCount: 0,
       LikeCount: "",

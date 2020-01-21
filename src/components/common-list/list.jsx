@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-12-06 22:33:51
- * @LastEditTime: 2020-01-12 10:08:48
+ * @LastEditTime: 2020-01-21 20:58:07
  eg:
  <List label="detail" api={QUESTION.GET_NEW_QUESTION} item={AnswerItem} />
   参数:   type            desc
@@ -17,7 +17,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { findDOMNode } from "react-dom";
 import { ListView } from "antd-mobile";
-import { QUESTION, USER } from "@/service/api.js";
+import { USER } from "@/service/api.js";
 import { post } from "@/utils/request.js";
 
 function MyBody(props) {
@@ -59,7 +59,7 @@ class List extends Component {
   }
 
   componentDidMount() {
-    const hei = findDOMNode(this.lv).parentNode.clientHeight;
+    // const hei = findDOMNode(this.lv).parentNode.clientHeight;
     this.setState({
       height: findDOMNode(this.lv).parentNode.clientHeight
     });
@@ -108,28 +108,6 @@ class List extends Component {
     });
   }
 
-  getUserInfo() {
-    return new Promise((resolve, reject) => {
-      const wx_open_id = localStorage.getItem("wx_open_id");
-      post(USER.GET_USER_BY_OPENID, {
-        wx_open_id
-      }).then(res => {
-        if (!res.data) return;
-        const { id, city, provence, nick_name, head_img } = res.data;
-        let userInfo = {
-          id,
-          city,
-          provence,
-          photo: head_img,
-          name: nick_name
-        };
-        this.setState({ userInfo });
-        sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
-        resolve(userInfo);
-      });
-    });
-  }
-
   async getData(pageIndex) {
     // searchArgvs 检索项添加
     const { api, perpagenum, searchArgvs } = this.props;
@@ -165,7 +143,7 @@ class List extends Component {
           // console.log(data);
 
           tempData = [].concat(data, tempData);
-          totalPage = data.length; //res.data.totalPage;
+          totalPage = res.data.totalPage;
 
           resolve(data);
         })
@@ -199,7 +177,13 @@ class List extends Component {
         index = 0;
       }
       const obj = tempData[index++];
-      return <Child data={obj} userInfo={userInfo} />;
+      return (
+        <Child
+          data={obj}
+          userInfo={userInfo}
+          deleteItem={this.deleteItem.bind(this)}
+        />
+      );
     };
 
     return (
@@ -232,6 +216,43 @@ class List extends Component {
         onEndReachedThreshold={20}
       />
     );
+  }
+  /*
+   * @Description: 删除列表中的某项 操作
+   * @param {type}
+   */
+  deleteItem(options) {
+    // if (typeof options !== "object") return new Error("参数必须是对象~");
+    // const keys = Object.keys(options);
+    // if (!keys.length) return new Error("对象必须有值~");
+
+    // // 先使用一个值
+    // let { data } = this.state;
+    // // data = data.filter(item => item[keys[0]] !== options[keys[0]]);
+    // console.log(dataBlobs, data, rowIDs);
+    // console.log("", tempData, options);
+  }
+
+  getUserInfo() {
+    return new Promise((resolve, reject) => {
+      const wx_open_id = localStorage.getItem("wx_open_id");
+      post(USER.GET_USER_BY_OPENID, {
+        wx_open_id
+      }).then(res => {
+        if (!res.data) return;
+        const { id, city, provence, nick_name, head_img } = res.data;
+        let userInfo = {
+          id,
+          city,
+          provence,
+          photo: head_img,
+          name: nick_name
+        };
+        this.setState({ userInfo });
+        sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+        resolve(userInfo);
+      });
+    });
   }
 }
 

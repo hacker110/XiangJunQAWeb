@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-11-05 08:51:42
- * @LastEditTime : 2020-01-10 14:48:18
+ * @LastEditTime : 2020-01-16 17:48:51
  */
 import Home from "@comp/home";
 import Page404 from "@/components/404/page404";
@@ -44,11 +44,11 @@ export default [
     component: Mine
   },
   {
-    path: "/question/questioncreate/:id?",
+    path: "/question/questioncreate/:type?/:questionId?",
     component: QuestionCreate
   },
   {
-    path: "/question/questiondetail/:id",
+    path: "/question/questiondetail/:questionId",
     component: QuestionDetail,
     meta: {
       title: "问题详情页"

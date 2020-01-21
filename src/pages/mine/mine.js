@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-11-13 08:30:07
- * @LastEditTime : 2020-01-07 23:18:18
+ * @LastEditTime : 2020-01-16 10:44:59
  */
 
 import React, { Component } from "react";
@@ -49,12 +49,14 @@ export default class Mine extends Component {
         <div className="mine-box">
           <section className="mine-header">
             <div className="mine-header__avator">
-              <img src={userInfo.photo || teacher} alt="头像" />
+              <img src={(userInfo && userInfo.photo) || teacher} alt="头像" />
             </div>
             <div className="mine-header__desc">
-              <div className="mine-header__name">{userInfo.name}</div>
+              <div className="mine-header__name">
+                {userInfo && userInfo.name}
+              </div>
               <div className="mine-header__provence">
-                {userInfo.provence || userInfo.city}
+                {(userInfo && userInfo.provence) || (userInfo && userInfo.city)}
               </div>
             </div>
           </section>
