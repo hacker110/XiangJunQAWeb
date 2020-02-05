@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-01-16 17:55:25
+ * @LastEditTime : 2020-02-05 22:35:23
  */
 // @flow
 import React, { Component } from "react";
@@ -34,9 +34,9 @@ class QuestionCreate extends Component {
     console.log(questionId);
     this.state = {
       id: questionId,
-      questionType: questionId && [
+      questionType: (questionId && [
         QESTION_TYPE.find(item => item.alias === type)["value"]
-      ],
+      ]) || [1], // 1问题, 2知识 默认问题
       pageStatus: questionId ? pageStatusConf.EDIT : pageStatusConf.CREATE,
       subject_id: [],
       files: [],
@@ -111,7 +111,7 @@ class QuestionCreate extends Component {
       questionType,
       userInfo
     } = this.state;
-    if (!subject_id) return Toast.info("请选择标签");
+    if (!subject_id.length) return Toast.info("请选择专业标签");
     if (trim(content) === "") return Toast.info("请输入内容");
     post(QUESTION.ADD_QUESTION, {
       subject_id: subject_id[0],
