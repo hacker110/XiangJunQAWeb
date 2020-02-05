@@ -3,14 +3,17 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-01-21 20:52:41
+ * @LastEditTime : 2020-02-05 16:38:06
  */
 // @flow
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
+import { Modal } from "antd-mobile";
 import teacher from "@/assets/teacher.png";
 import { post } from "@/utils/request.js";
 import { QUESTION } from "@/service/api.js";
+
+const alert = Modal.alert;
 
 // 文字的最大长度
 const maxLength = 35;
@@ -30,12 +33,25 @@ function ListItem(props) {
   };
 
   const deleteQuestion = () => {
-    post(QUESTION.DELETE_QUESTION_BY_QUESTIONID, {
-      user_id: userInfo.id,
-      question_id: question_id
-    }).then(res => {
-      window.location.reload();
-    });
+    alert("删除", "确认删除该项吗?", [
+      {
+        text: "取消",
+        onPress: () => {
+          console.log("取消");
+        }
+      },
+      {
+        text: "确认",
+        onPress: () => {
+          post(QUESTION.DELETE_QUESTION_BY_QUESTIONID, {
+            user_id: userInfo.id,
+            question_id: question_id
+          }).then(res => {
+            window.location.reload();
+          });
+        }
+      }
+    ]);
   };
 
   const editQuestion = () => {
