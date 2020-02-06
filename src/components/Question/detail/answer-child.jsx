@@ -3,21 +3,19 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2020-01-12 07:53:29
- * @LastEditTime: 2020-01-21 20:59:39
+ * @LastEditTime: 2020-02-06 21:00:13
  */
 
 import React from "react";
 import { withRouter } from "react-router-dom";
-import teacher from "@/assets/teacher.png";
 import { useState } from "react";
 import { Icon } from "antd-mobile";
 
 function AnswerItem(props) {
   // 文字的最大长度
   const maxLength = 35;
-  const { question_id, answer_id } = props.data;
+  const { question_id, answer_id, head_img } = props.data;
   const { hasMore, data } = props;
-
   // const [likeStatus, setLikeStatus] = useState(Boolean(is_like));
   // const [collection, setCollection] = useState(collection_count);
   // const [collectionStatus, setCollectionStatus] = useState(collection_status);
@@ -38,7 +36,7 @@ function AnswerItem(props) {
     return (
       <div className="list-item answer-item answer-child" key={item.answer_id}>
         <div className="list-item__advatorBox">
-          <img className="list-item__advator" src={teacher} alt="用户头像" />
+          <img className="list-item__advator" src={head_img} alt="用户头像" />
         </div>
         <div className="list-item__contentBox">
           <div className="list-item__content" style={{ maxHeight: "none" }}>

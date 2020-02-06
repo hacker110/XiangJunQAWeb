@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-12-12 00:33:44
- * @LastEditTime: 2020-01-21 20:57:56
+ * @LastEditTime: 2020-02-06 20:59:30
  */
 import React from "react";
 import { withRouter } from "react-router-dom";
@@ -24,7 +24,8 @@ function AnswerItem(props) {
     create_user_id,
     answer_id,
     is_like,
-    child
+    child,
+    head_img
   } = props.data;
   const { userInfo } = props;
   // 子评论大于2的话标识可以加载更多
@@ -76,7 +77,7 @@ function AnswerItem(props) {
   return (
     <div className="list-item answer-item">
       <div className="list-item__advatorBox">
-        <img className="list-item__advator" src={teacher} alt="用户头像" />
+        <img className="list-item__advator" src={head_img} alt="用户头像" />
       </div>
       <div className="list-item__contentBox">
         <div className="list-item__content" style={{ maxHeight: "none" }}>
@@ -93,7 +94,7 @@ function AnswerItem(props) {
             </span>
           )}
         </div>
-        <div className={`list-item__control ${hasChild() ? "hasline": ""} `}>
+        <div className={`list-item__control ${hasChild() ? "hasline" : ""} `}>
           <div className="list-item__control--status"></div>
           <div className="list-item__control--btn">
             {likeStatus ? (

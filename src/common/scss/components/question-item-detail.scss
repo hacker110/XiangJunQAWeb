@@ -13,6 +13,11 @@
     width: 0.4rem;
     height: 0.4rem;
     margin-right: 0.1rem;
+    &>img{
+      width: 100%;
+      height: 100%;
+      border-radius: 100%;
+    }
   }
   .question-itemDetail-txtBox {
     font-size: 0.16rem;

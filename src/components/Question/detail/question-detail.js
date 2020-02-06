@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-01-16 11:01:05
+ * @LastEditTime : 2020-02-06 21:02:17
  */
 // @flow
 import React, { Component } from "react";
@@ -123,9 +123,11 @@ class QuestionItem extends Component<{}, {}> {
         user_id,
         is_like,
         is_collection,
-        is_collection_author
+        is_collection_author,
+        head_img
       } = res.data;
       this.setState({
+        head_img,
         user_id,
         content,
         CollectionCount,
@@ -147,7 +149,7 @@ class QuestionItem extends Component<{}, {}> {
     const {
       id,
       content,
-      icon,
+      head_img,
       CollectionCount,
       LikeCount,
       isLike,
@@ -158,7 +160,7 @@ class QuestionItem extends Component<{}, {}> {
       <div data-question={id} className="question-itemDetail">
         <div className="question-itemDetail-box">
           <div className="question-itemDetail-imgBox">
-            <img src={icon} alt="用户的icon" />
+            <img src={head_img} alt="用户的icon" />
           </div>
           <div className="question-itemDetail-txtBox">{content}</div>
         </div>

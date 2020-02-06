@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-01-08 11:07:18
+ * @LastEditTime : 2020-02-06 16:43:21
  */
 // @flow
 import React, { useState } from "react";
@@ -24,7 +24,8 @@ function ListItem(props) {
     question_id,
     create_user_id,
     is_like = 0,
-    is_collection = 0
+    is_collection = 0,
+    head_img
   } = props.data;
   const [like, setLike] = useState(like_count);
   const [likeStatus, setLikeStatus] = useState(is_like);
@@ -93,7 +94,7 @@ function ListItem(props) {
   return (
     <div className="list-item">
       <div className="list-item__advatorBox">
-        <img className="list-item__advator" src={teacher} alt="用户头像" />
+        <img className="list-item__advator" src={head_img} alt="用户头像" />
       </div>
       <div className="list-item__contentBox">
         <div
