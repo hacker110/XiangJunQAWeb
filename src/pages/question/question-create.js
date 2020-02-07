@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-02-05 22:35:23
+ * @LastEditTime : 2020-02-07 23:32:50
  */
 // @flow
 import React, { Component } from "react";
@@ -31,12 +31,14 @@ class QuestionCreate extends Component {
     console.log("QuestionCreate");
     const userInfo = JSON.parse(sessionStorage.getItem("userInfo"));
     const { questionId, type } = this.props.match.params;
-    console.log(questionId);
+    console.log(
+      questionId,
+      type,
+      QESTION_TYPE.find(item => item.alias === type)["value"]
+    );
     this.state = {
       id: questionId,
-      questionType: (questionId && [
-        QESTION_TYPE.find(item => item.alias === type)["value"]
-      ]) || [1], // 1问题, 2知识 默认问题
+      questionType: QESTION_TYPE.find(item => item.alias === type)["value"], // 1问题, 2知识 默认问题
       pageStatus: questionId ? pageStatusConf.EDIT : pageStatusConf.CREATE,
       subject_id: [],
       files: [],
@@ -116,7 +118,7 @@ class QuestionCreate extends Component {
     post(QUESTION.ADD_QUESTION, {
       subject_id: subject_id[0],
       content,
-      type: questionType[0],
+      type: questionType,
       user_id: userInfo.id,
       img_name: uploadFiles.join(",")
     }).then(e => {
@@ -157,19 +159,19 @@ class QuestionCreate extends Component {
 
   render() {
     const { files, content, choiceData, pageStatus } = this.state;
+    // <Picker
+    //   data={QESTION_TYPE}
+    //   title="选择类型"
+    //   cols={1}
+    //   value={this.state.questionType}
+    //   onOk={v => this.setState({ questionType: v })}
+    // >
+    //   <List.Item arrow="horizontal">选择创建的类型</List.Item>
+    // </Picker>
+    // <br />
     return (
       <div className="question-create">
         <div className="question-create__box">
-          <Picker
-            data={QESTION_TYPE}
-            title="选择类型"
-            cols={1}
-            value={this.state.questionType}
-            onOk={v => this.setState({ questionType: v })}
-          >
-            <List.Item arrow="horizontal">选择创建的类型</List.Item>
-          </Picker>
-          <br />
           <Picker
             data={choiceData}
             title="选择专业"

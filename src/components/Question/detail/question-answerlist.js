@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-01-21 20:57:44
+ * @LastEditTime : 2020-02-06 23:30:22
  */
 // @flow
 import React, { Component } from "react";
@@ -15,9 +15,9 @@ import AnswerItem from "./answer-item.jsx";
 class QuestionAnswerList extends Component<{}, {}> {
   constructor(props) {
     super(props);
-    const { id } = this.props.match.params;
+    const { questionId } = this.props.match.params;
     this.state = {
-      id,
+      questionId,
       CollectionCount: 0,
       LikeCount: "",
       content: "",
@@ -30,13 +30,13 @@ class QuestionAnswerList extends Component<{}, {}> {
   componentDidMount() {}
 
   render() {
-    const { id } = this.state;
+    const { questionId } = this.state;
     return (
-      <div data-question={id} className="question-answerlist">
+      <div data-question={questionId} className="question-answerlist">
         <List
           label="detail"
           api={QUESTION.GET_QUESTION_ANSWER_BY_QUESTIONID}
-          searchArgvs={{ question_id: id }}
+          searchArgvs={{ question_id: questionId }}
           item={AnswerItem}
         />
       </div>

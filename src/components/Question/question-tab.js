@@ -1,14 +1,16 @@
 /*
  * @Description: This is a description
  * @Author: Ask
- * @LastEditors: Ask
+ * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime: 2019-12-12 00:17:39
+ * @LastEditTime : 2020-02-07 23:05:43
  */
 // @flow
 import React, { Component } from "react";
-import { TabBar } from "antd-mobile";
+import { TabBar, Modal } from "antd-mobile";
 import { withRouter } from "react-router-dom";
+
+const operation = Modal.operation;
 
 class QuestionBase extends Component {
   constructor(props) {
@@ -69,12 +71,34 @@ class QuestionBase extends Component {
                 key={item.key}
                 icon={<i className={"iconfont " + item.icon}></i>}
                 selectedIcon={
-                  <i className={"iconfont selectedIcon " + item.selectedIcon}></i>
+                  <i
+                    className={"iconfont selectedIcon " + item.selectedIcon}
+                  ></i>
                 }
                 selected={this.state.selectedTab === item.path}
                 // badge={1}
                 onPress={() => {
-                  console.log(this.state.selectedTab, item.path);
+                  if (item.path === "/question/questioncreate") {
+                    operation([
+                      {
+                        text: "创建问题",
+                        onPress: () => {
+                          this.props.history.push(item.path + "/question");
+                          console.log("创建问题");
+                        }
+                      },
+                      {
+                        text: "创建分享",
+                        onPress: () => {
+                          this.props.history.push(item.path + "/knowledge");
+                          console.log("创建分享");
+                        }
+                      }
+                    ]);
+                    console.log("questioncreate");
+                    return;
+                  }
+                  console.log(item.path);
                   this.setState(
                     {
                       selectedTab: item.path
