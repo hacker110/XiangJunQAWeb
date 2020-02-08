@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2019-12-12 00:33:44
- * @LastEditTime: 2020-02-06 20:59:30
+ * @LastEditTime: 2020-02-08 09:44:48
  */
 import React from "react";
 import { withRouter } from "react-router-dom";
@@ -11,7 +11,6 @@ import { Icon } from "antd-mobile";
 import { post } from "@/utils/request.js";
 import { QUESTION } from "@/service/api.js";
 import { useState } from "react";
-import teacher from "@/assets/teacher.png";
 import Child from "./answer-child.jsx";
 
 function AnswerItem(props) {

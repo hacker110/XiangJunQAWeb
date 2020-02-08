@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2020-01-12 07:53:29
- * @LastEditTime: 2020-02-08 09:13:35
+ * @LastEditTime: 2020-02-08 09:49:57
  */
 
 import React from "react";
@@ -16,9 +16,6 @@ function AnswerItem(props) {
   const maxLength = 35;
   const { question_id, answer_id, head_img } = props.data;
   const { hasMore, data } = props;
-  // const [likeStatus, setLikeStatus] = useState(Boolean(is_like));
-  // const [collection, setCollection] = useState(collection_count);
-  // const [collectionStatus, setCollectionStatus] = useState(collection_status);
 
   // 展开与合并的开关
   const [flag, setFlag] = useState(false);
@@ -34,7 +31,7 @@ function AnswerItem(props) {
   };
   const remark = item => {
     return (
-      <div className="list-item answer-item answer-child" key={item.answer_id}>
+      <div className="list-item answer-item answer-child" key={item.id}>
         <div className="list-item__advatorBox">
           <img className="list-item__advator" src={head_img} alt="用户头像" />
         </div>
@@ -59,7 +56,7 @@ function AnswerItem(props) {
             <div className="list-item__control--status"></div>
             <div className="list-item__control--btn">
               <i
-                className={"iconfont iconhuida selectIcon"}
+                className={"iconfont iconicon-test-copy selectIcon"}
                 onClick={openAnswer}
                 style={{
                   marginRight: "4px",
