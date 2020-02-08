@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors: Ask
  * @Date: 2020-01-12 07:53:29
- * @LastEditTime: 2020-02-06 21:00:13
+ * @LastEditTime: 2020-02-08 09:13:35
  */
 
 import React from "react";
@@ -58,23 +58,8 @@ function AnswerItem(props) {
           <div className="list-item__control">
             <div className="list-item__control--status"></div>
             <div className="list-item__control--btn">
-              {/*likeStatus ? (
               <i
-                onClick={unLikeFun}
-                className={"iconfont icondiancai1-copy selectIcon selectedIcon"}
-                style={{ marginRight: "10px" }}
-              ></i>
-            ) : (
-              <i
-                onClick={likeFun}
-                className={
-                  "iconfont icondiancai1-copy selectIcon unselectedIcon"
-                }
-                style={{ marginRight: "10px" }}
-              ></i>
-            )*/}
-              <i
-                className={"iconfont iconicon-test-copy selectIcon"}
+                className={"iconfont iconhuida selectIcon"}
                 onClick={openAnswer}
                 style={{
                   marginRight: "4px",

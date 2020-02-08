@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-02-07 22:54:32
+ * @LastEditTime : 2020-02-07 23:56:37
  */
 // @flow
 import React, { useState } from "react";
@@ -94,33 +94,17 @@ function ListItem(props) {
             <span>{dealData(like)}&nbsp;赞同</span>
           </div>
           <div className="list-item__control--btn">
-            {/*<i
-              className={"iconfont iconshanchu selectIcon alertIcon"}
-              onClick={deleteQuestion}
-              style={{ marginRight: "16px" }}
-            ></i>
-            <i
-              className={"iconfont iconbianji selectIcon selectedIcon"}
-              onClick={editQuestion}
-            ></i>*/}
             <Popover
               mask
               overlayClassName="fortest"
               overlayStyle={{ color: "currentColor" }}
-              // visible={this.state.visible}
               overlay={[
-                <Item
-                  key="1"
-                  value="deleteQuestion"
-                  // icon={myImg("tOtXhkIWzwotgGSeptou")}
-                  data-seed="logId"
-                >
+                <Item key="1" value="deleteQuestion" data-seed="logId">
                   删除
                 </Item>,
                 <Item
                   key="2"
                   value="editQuestion"
-                  // icon={myImg("PKAgAqZWJVNwKsAJSmXd")}
                   style={{ whiteSpace: "nowrap" }}
                 >
                   编辑

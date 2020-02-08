@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-02-06 23:39:56
+ * @LastEditTime : 2020-02-08 09:13:23
  */
 // @flow
 import React, { Component } from "react";
@@ -217,7 +217,7 @@ class QuestionItem extends Component<{}, {}> {
               ></i>
             )}
             <i
-              className={"iconfont iconicon-test-copy selectIcon selectedIcon"}
+              className={"iconfont iconhuida selectIcon selectedIcon"}
               onClick={() => {
                 this.props.history.push({
                   pathname: `/question/questionanswer/${id}`

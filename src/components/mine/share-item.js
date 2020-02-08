@@ -3,18 +3,17 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-02-05 16:38:06
+ * @LastEditTime : 2020-02-08 09:36:40
  */
 // @flow
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
-import { Modal } from "antd-mobile";
-import teacher from "@/assets/teacher.png";
+import { Modal, Popover, Icon } from "antd-mobile";
 import { post } from "@/utils/request.js";
 import { QUESTION } from "@/service/api.js";
 
 const alert = Modal.alert;
-
+const Item = Popover.Item;
 // 文字的最大长度
 const maxLength = 35;
 
@@ -60,11 +59,20 @@ function ListItem(props) {
     });
   };
 
+  const onSelect = opt => {
+    switch (opt.props.value) {
+      case "deleteQuestion":
+        deleteQuestion();
+        break;
+      case "editQuestion":
+        editQuestion();
+        break;
+      default:
+        break;
+    }
+  };
   return (
     <div className="list-item">
-      <div className="list-item__advatorBox">
-        <img className="list-item__advator" src={teacher} alt="用户头像" />
-      </div>
       <div className="list-item__contentBox">
         <div
           className="list-item__content"
@@ -85,15 +93,41 @@ function ListItem(props) {
             <span>{dealData(like)}&nbsp;赞同</span>
           </div>
           <div className="list-item__control--btn">
-            <i
-              className={"iconfont iconshanchu selectIcon alertIcon"}
-              onClick={deleteQuestion}
-              style={{ marginRight: "16px" }}
-            ></i>
-            <i
-              className={"iconfont iconbianji selectIcon selectedIcon"}
-              onClick={editQuestion}
-            ></i>
+            <Popover
+              mask
+              overlayClassName="fortest"
+              overlayStyle={{ color: "currentColor" }}
+              overlay={[
+                <Item key="1" value="deleteQuestion" data-seed="logId">
+                  删除
+                </Item>,
+                <Item
+                  key="2"
+                  value="editQuestion"
+                  style={{ whiteSpace: "nowrap" }}
+                >
+                  编辑
+                </Item>
+              ]}
+              align={{
+                overflow: { adjustY: 0, adjustX: 0 },
+                offset: [-10, 0]
+              }}
+              // onVisibleChange={this.handleVisibleChange}
+              onSelect={onSelect}
+            >
+              <div
+                style={{
+                  height: "100%",
+                  padding: "0 15px",
+                  marginRight: "-15px",
+                  display: "flex",
+                  alignItems: "center"
+                }}
+              >
+                <Icon type="ellipsis" color="#42c57a" />
+              </div>
+            </Popover>
           </div>
         </div>
       </div>

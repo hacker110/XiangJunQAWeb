@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-02-07 23:05:43
+ * @LastEditTime : 2020-02-08 09:09:13
  */
 // @flow
 import React, { Component } from "react";
@@ -75,7 +75,7 @@ class QuestionBase extends Component {
                     className={"iconfont selectedIcon " + item.selectedIcon}
                   ></i>
                 }
-                selected={this.state.selectedTab === item.path}
+                selected={this.state.selectedTab.indexOf(item.path) > -1}
                 // badge={1}
                 onPress={() => {
                   if (item.path === "/question/questioncreate") {
@@ -98,16 +98,8 @@ class QuestionBase extends Component {
                     console.log("questioncreate");
                     return;
                   }
-                  console.log(item.path);
-                  this.setState(
-                    {
-                      selectedTab: item.path
-                    },
-                    () => {
-                      console.log(this.state.selectedTab, item.path);
-                      this.props.history.push(item.path);
-                    }
-                  );
+                  console.log(this.state.selectedTab, item.path);
+                  this.props.history.push(item.path);
                 }}
                 data-seed="logId"
               ></TabBar.Item>

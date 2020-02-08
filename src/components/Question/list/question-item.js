@@ -3,7 +3,7 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-02-06 16:43:21
+ * @LastEditTime : 2020-02-08 09:12:28
  */
 // @flow
 import React, { useState } from "react";
@@ -147,7 +147,7 @@ function ListItem(props) {
               ></i>
             )}
             <i
-              className={"iconfont iconicon-test-copy selectIcon"}
+              className={"iconfont iconhuida selectIcon"}
               onClick={openAnswer}
               style={{ marginRight: "4px", color: "#38bc6d" }}
             ></i>

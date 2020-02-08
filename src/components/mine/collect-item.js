@@ -3,17 +3,19 @@
  * @Author: Ask
  * @LastEditors  : Ask
  * @Date: 2019-10-27 20:46:59
- * @LastEditTime : 2020-01-21 20:58:17
+ * @LastEditTime : 2020-02-08 09:38:11
  */
 // @flow
 import React from "react";
 import { withRouter } from "react-router-dom";
+import { Modal } from "antd-mobile";
 import teacher from "@/assets/teacher.png";
 import { post } from "@/utils/request.js";
 import { QUESTION } from "@/service/api.js";
 
 // 文字的最大长度
 const maxLength = 35;
+const alert = Modal.alert;
 
 function ListItem(props) {
   const { userInfo } = props;
@@ -23,14 +25,27 @@ function ListItem(props) {
     return text.substr(0, maxLength) + "...";
   };
   const unCollect = () => {
-    post(QUESTION.CANCLE_QUESTION_COLLECTION, {
-      question_id: question_id,
-      create_user_id: create_user_id,
-      collection_user_id: userInfo.id
-    }).then(res => {
-      props.deleteItem({ question_id });
-      window.location.reload();
-    });
+    alert("删除", "确认取消收藏该项吗?", [
+      {
+        text: "取消",
+        onPress: () => {
+          console.log("取消");
+        }
+      },
+      {
+        text: "确认",
+        onPress: () => {
+          post(QUESTION.CANCLE_QUESTION_COLLECTION, {
+            question_id: question_id,
+            create_user_id: create_user_id,
+            collection_user_id: userInfo.id
+          }).then(res => {
+            props.deleteItem({ question_id });
+            window.location.reload();
+          });
+        }
+      }
+    ]);
   };
   return (
     <div className="list-item">
