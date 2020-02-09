@@ -61,5 +61,8 @@ export const FILE = {
   SAVE_FILE: "/api/qaFile/saveFile"
 };
 
+export const CONFIG = {
+  GET_WX_CONFIG: "/api/weixin/GetWxConfig"
+}
 // export const host = "http://115.29.65.101:8888";
 export const host = "http://www.xiangjun325.com";

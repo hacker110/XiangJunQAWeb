@@ -14,7 +14,7 @@ import { Icon } from "antd-mobile";
 function AnswerItem(props) {
   // 文字的最大长度
   const maxLength = 35;
-  const { question_id, answer_id, head_img } = props.data;
+  const { question_id, answer_id } = props.data;
   const { hasMore, data } = props;
 
   // 展开与合并的开关
@@ -33,7 +33,7 @@ function AnswerItem(props) {
     return (
       <div className="list-item answer-item answer-child" key={item.id}>
         <div className="list-item__advatorBox">
-          <img className="list-item__advator" src={head_img} alt="用户头像" />
+          <img className="list-item__advator" src={item.head_img} alt="用户头像" />
         </div>
         <div className="list-item__contentBox">
           <div className="list-item__content" style={{ maxHeight: "none" }}>

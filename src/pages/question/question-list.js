@@ -9,7 +9,7 @@
 import React, { Component } from "react";
 import { Tabs } from "antd-mobile";
 import QuestionTab from "@/components/Question/question-tab";
-import { QUESTION, USER } from "@/service/api.js";
+import { QUESTION, USER, CONFIG } from "@/service/api.js";
 import List from "@/components/common-list/list.jsx";
 import { post } from "@/utils/request.js";
 import QuestionItem from "@/components/Question/list/question-item";
@@ -61,6 +61,7 @@ class QuestionList extends Component<{}, {}> {
         name: ""
       }
     };
+    this.getWxconfig()
   }
 
   componentDidMount() {
@@ -97,6 +98,13 @@ class QuestionList extends Component<{}, {}> {
       };
       this.setState({ userInfo });
       sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
+    });
+  }
+
+  getWxconfig() {
+    post(CONFIG.GET_WX_CONFIG, {
+    }).then(res => {
+      console.log(res.data);
     });
   }
   render() {
