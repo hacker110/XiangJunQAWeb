@@ -158,6 +158,7 @@ class QuestionCreate extends Component {
       wx.getLocalImgData({
         localId: res1[0],
         success: (res) => {
+          alert(res.localData);
           const blob = imgBase64ToBlob(res.localData);
           const blobUrl = window.URL.createObjectURL(blob)
           files.push({
