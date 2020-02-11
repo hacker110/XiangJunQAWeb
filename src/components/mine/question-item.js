@@ -9,7 +9,6 @@
 import React, { useState } from "react";
 import { Modal, Popover, Icon } from "antd-mobile";
 import { withRouter } from "react-router-dom";
-import teacher from "@/assets/teacher.png";
 import { post } from "@/utils/request.js";
 import { QUESTION } from "@/service/api.js";
 

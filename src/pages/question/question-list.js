@@ -6,28 +6,41 @@
  * @LastEditTime : 2020-01-21 20:03:59
  */
 // @flow
-import React, { Component } from "react";
-import { Tabs } from "antd-mobile";
-import QuestionTab from "@/components/Question/question-tab";
-import { QUESTION, USER, CONFIG } from "@/service/api.js";
-import List from "@/components/common-list/list.jsx";
-import { post } from "@/utils/request.js";
+import React, {
+  Component
+} from "react";
+import {
+  Tabs
+} from "antd-mobile";
+import {
+  QUESTION,
+  USER,
+  CONFIG
+} from "@/service/api.js";
+import {
+  post
+} from "@/utils/request.js";
 import QuestionItem from "@/components/Question/list/question-item";
-
-const tabList = [
-  {
+import QuestionTab from "@/components/Question/question-tab";
+import List from "@/components/common-list/list.jsx";
+const wx = window.wx
+const tabList = [{
     title: "推荐",
     key: 1,
     api: QUESTION.GET_LIKE_QUESTION,
     item: QuestionItem,
-    searchArgvs: { subjectId: 0 }
+    searchArgvs: {
+      subjectId: 0
+    }
   },
   {
     title: "最新",
     key: 2,
     api: QUESTION.GET_NEW_QUESTION,
     item: QuestionItem,
-    searchArgvs: { subjectId: 0 }
+    searchArgvs: {
+      subjectId: 0
+    }
   },
   {
     title: "关注",
@@ -47,7 +60,7 @@ const tabList = [
 //   { title: "音乐", key: 7",
 // ];
 
-class QuestionList extends Component<{}, {}> {
+class QuestionList extends Component < {}, {} > {
   constructor(props) {
     super(props);
     this.state = {
@@ -88,7 +101,13 @@ class QuestionList extends Component<{}, {}> {
       wx_open_id
     }).then(res => {
       if (!res.data) return;
-      const { id, city, provence, nick_name, head_img } = res.data;
+      const {
+        id,
+        city,
+        provence,
+        nick_name,
+        head_img
+      } = res.data;
       let userInfo = {
         id,
         city,
@@ -96,58 +115,110 @@ class QuestionList extends Component<{}, {}> {
         photo: head_img,
         name: nick_name
       };
-      this.setState({ userInfo });
+      this.setState({
+        userInfo
+      });
       sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
     });
   }
 
   getWxconfig() {
-    post(CONFIG.GET_WX_CONFIG, {
-    }).then(res => {
+    post(CONFIG.GET_WX_CONFIG, {}).then(res => {
+
       console.log(res.data);
+      const {
+        appId,
+        timestamp,
+        nonceStr,
+        signature
+      } = res.data;
+      wx.config({
+        debug: true,
+        appId,
+        timestamp,
+        nonceStr,
+        signature,
+        jsApiList: ['chooseImage', 'previewImage', 'uploadImage', 'downloadImage']
+      })
+      wx.ready(function () {
+        console.log("ready")
+        console.log("chooseImage")
+        wx.chooseImage({
+          count: 1, // 默认9
+          sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+          sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+          success: function (res) {
+            console.log(res);
+            var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+
+          }
+
+        });
+      })
     });
   }
+
   render() {
-    const { userInfo, currentTab } = this.state;
-    return (
-      <div className="question-list">
-        <Tabs
-          tabs={tabList}
-          initialPage="1"
-          onChange={(tab, index) => {
-            console.log("onChange", index, tab);
-            this.setState({ currentTab: tab });
-          }}
-        >
-          {/*<Tabs
-            // key={item.key}
-           tabs={tabs,
-            initialPage="1"
-            onChange={(tab, index) => {
-              console.log("onChange", index, tab);
-            }}
-            onTabClick={(tab, index) => {
-              console.log("onTabClick", index, tab);
-            }}
-          ></Tabs>*/}
-        </Tabs>
-        <div className="question-listbox">
-          {userInfo.id && (
-            <List
-              key={currentTab.key}
-              label="list"
-              api={currentTab.api}
-              item={currentTab.item}
-              perpagenum={10}
-              renderFooterPadding="10px 0 50px"
-              searchArgvs={Object.assign(currentTab.searchArgvs, {
-                // user_id: userInfo.id
-              })}
-            />
-          )}
-        </div>
-        <QuestionTab />
-      </div>
+    const {
+      userInfo,
+      currentTab
+    } = this.state;
+    return ( <
+      div className = "question-list" >
+      <
+      Tabs tabs = {
+        tabList
+      }
+      initialPage = "1"
+      onChange = {
+        (tab, index) => {
+          console.log("onChange", index, tab);
+          this.setState({
+            currentTab: tab
+          });
+        }
+      } > {
+        /*<Tabs
+                    // key={item.key}
+                   tabs={tabs,
+                    initialPage="1"
+                    onChange={(tab, index) => {
+                      console.log("onChange", index, tab);
+                    }}
+                    onTabClick={(tab, index) => {
+                      console.log("onTabClick", index, tab);
+                    }}
+                  ></Tabs>*/
+      } <
+      /Tabs> <
+      div className = "question-listbox" > {
+        userInfo.id && ( <
+          List key = {
+            currentTab.key
+          }
+          label = "list"
+          api = {
+            currentTab.api
+          }
+          item = {
+            currentTab.item
+          }
+          perpagenum = {
+            10
+          }
+          renderFooterPadding = "10px 0 50px"
+          searchArgvs = {
+            Object.assign(currentTab.searchArgvs, {
+              // user_id: userInfo.id
+            })
+          }
+          />
+        )
+      } <
+      /div> <
+      QuestionTab / >
+      <
+      /div>
     );
   }
 }
