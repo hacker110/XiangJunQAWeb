@@ -21,6 +21,7 @@ import { trim } from "@/utils/utils.js";
 import { QUESTION, SUBJECT, FILE, CONFIG } from "@/service/api.js";
 import { post } from "@/utils/request.js";
 import { QESTION_TYPE } from "@/utils/constans.js";
+import { imgBase64ToBlob } from "@/utils/utils.js"
 
 const wx = window.wx
 const pageStatusConf = {
@@ -93,17 +94,7 @@ class QuestionCreate extends Component {
     });
   }
 
-  uploadFun(file) {
-    const { uploadFiles } = this.state;
-    let formdata = new FormData();
-    formdata.append("file", file);
-    post(FILE.SAVE_FILE, formdata, { needqs: false }).then(res => {
-      uploadFiles.push(res.data);
-      this.setState({
-        uploadFiles
-      });
-    });
-  }
+
 
   /**
    * @Description: 发布问题/分享
@@ -164,18 +155,20 @@ class QuestionCreate extends Component {
     const { files } = this.state;
     console.log("onAddImageClick");
     this.chooseImage().then(res1 => {
-      console.log(res1);
-      // res1.forEach(item=>{
-      // })
-      files.push({
-        id: Math.random(),
-        url: res1[0]
+      wx.getLocalImgData({
+        localId: res1[0],
+        success: (res) => {
+          const blob = imgBase64ToBlob(res.localData);
+          const blobUrl = window.URL.createObjectURL(blob)
+          files.push({
+            id: Math.random(),
+            url: blobUrl
+          })
+          this.setState({ files })
+          console.log(files);
+          this.uploadFun(blob);
+        }
       })
-      this.setState({ files })
-      console.log(files);
-      // this.uploadImage(res1[0]).then(res2 => {
-      //   console.log(res2);
-      // })
     })
   }
 
@@ -184,7 +177,6 @@ class QuestionCreate extends Component {
     return (
       <div className="question-create">
         <div className="question-create__box">
-          {files.length && <img src={files[0].url} />}
           <Picker
             data={choiceData}
             title="选择专业"
@@ -208,7 +200,7 @@ class QuestionCreate extends Component {
             className="img-picker"
             files={files}
             multiple={true}
-            // onChange={this.onChange}
+            onChange={this.onChange}
             onImageClick={(index, fs) => console.log("onImageClick", index, fs)}
             onAddImageClick={this.wxChooseImage.bind(this)}
             selectable={files.length < 8}
@@ -337,6 +329,17 @@ class QuestionCreate extends Component {
   //     });
   //   })
   // }
+  uploadFun(file) {
+    const { uploadFiles } = this.state;
+    let formdata = new FormData();
+    formdata.append("file", file, Date.now()+"."+file.type.split("/")[1]);
+    post(FILE.SAVE_FILE, formdata, { needqs: false }).then(res => {
+      uploadFiles.push(res.data);
+      this.setState({
+        uploadFiles
+      });
+    });
+  }
 }
 
 export default withRouter(QuestionCreate);
