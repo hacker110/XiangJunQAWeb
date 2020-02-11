@@ -18,9 +18,11 @@ import {
   Toast
 } from "antd-mobile";
 import { trim } from "@/utils/utils.js";
-import { QUESTION, SUBJECT, FILE } from "@/service/api.js";
+import { QUESTION, SUBJECT, FILE, CONFIG } from "@/service/api.js";
 import { post } from "@/utils/request.js";
 import { QESTION_TYPE } from "@/utils/constans.js";
+
+const wx = window.wx
 const pageStatusConf = {
   CREATE: "create",
   EDIT: "edit"
@@ -50,6 +52,7 @@ class QuestionCreate extends Component {
     if (questionId) {
       this.getData();
     }
+    this.getWxconfig()
   }
 
   componentDidMount() {
@@ -76,6 +79,7 @@ class QuestionCreate extends Component {
       questionType,
       userInfo
     } = this.state;
+
     post(QUESTION.UPDATE_QUESTION, {
       id,
       uploadFiles,
@@ -98,7 +102,6 @@ class QuestionCreate extends Component {
       this.setState({
         uploadFiles
       });
-      console.log(res.data);
     });
   }
 
@@ -156,29 +159,39 @@ class QuestionCreate extends Component {
       });
     });
   }
+  wxChooseImage(e) {
+    e.preventDefault();
+    const { files } = this.state;
+    console.log("onAddImageClick");
+    this.chooseImage().then(res1 => {
+      console.log(res1);
+      // res1.forEach(item=>{
+      // })
+      files.push({
+        id: Math.random(),
+        url: res1[0]
+      })
+      this.setState({ files })
+      console.log(files);
+      // this.uploadImage(res1[0]).then(res2 => {
+      //   console.log(res2);
+      // })
+    })
+  }
 
   render() {
     const { files, content, choiceData, pageStatus } = this.state;
-    // <Picker
-    //   data={QESTION_TYPE}
-    //   title="选择类型"
-    //   cols={1}
-    //   value={this.state.questionType}
-    //   onOk={v => this.setState({ questionType: v })}
-    // >
-    //   <List.Item arrow="horizontal">选择创建的类型</List.Item>
-    // </Picker>
-    // <br />
     return (
       <div className="question-create">
         <div className="question-create__box">
+          {files.length && <img src={files[0].url} />}
           <Picker
             data={choiceData}
             title="选择专业"
             cols={1}
             value={this.state.subject_id}
             onChange={v => this.setState({ subject_id: v })}
-            // onOk={v => this.setState({ subject_id: v })}
+          // onOk={v => this.setState({ subject_id: v })}
           >
             <List.Item arrow="horizontal">选择相关专业</List.Item>
           </Picker>
@@ -194,9 +207,10 @@ class QuestionCreate extends Component {
           <ImagePicker
             className="img-picker"
             files={files}
-            onChange={this.onChange}
             multiple={true}
-            onImageClick={(index, fs) => console.log(index, fs)}
+            // onChange={this.onChange}
+            onImageClick={(index, fs) => console.log("onImageClick", index, fs)}
+            onAddImageClick={this.wxChooseImage.bind(this)}
             selectable={files.length < 8}
             accept="image/gif,image/jpeg,image/jpg,image/png"
           />
@@ -225,16 +239,16 @@ class QuestionCreate extends Component {
                 发布并返回主页
               </Button>
             ) : (
-              <Button
-                onClick={this.updateQuestion.bind(this)}
-                icon="check-circle-o"
-                size="small"
-                type="primary"
-                inline
-              >
-                保存并返回主页
+                <Button
+                  onClick={this.updateQuestion.bind(this)}
+                  icon="check-circle-o"
+                  size="small"
+                  type="primary"
+                  inline
+                >
+                  保存并返回主页
               </Button>
-            )}
+              )}
           </div>
         </div>
 
@@ -242,6 +256,87 @@ class QuestionCreate extends Component {
       </div>
     );
   }
+
+  getWxconfig() {
+    // alert(location.href.split('#')[0])
+
+    post(CONFIG.GET_WX_CONFIG, {
+      url: encodeURIComponent(window.location.href.split('#')[0])
+    }).then(res => {
+
+      console.log(res.data);
+      const {
+        appId,
+        timestamp,
+        nonceStr,
+        signature
+      } = res.data;
+
+      wx.config({
+        debug: true,
+        appId,
+        timestamp,
+        nonceStr,
+        signature,
+        jsApiList: ['chooseImage', 'previewImage', 'uploadImage', 'downloadImage']
+      })
+
+      wx.ready(function () {
+        console.log("ready")
+        console.log("chooseImage")
+      })
+    });
+  }
+
+  chooseImage() {
+    return new Promise((resolve, reject) => {
+      wx.chooseImage({
+        count: 1, // 默认9
+        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+        success: function (res) {
+          console.log(res.localIds);
+          resolve(res.localIds);
+          // var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+        },
+        fail: () => { reject() },
+        cancel: () => { reject("cancale") }
+      });
+    })
+  }
+
+  uploadImage(localId) {
+    return new Promise((resolve, reject) => {
+      wx.uploadImage({
+        localId: localId, // 需要上传的图片的本地ID，由chooseImage接口获得
+        isShowProgressTips: 1, // 默认为1，显示进度提示
+        success: function (res) {
+          resolve(res.serverId);
+        },
+        fail: () => {
+          reject()
+        },
+        cancel: () => { reject("cancale") }
+      });
+    })
+  }
+
+  // downloadImage(serverId) {
+  //   return new Promise((resolve, reject) => {
+  //     wx.downloadImage({
+  //       serverId, // 需要下载的图片的服务器端ID，由uploadImage接口获得
+  //       isShowProgressTips: 1, // 默认为1，显示进度提示
+  //       success: function (res) {
+  //         console.log(res);
+  //         resolve(res);
+  //       },
+  //       fail: () => {
+  //         reject()
+  //       },
+  //       cancel: () => { reject("cancale") }
+  //     });
+  //   })
+  // }
 }
 
 export default withRouter(QuestionCreate);
