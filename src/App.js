@@ -28,9 +28,9 @@ class App extends Component < {}, {} > {
 
   getWxconfig() {
     // alert(location.href.split('#')[0])
-    
+
     post(CONFIG.GET_WX_CONFIG, {
-      url:location.href.split('#')[0]
+      url: encodeURIComponent(window.location.href.split('#')[0])
     }).then(res => {
 
       console.log(res.data);
