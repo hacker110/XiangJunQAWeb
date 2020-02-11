@@ -19,7 +19,7 @@ export default [
   {
     path: "/",
     component: Home,
-    redirect: "/prepage"
+    // redirect: "/prepage"
   },
   {
     path: "/prepage",

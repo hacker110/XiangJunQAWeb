@@ -14,8 +14,7 @@ import {
 } from "antd-mobile";
 import {
   QUESTION,
-  USER,
-  CONFIG
+  USER
 } from "@/service/api.js";
 import {
   post
@@ -23,7 +22,7 @@ import {
 import QuestionItem from "@/components/Question/list/question-item";
 import QuestionTab from "@/components/Question/question-tab";
 import List from "@/components/common-list/list.jsx";
-const wx = window.wx
+
 const tabList = [{
     title: "推荐",
     key: 1,
@@ -74,7 +73,6 @@ class QuestionList extends Component < {}, {} > {
         name: ""
       }
     };
-    this.getWxconfig()
   }
 
   componentDidMount() {
@@ -119,42 +117,6 @@ class QuestionList extends Component < {}, {} > {
         userInfo
       });
       sessionStorage.setItem("userInfo", JSON.stringify(userInfo));
-    });
-  }
-
-  getWxconfig() {
-    post(CONFIG.GET_WX_CONFIG, {}).then(res => {
-
-      console.log(res.data);
-      const {
-        appId,
-        timestamp,
-        nonceStr,
-        signature
-      } = res.data;
-      wx.config({
-        debug: true,
-        appId,
-        timestamp,
-        nonceStr,
-        signature,
-        jsApiList: ['chooseImage', 'previewImage', 'uploadImage', 'downloadImage']
-      })
-      wx.ready(function () {
-        console.log("ready")
-        console.log("chooseImage")
-        wx.chooseImage({
-          count: 1, // 默认9
-          sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-          sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-          success: function (res) {
-            console.log(res);
-            var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
-
-          }
-
-        });
-      })
     });
   }
 
