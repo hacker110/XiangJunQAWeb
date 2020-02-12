@@ -165,7 +165,7 @@ class QuestionCreate extends Component {
             url: blobUrl
           })
           this.setState({ files })
-          
+
           // 将blob数据上传到服务器
           this.uploadFun(blob);
         }
@@ -266,7 +266,7 @@ class QuestionCreate extends Component {
       } = res.data;
 
       wx.config({
-        debug: true,
+        debug: false,
         appId,
         timestamp,
         nonceStr,
