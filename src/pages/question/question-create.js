@@ -153,12 +153,11 @@ class QuestionCreate extends Component {
   wxChooseImage(e) {
     e.preventDefault();
     const { files } = this.state;
-    console.log("onAddImageClick");
     this.chooseImage().then(res1 => {
       wx.getLocalImgData({
         localId: res1[0],
         success: (res) => {
-          alert(res.localData);
+          // 将拿到的数据转换为blob对象
           const blob = imgBase64ToBlob(res.localData);
           const blobUrl = window.URL.createObjectURL(blob)
           files.push({
@@ -166,7 +165,8 @@ class QuestionCreate extends Component {
             url: blobUrl
           })
           this.setState({ files })
-          console.log(files);
+          
+          // 将blob数据上传到服务器
           this.uploadFun(blob);
         }
       })
@@ -314,26 +314,10 @@ class QuestionCreate extends Component {
     })
   }
 
-  // downloadImage(serverId) {
-  //   return new Promise((resolve, reject) => {
-  //     wx.downloadImage({
-  //       serverId, // 需要下载的图片的服务器端ID，由uploadImage接口获得
-  //       isShowProgressTips: 1, // 默认为1，显示进度提示
-  //       success: function (res) {
-  //         console.log(res);
-  //         resolve(res);
-  //       },
-  //       fail: () => {
-  //         reject()
-  //       },
-  //       cancel: () => { reject("cancale") }
-  //     });
-  //   })
-  // }
   uploadFun(file) {
     const { uploadFiles } = this.state;
     let formdata = new FormData();
-    formdata.append("file", file, Date.now()+"."+file.type.split("/")[1]);
+    formdata.append("file", file, Date.now()+"."+ file.type.split("/")[1]);
     post(FILE.SAVE_FILE, formdata, { needqs: false }).then(res => {
       uploadFiles.push(res.data);
       this.setState({

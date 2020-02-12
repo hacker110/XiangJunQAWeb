@@ -29,13 +29,10 @@ export const concatUrl = params => {
 export const imgBase64ToBlob = (base64) => {
   // 对base64操作，去掉URL头，转换为byte
   let content;
-  let type;
-  if (navigator.userAgent.indexOf("Android")) {
+  if (navigator.userAgent.indexOf("Android") >= 0) {
     content = base64;
-    type = "jpeg"
   } else {
     let sp = base64.split(',')
-    type = sp[0].match(/^data:([a-z/]*);base64$/)[1]
     content = sp[1];
   }
 
@@ -47,7 +44,7 @@ export const imgBase64ToBlob = (base64) => {
   for (let i = 0; i < bytes.length; i++) {
     ia[i] = bytes.charCodeAt(i);
   }
-  return new Blob([ab], { type });
+  return new Blob([ab], { type: 'image/jpeg' });
 
   // 第二种
   // const ab = [];
