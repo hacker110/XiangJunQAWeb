@@ -8,6 +8,7 @@
 // @flow
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import { Toast } from "antd-mobile";
 import { post } from "@/utils/request.js";
 import { QUESTION, USER } from "@/service/api.js";
 
@@ -46,6 +47,7 @@ class QuestionItem extends Component<{}, {}> {
       collection_user_id: user_id,
       user_id: userInfo.id
     }).then(res => {
+      Toast.info('您关注了该用户～');
       this.setState({ isCollectionAuthor: true });
     });
   }
@@ -56,6 +58,7 @@ class QuestionItem extends Component<{}, {}> {
       collection_user_id: user_id,
       user_id: userInfo.id
     }).then(res => {
+      Toast.info('您取关了该用户～');
       this.setState({ isCollectionAuthor: false });
     });
   }
@@ -67,6 +70,7 @@ class QuestionItem extends Component<{}, {}> {
       question_id: id,
       like_user_id: userInfo.id
     }).then(res => {
+      Toast.info('回答者收到了您的认可～');
       this.setState({ isLike: true, LikeCount: LikeCount + 1 });
     });
   }
@@ -78,6 +82,7 @@ class QuestionItem extends Component<{}, {}> {
       question_id: id,
       like_user_id: userInfo.id
     }).then(res => {
+      Toast.info('您收回了对回答者的认可～');
       this.setState({ isLike: false, LikeCount: LikeCount - 1 });
     });
   }
@@ -89,6 +94,7 @@ class QuestionItem extends Component<{}, {}> {
       create_user_id: user_id,
       collection_user_id: userInfo.id
     }).then(res => {
+      Toast.info('您收藏了该问题～');
       this.setState({
         isCollection: true,
         CollectionCount: CollectionCount + 1
@@ -103,6 +109,7 @@ class QuestionItem extends Component<{}, {}> {
       create_user_id: user_id,
       collection_user_id: userInfo.id
     }).then(res => {
+      Toast.info('您取消收藏了该问题～');
       this.setState({
         isCollection: false,
         CollectionCount: CollectionCount - 1
@@ -180,14 +187,14 @@ class QuestionItem extends Component<{}, {}> {
                 style={{ marginRight: "10px" }}
               ></i>
             ) : (
-              <i
-                onClick={this.like}
-                className={
-                  "iconfont icondiancai1-copy selectIcon unselectedIcon"
-                }
-                style={{ marginRight: "10px" }}
-              ></i>
-            )}
+                <i
+                  onClick={this.like}
+                  className={
+                    "iconfont icondiancai1-copy selectIcon unselectedIcon"
+                  }
+                  style={{ marginRight: "10px" }}
+                ></i>
+              )}
             {isCollection ? (
               <i
                 onClick={this.unCollection}
@@ -195,14 +202,14 @@ class QuestionItem extends Component<{}, {}> {
                 style={{ marginRight: "10px" }}
               ></i>
             ) : (
-              <i
-                onClick={this.collection}
-                className={
-                  "iconfont iconfavor-active selectIcon unselectedIcon"
-                }
-                style={{ marginRight: "10px" }}
-              ></i>
-            )}
+                <i
+                  onClick={this.collection}
+                  className={
+                    "iconfont iconfavor-active selectIcon unselectedIcon"
+                  }
+                  style={{ marginRight: "10px" }}
+                ></i>
+              )}
             {isCollectionAuthor ? (
               <i
                 onClick={this.cancleFocusUser}
@@ -210,12 +217,12 @@ class QuestionItem extends Component<{}, {}> {
                 style={{ marginRight: "10px" }}
               ></i>
             ) : (
-              <i
-                onClick={this.focusUser}
-                className={"iconfont iconguanzhu selectIcon unselectedIcon"}
-                style={{ marginRight: "10px" }}
-              ></i>
-            )}
+                <i
+                  onClick={this.focusUser}
+                  className={"iconfont iconguanzhu selectIcon unselectedIcon"}
+                  style={{ marginRight: "10px" }}
+                ></i>
+              )}
             <i
               className={"iconfont iconhuida selectIcon selectedIcon"}
               onClick={() => {

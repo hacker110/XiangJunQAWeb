@@ -8,6 +8,7 @@
 // @flow
 import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
+import { Toast } from "antd-mobile";
 import { post } from "@/utils/request.js";
 import { QUESTION } from "@/service/api.js";
 
@@ -47,6 +48,7 @@ function ListItem(props) {
       setCollection(collection + 1);
       setCollectionStatus(1);
       console.log("collect", res);
+      Toast.info('已收藏该问题', 2, () => { }, false);
     });
   };
   const unCollect = () => {
@@ -57,6 +59,7 @@ function ListItem(props) {
     }).then(res => {
       setCollection(collection - 1);
       setCollectionStatus(0);
+      Toast.info('已取消收藏该问题～', 2, () => { }, false);
     });
   };
   const likeFun = () => {
@@ -69,6 +72,7 @@ function ListItem(props) {
       setLike(like + 1);
       setLikeStatus(1);
       console.log("like", res);
+      Toast.info('已点赞该问题', 2, () => { }, false);
     });
   };
 
@@ -81,6 +85,7 @@ function ListItem(props) {
       setLike(like - 1);
       setLikeStatus(0);
       console.log("like", res);
+      Toast.info('已取消点赞该问题', 2, () => { }, false);
     });
   };
   const openAnswer = () => {
@@ -122,14 +127,14 @@ function ListItem(props) {
                 style={{ marginRight: "16px" }}
               ></i>
             ) : (
-              <i
-                onClick={collect}
-                className={
-                  "iconfont iconfavor-active selectIcon unselectedIcon"
-                }
-                style={{ marginRight: "16px" }}
-              ></i>
-            )}
+                <i
+                  onClick={collect}
+                  className={
+                    "iconfont iconfavor-active selectIcon unselectedIcon"
+                  }
+                  style={{ marginRight: "16px" }}
+                ></i>
+              )}
             {likeStatus ? (
               <i
                 onClick={unLikeFun}
@@ -137,14 +142,14 @@ function ListItem(props) {
                 style={{ marginRight: "10px" }}
               ></i>
             ) : (
-              <i
-                onClick={likeFun}
-                className={
-                  "iconfont icondianzandianji selectIcon unselectedIcon"
-                }
-                style={{ marginRight: "10px" }}
-              ></i>
-            )}
+                <i
+                  onClick={likeFun}
+                  className={
+                    "iconfont icondianzandianji selectIcon unselectedIcon"
+                  }
+                  style={{ marginRight: "10px" }}
+                ></i>
+              )}
             <i
               className={"iconfont iconhuida selectIcon"}
               onClick={openAnswer}

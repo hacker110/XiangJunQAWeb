@@ -7,7 +7,7 @@
  */
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { Icon } from "antd-mobile";
+import { Icon, Toast } from "antd-mobile";
 import { post } from "@/utils/request.js";
 import { QUESTION } from "@/service/api.js";
 import { useState } from "react";
@@ -49,6 +49,7 @@ function AnswerItem(props) {
       question_answer_id: answer_id //0 对问题点赞，评论点赞,（评论的ID）
     }).then(res => {
       setLikeStatus(true);
+      Toast.info('回答者收到了您的认可～');
       console.log("like", res);
     });
   };
@@ -60,6 +61,7 @@ function AnswerItem(props) {
       question_answer_id: answer_id //0 对问题点赞，评论点赞,（评论的ID）
     }).then(res => {
       setLikeStatus(false);
+      Toast.info('您收回了对回答者的认可～');
       console.log("like", res);
     });
   };
